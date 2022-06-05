@@ -14,6 +14,16 @@
 **Bernard** has all the tools you will need for your Discord server,<br>
 **Bernard** is a multi-function Discord bot developped by [matyeu](https://discord.com/users/916444775861850175). You can invite the hosted version [here](https://discord.com/api/oauth2/authorize?client_id=983074050010144819&permissions=8&scope=bot%20applications.commands)
 
+## Commands
+
+### Informations
+
+| Name          | Description                          | Sub-commands   | Usage                 | Cd     |
+| ------------- | ------------------------------------ | -------------- | --------------------- | ------ |
+| avatar        | Displays a user's avatar.              | none         | /avatar <@user>       | 10secs |
+| botinfo       | Displays the bot's information.        | none         | none                  | 10secs |
+| ping          | Ping the bot.                          | none         | none                  | 10secs |
+
 ## Configuration
 
 1. Clone the repo
