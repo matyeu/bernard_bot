@@ -1,0 +1,29 @@
+{
+  "name": "bernard",
+  "version": "1.0.0",
+  "description": "A multi-function Discord bot. Leveling | Economy | Custom Commands | Reactions-Roles | Moderation | Fun",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matyeu/bernard.git"
+  },
+  "keywords": [
+    "bernard",
+    "discord-bot",
+    "bot",
+    "discord",
+    "discord-js"
+  ],
+  "author": "matyeu;#0611",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matyeu/bernard/issues"
+  },
+  "homepage": "https://github.com/matyeu/bernard#readme",
+  "devDependencies": {
+    "typescript": "^4.7.3"
+  }
+}
