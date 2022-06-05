@@ -60,6 +60,7 @@ export default async function (client: BernardClient, interaction: Interaction) 
     } else if (interaction.isButton()) {
         try {
             const button = client.buttons.get(interaction.customId.split(':')[0]);
+            if (!button) return;
             Logger.client(`Le bouton ${interaction.customId} a été utilisé par ${interaction.user?.tag} sur le serveur ${interaction.guild?.name} ( ${interaction.guild?.id} ).`);
             button.default(client, interaction)
         } catch (err) {

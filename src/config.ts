@@ -18,4 +18,6 @@ export const FOOTER_TICKET = "Bernard - Tickets";
 export const EMOJIS = {
     error: "983085316388843610",
     heart: "983100339613995058",
+    verification: "983106823534043186",
+    diamondBlueDark: "983109519603269742",
 };

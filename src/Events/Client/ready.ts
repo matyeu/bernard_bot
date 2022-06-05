@@ -32,6 +32,9 @@ export default async function (client: BernardClient) {
 
     for (let guild of client.guilds.cache.map(guild => guild)) {
         await update(guild.id);
+        if (guild.id === "983056621716512910") {
+            await import("../../Modules/informations").then(exports => exports.default(client, guild));
+        };
             for (const command of client.slashCommands.map(command => command)) await guild.commands.create(command.slash.data);
 
     }

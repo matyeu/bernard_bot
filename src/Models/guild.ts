@@ -4,12 +4,34 @@ import {createMissingProperties} from "../Librairie";
 const Logger = require("../Librairie/logger");
 
 let Guild = model("Guild", new Schema({
-    guildID: String
+    guildID: String,
+    channels: {
+        home: String,
+        rules: String,
+        general: String,
+    },
+    roles: {
+        member: String,
+    },
+    modules: {
+        informations: Boolean,
+    }
 }));
 
 
 export const def = {
     guildID: "",
+    channels: {
+        home: "",
+        rules: "",
+        general: "",
+    },
+    roles: {
+        member: "",
+    },
+    modules: {
+        informations: false,
+    }
 };
 
 export async function create(id: Snowflake) {
