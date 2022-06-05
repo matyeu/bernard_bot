@@ -19,7 +19,8 @@
 1. Clone the repo
 2. Clone `env.template.txt` into the main directory and rename it to `.env`
 3. Install the dependencies: `npm install`
-4. Start the bot:  : `npm run start`
+4. Compile the script: `npm run build`
+5. Start the bot: `npm run start`
 
 ## Développement
 
@@ -28,8 +29,8 @@
 * [Mongoose](https://mongodb.com) - Mongoose
 
 ## Versions
-* **Latest stable release** 1.0.0
-* **Latest release** 1.0.0
+* **Latest stable release:** 1.0.0
+* **Latest release:** 1.0.0
 
 ## Useful links
 
