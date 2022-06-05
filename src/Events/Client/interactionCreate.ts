@@ -27,7 +27,7 @@ export default async function (client: BernardClient, interaction: Interaction) 
 
             const timeNow = Date.now();
             const tStamps = client.cooldowns.get(interaction.commandName);
-            const cdAmount = (command.slash.data.cooldown || 5) * 1000;
+            const cdAmount = (command.slash.data.cooldown || 10) * 1000;
 
             if (tStamps.has(interaction.user.id)) {
                 const cdExpirationTime = tStamps.get(interaction.user.id) + cdAmount;
