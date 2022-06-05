@@ -4,7 +4,9 @@
   "description": "A multi-function Discord bot. Leveling | Economy | Custom Commands | Reactions-Roles | Moderation | Fun",
   "main": "dist/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "rm -r dist/ ||: && tsc && node dist/app.js",
+    "clean": "rm -r dist/",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -25,5 +27,13 @@
   "homepage": "https://github.com/matyeu/bernard#readme",
   "devDependencies": {
     "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "dayjs": "^1.11.2",
+    "discord.js": "^13.8.0",
+    "dotenv": "^16.0.1",
+    "fs": "^0.0.1-security",
+    "mongoose": "^5.13.14"
   }
 }
