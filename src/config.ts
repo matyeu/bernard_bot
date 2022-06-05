@@ -17,4 +17,5 @@ export const FOOTER_TICKET = "Bernard - Tickets";
 
 export const EMOJIS = {
     error: "983085316388843610",
+    heart: "983100339613995058",
 };
