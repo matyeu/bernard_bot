@@ -42,6 +42,10 @@
 * **Latest stable release:** 1.0.0
 * **Latest release:** 1.0.0
 
+## Contributions/Licence
+
+This project has an MIT license. And you are welcome to contribue. To contribute, please open a pull request on dev branch.
+
 ## Useful links
 
 Here are some useful links:
