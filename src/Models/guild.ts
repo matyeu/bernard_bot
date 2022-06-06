@@ -9,12 +9,21 @@ let Guild = model("Guild", new Schema({
         home: String,
         rules: String,
         general: String,
+        autorole: String,
     },
     roles: {
+        autorole: {
+            communications: String,
+            news: String,
+            bot: String,
+            team: String,
+            partnerships: String,
+        },
         member: String,
     },
     modules: {
         informations: Boolean,
+        autorole: Boolean,
     }
 }));
 
@@ -25,12 +34,21 @@ export const def = {
         home: "",
         rules: "",
         general: "",
+        autorole: "",
     },
     roles: {
+        autorole: {
+            communications: "",
+            news: "",
+            bot: "",
+            team: "",
+            partnerships: "",
+        },
         member: "",
     },
     modules: {
         informations: false,
+        autorole: false,
     }
 };
 
