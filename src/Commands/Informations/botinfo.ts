@@ -13,34 +13,34 @@ export default async function (client: BernardClient, interaction: CommandIntera
     let heart = client.getEmoji(EMOJIS.heart);
 
     const d = moment.duration(interaction.client.uptime);
-    const days = (d.days() == 1) ? `${d.days()} jour` : `${d.days()} jours`;
-    const hours = (d.hours() == 1) ? `${d.hours()} heure` : `${d.hours()} heures`;
+    const days = (d.days() == 1) ? `${d.days()} day` : `${d.days()} days`;
+    const hours = (d.hours() == 1) ? `${d.hours()} hour` : `${d.hours()} hours`;
     const date = moment().subtract(d, 'ms').format('DD/MM/YYYY');
 
     const embed = new MessageEmbed()
         .setColor(EMBED_INFO)
         .setDescription(`
-            \`${client.user?.username}\` est un **bot discord** riche en fonctionnalités 
-            **conçu pour la communauté discord.** 
-            \`${client.user?.username}\` possède une **varité de commandes** et une 
-            **multitude de paramètres** qui peuvent être **adaptés à vos besoins.**  
+            \`${client.user?.username}\` is a feature rich **bot discord**. 
+            **designed for the discord community ** 
+            \`${client.user?.username}\` has a **variety of commands** and a 
+            **A variety of parameters** that can be **adapted to your needs**.  
            \`\`\`👤 Informations\`\`\`
-           **» Tag et ID :** ${interaction.client?.user} - ${interaction.client.user?.id}
-           **» Préfix :** /
-           **» Créateur :** <@${CREATOR_ID}>
-           **» Version :** \`${JSON.parse(packageInfo).version}\`
+           **» Tag and ID:** ${interaction.client?.user} - ${interaction.client.user?.id}
+           **» Préfix:** /
+           **» Creator:** <@${CREATOR_ID}>
+           **» Version:** \`${JSON.parse(packageInfo).version}\`
            
-           \`\`\`📊 Statistiques\`\`\`
-           **» Serveurs :** \`${interaction.client?.guilds.cache.size.toString()}\` serveurs
-           **» Dernier redémarrage :** \`${days}\ et ${hours}\`
-           **» Dernière mise à jour :** \`${date}\`
+           \`\`\`📊 Statistics\`\`\`
+           **» Servers:** \`${interaction.client?.guilds.cache.size.toString()}\` servers
+           **» Last restart:** \`${days}\ and ${hours}\`
+           **» Last update:** \`${date}\`
            
-           \`\`\`📜 Ressources\`\`\`
-           **» Librairie / Envrionnement :** [Discord.js v13](https://discord.js.org/#/docs/main/stable/general/welcome) | [Node.js v16.11.0](https://nodejs.org/fr/)
-           **» Base de données :** [Mongoose](https://mongodb.com)
-           **» Emojis :** [Favicon](https://www.flaticon.com/search?word=coeur)
-           **» Github :** [Bernard](${GITHUB})
-           **» Serveur :** ubuntu \`21.04\`
+           \`\`\`📜 Resources\`\`\`
+           **» Librairie / Envrionnement:** [Discord.js v13](https://discord.js.org/#/docs/main/stable/general/welcome) | [Node.js v16.11.0](https://nodejs.org/fr/)
+           **» Database:** [Mongoose](https://mongodb.com)
+           **» Emojis:** [Favicon](https://www.flaticon.com/search?word=coeur)
+           **» Github:** [Bernard](${GITHUB})
+           **» Host:** ubuntu \`21.04\`
            
            **Developed with ${heart} by \`${JSON.parse(packageInfo).author}\`**
            `)
@@ -55,11 +55,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
 }
 
 export const slash = {
-    roles: ["membre"],
     maintenance: false,
     data: {
         name: "botinfo",
-        description: "Affiche les informations du bot",
+        description: "Displays the bot's information.",
         category: "Informations",
         defaultPermission: false
     }

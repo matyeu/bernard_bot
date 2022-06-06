@@ -29,28 +29,28 @@ export default async function (client: BernardClient, interaction: CommandIntera
     );
     const embed = new MessageEmbed()
         .setColor(EMBED_GENERAL)
-        .setTitle(`Statut des membres du serveur: [${interaction.guild?.members.cache.size}] membres`)
-        .setThumbnail(<string>interaction.guild?.iconURL({dynamic: true, format: "png"}))
+        .setTitle(`Status of the server members: [${interaction.guild?.members.cache.size}] members`)
+        .setThumbnail(<string>interaction.guild?.iconURL({dynamic: true}))
         .addFields(
             {
-                name: `${online} **En Ligne** `,
-                value: `\`${onlineMembers}\` membres`,
+                name: `${online} **Online** `,
+                value: `\`${onlineMembers}\` members`,
                 inline: true
             },
 
             {
-                name: `${dnd} **Occupés**: `,
-                value: `\`${dndMembers}\` membres`,
+                name: `${dnd} **Dnd**: `,
+                value: `\`${dndMembers}\` members`,
                 inline: true
             },
             {
-                name: `${afk} **Absents**: `,
-                value: "\`" + afkMembers + "\` membres",
+                name: `${afk} **Afk**: `,
+                value: "\`" + afkMembers + "\` members",
                 inline: true
             },
             {
-                name: `${offline} **Hors Ligne**: `,
-                value: "\`" + offlineMembers + "\` membres",
+                name: `${offline} **Offline**: `,
+                value: "\`" + offlineMembers + "\` members",
                 inline: true
             },
         )
@@ -63,10 +63,9 @@ export default async function (client: BernardClient, interaction: CommandIntera
 }
 
 export const slash = {
-    roles: ["membre"],
     data: {
-        name: "membres",
-        description: "Donne Les Informations sur les membres du serveur",
+        name: "members",
+        description: "Displays the number of members.",
         category: "Informations",
         defaultPermission: false
     }

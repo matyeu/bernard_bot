@@ -9,7 +9,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
     const embed = new MessageEmbed()
         .setColor(EMBED_GENERAL)
-        .setTitle(`Avatar de ${user.displayName}`)
+        .setTitle(`Avatar of ${user.displayName}`)
         .setURL(imgUrl)
         .setImage(imgUrl)
         .setTimestamp()
@@ -24,15 +24,14 @@ export default async function (client: BernardClient, interaction: CommandIntera
 }
 
 export const slash = {
-    roles: ["membre"],
     data: {
         name: "avatar",
-        description: "Affiche l'avatar de l'utilisateur mentionné.",
-        category: "Avatars",
+        description: "Displays a user's avatar.",
+        category: "Informations",
         options: [{
-            name: "membre",
+            name: "user",
             type: "USER",
-            description: "L'utilisateur à qui afficher l'avatar ",
+            description: "Mention of the user",
             required: false,
         }],
         defaultPermission: false

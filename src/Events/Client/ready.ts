@@ -7,8 +7,8 @@ const Logger = require("../../Librairie/logger");
 
 export default async function (client: BernardClient) {
     console.log(chalk.grey('--------------------------------'));
-    Logger.client(`- Connecté sous le nom de "${client.user!.tag}"`);
-    Logger.client(`- Pour ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b)} utilisateurs, pour ${client.channels.cache.size} salons, pour ${client.guilds.cache.size} serveurs discord !`);
+    Logger.client(`- Connected as "${client.user!.tag}"`);
+    Logger.client(`- For ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b)} users, for ${client.channels.cache.size} channels, for ${client.guilds.cache.size} servers discord !`);
 
     await mongoose.connect(process.env.DBCONNECTION!, {
         useNewUrlParser: true,
@@ -21,7 +21,7 @@ export default async function (client: BernardClient) {
         socketTimeoutMS: 45000,
         family: 4
     }).then(() => {
-        Logger.client(`- Connecté à la base de données`)
+        Logger.client(`- Connected to the database`)
     }).catch(err => {
         Logger.error(`${err}`)
     })

@@ -15,10 +15,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
         const embed = new MessageEmbed()
             .setColor(EMBED_INFO)
-            .setTitle(`🏓 | Temps de réponses`)
+            .setTitle(`🏓 | Response times`)
             .addFields(
-                {name: `Latence du bot`, value: botLatency, inline: true},
-                {name: `Latence de l'api`, value: apiLatency, inline: true},
+                {name: `Bot latency`, value: botLatency, inline: true},
+                {name: `Latency of the api`, value: apiLatency, inline: true},
             )
             .setTimestamp()
             .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})});
@@ -30,8 +30,6 @@ export default async function (client: BernardClient, interaction: CommandIntera
 }
 
 export const slash = {
-    roles: ["membre"],
-    maintenance: false,
     data: {
         name: "ping",
         description: "Ping ? Pong !",
