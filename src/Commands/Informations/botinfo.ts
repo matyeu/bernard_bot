@@ -21,8 +21,9 @@ export default async function (client: BernardClient, interaction: CommandIntera
         .setColor(EMBED_INFO)
         .setDescription(`
             \`${client.user?.username}\` est un **bot discord** riche en fonctionnalités 
-            **conçu pour la communauté discord.** \`${client.user?.username}\` possède 
-            une **varité de commandes** et une **multitude de paramètres** qui peuvent être **adaptés à vos besoins.**  
+            **conçu pour la communauté discord.** 
+            \`${client.user?.username}\` possède une **varité de commandes** et une 
+            **multitude de paramètres** qui peuvent être **adaptés à vos besoins.**  
            \`\`\`👤 Informations\`\`\`
            **» Tag et ID :** ${interaction.client?.user} - ${interaction.client.user?.id}
            **» Préfix :** /
