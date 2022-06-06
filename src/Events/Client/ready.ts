@@ -1,6 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import mongoose from "mongoose";
-import {update} from '../../Models/guild';
+import {update as updateGuild} from "../../Models/guild";
+import {update as updateMember} from "../../Models/members";
 import chalk from "chalk"
 
 const Logger = require("../../Librairie/logger");
@@ -31,7 +32,13 @@ export default async function (client: BernardClient) {
     console.log(chalk.grey('--------------------------------'));
 
     for (let guild of client.guilds.cache.map(guild => guild)) {
-        await update(guild.id);
+        await updateGuild(guild.id);
+
+        for (let member of guild.members.cache.map(member => member)) {
+            if (member.user.bot) continue;
+            await updateMember(guild.id, member.user.id);
+        };
+
         if (guild.id === "983056621716512910") {
             await import("../../Modules/informations").then(exports => exports.default(client, guild));
             await import("../../Modules/autorole").then(exports => exports.default(client, guild));

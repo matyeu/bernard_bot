@@ -13,13 +13,13 @@ export default async function (client: BernardClient, interaction: Interaction) 
 
             let command = client.slashCommands.get(interaction.commandName);
             if (!command) return interaction.reply({
-                content: `**${error} | La commande \`${interaction.commandName}\` est introuvable**`,
+                content: `**${error} | The \`${interaction.commandName}\` command be found**`,
                 ephemeral: true
             });
 
             if (command.slash.maintenance && interaction.user.id !== CREATOR_ID)
                 return interaction.reply({
-                    content: `** ${error} | Cette commande est en cours de maintenance...**`,
+                    content: `** ${error} | This order is under maintenance...**`,
                     ephemeral: true
                 });
 
@@ -36,10 +36,10 @@ export default async function (client: BernardClient, interaction: Interaction) 
                     let timeLeft = (cdExpirationTime - timeNow) / 1000;
 
                     await interaction.reply({
-                        content: `**${error} | merci de patienter ${timeLeft.toFixed(0)} seconde(s) pour réexécuter cette commande.**`,
+                        content: `**${error} | please wait ${timeLeft.toFixed(0)} seconds to run this command again.**`,
                         ephemeral: true
                     });
-                    await Logger.warn(`Le cooldown a été déclenché par ${interaction.user.tag} sur la commande ${interaction.commandName}`);
+                    return Logger.warn(`The cooldown was triggered by ${interaction.user.tag} on the ${interaction.commandName} command`);
                 }
             }
 
@@ -49,7 +49,7 @@ export default async function (client: BernardClient, interaction: Interaction) 
             let ephemeral = command.slash.ephemeral ?? false
             await interaction.deferReply({ephemeral});
 
-            Logger.client(`La commande ${interaction.commandName} a été utilisée par ${interaction.user.tag} sur le serveur ${interaction.guild?.name}`);
+            Logger.client(`The ${interaction.commandName} command was used by ${interaction.user.tag} on the ${interaction.guild?.name} server`);
 
             await command.default(client, interaction);
 
@@ -61,7 +61,7 @@ export default async function (client: BernardClient, interaction: Interaction) 
         try {
             const button = client.buttons.get(interaction.customId.split(':')[0]);
             if (!button) return;
-            Logger.client(`Le bouton ${interaction.customId} a été utilisé par ${interaction.user?.tag} sur le serveur ${interaction.guild?.name} ( ${interaction.guild?.id} ).`);
+            Logger.client(`The ${interaction.customId} button was used by ${interaction.user?.tag} on the ${interaction.guild?.name} server.`);
             button.default(client, interaction)
         } catch (err) {
             return console.error(err)
@@ -70,7 +70,8 @@ export default async function (client: BernardClient, interaction: Interaction) 
     } else if (interaction.isSelectMenu()) {
         try {
             const selectMenu = client.selects.get(interaction.customId);
-            Logger.client(`Le select-menu ${interaction.customId} a été utilisé par ${interaction.user.tag} sur le serveur ${interaction.guild?.name}`);
+            if (!selectMenu) return;
+            Logger.client(`The ${interaction.customId} select-menu was used by ${interaction.user.tag} on the ${interaction.guild?.name} server.`);
             selectMenu.default(client, interaction)
         } catch (err) {
             return console.error(err)
@@ -78,6 +79,7 @@ export default async function (client: BernardClient, interaction: Interaction) 
     } else if (interaction.isModalSubmit()) {
         try {
             const modal = client.modals.get(interaction.customId.split(':')[0]);
+            Logger.client(`The ${interaction.customId} modal was used by ${interaction.user.tag} on the ${interaction.guild?.name} server.`);
             await modal.execute(client, interaction);
         } catch (err) {
             console.error(err)
