@@ -22,6 +22,7 @@
 | ------------- | ------------------------------------ | -------------- | --------------------- | ------ |
 | avatar        | Displays a user's avatar.              | none         | /avatar <@user>       | 10secs |
 | botinfo       | Displays the bot's information.        | none         | none                  | 10secs |
+| membres       | Displays the number of members.        | none         | none                  | 10secs |
 | ping          | Ping the bot.                          | none         | none                  | 10secs |
 
 ## Configuration
