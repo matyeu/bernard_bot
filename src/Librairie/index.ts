@@ -33,7 +33,7 @@ export class BernardClient extends Client {
         return guild.roles.cache.get(id);
     }
 
-    async guildLog(guild: Guild, snowflake: Snowflake, messageData: MessageOptions) {
+    async getChannel(guild: Guild, snowflake: Snowflake, messageData: MessageOptions) {
         if(snowflake) {
             let channel = <TextChannel>guild.channels.cache.get(snowflake);
             if(channel) {
