@@ -13,6 +13,12 @@ export const FOOTER_MODERATION = "Bernard - Modération";
 export const FOOTER_LOG = "Bernard - Logs";
 export const FOOTER_TICKET = "Bernard - Tickets";
 
+export const SERVER = {
+    id: "983056621716512910",
+    suggestion: "983068278832377886",
+    bug: "983070467491512361"
+}
+
 export const EMOJIS = {
     badge: "983699405171490826",
     check: "983324495865589790",
@@ -27,4 +33,7 @@ export const EMOJIS = {
     offline: "983117513778950214",
     speaker: "983292101041217556",
     yeah: "983292226262143036",
+    thread: "983780241744986163",
+    quoteS: "983786376770240532",
+    quoteE: "983786491706765322"
 };

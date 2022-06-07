@@ -24,6 +24,8 @@ let Guild = model("Guild", new Schema({
         voice: String,
         tickets: String,
         team: String,
+        suggestion: String,
+        bug: String,
     },
     roles: {
         autorole: {
@@ -71,6 +73,8 @@ export const def = {
         voice: "",
         tickets: "",
         team: "",
+        suggestion: "",
+        bug: "",
     },
     roles: {
         autorole: {
