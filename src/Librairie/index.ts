@@ -92,3 +92,9 @@ export function createMissingProperties(def: object, obj: object) {
 export function capitalize(firstLetter: string) {
     return firstLetter.charAt(0).toUpperCase() + firstLetter.slice(1)
 };
+
+export function diffArr(A: any, B: any) {
+    return A.filter(function (a: any) {
+        return B.indexOf(a) == -1
+    })
+};
