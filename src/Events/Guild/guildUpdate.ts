@@ -15,7 +15,7 @@ export default async function (client: BernardClient, oldGuild: Guild, newGuild:
         .setColor(EMBED_INFO)
         .setTitle(`Server update`)
         .setTimestamp()
-        .setFooter({text: FOOTER_LOG, iconURL: oldGuild.client.user?.displayAvatarURL({dynamic: true, format: "png"})})
+        .setFooter({text: FOOTER_LOG, iconURL: oldGuild.client.user?.displayAvatarURL({dynamic: true})})
 
     if (oldGuild.name !== newGuild.name) {
         embed.addFields(
