@@ -14,7 +14,9 @@ export const FOOTER_LOG = "Bernard - Logs";
 export const FOOTER_TICKET = "Bernard - Tickets";
 
 export const EMOJIS = {
+    badge: "983699405171490826",
     check: "983324495865589790",
+    developer: "983456531456610445",
     diamondBlueDark: "983109519603269742",
     error: "983085316388843610",
     heart: "983100339613995058",

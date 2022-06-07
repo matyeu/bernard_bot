@@ -80,20 +80,6 @@ export function createMissingProperties(def: object, obj: object) {
     return obj;
 }
 
-export function getMissingProperties(def: object, obj: object, prevKey?: string) {
-    prevKey = prevKey ?? "obj";
-    let arr: string[] = [];
-    for (let key of Object.keys(def) as Array<keyof object>) {
-        if (typeof def[key] === "object") {
-            if (!obj[key]) {
-                arr.push(`${prevKey}.${key}`);
-                arr = [...arr, ...getMissingProperties(def[key], {}, key)];
-            } else arr = [...arr, ...getMissingProperties(def[key], obj[key], `${prevKey}.${key}`)];
-        }
-
-        if (!obj[key]) {
-            arr.push(`${prevKey}.${key}`);
-        }
-    }
-    return arr
+export function capitalize(firstLetter: string) {
+    return firstLetter.charAt(0).toUpperCase() + firstLetter.slice(1)
 };

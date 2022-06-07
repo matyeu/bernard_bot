@@ -7,10 +7,14 @@ let Guild = model("Guild", new Schema({
     guildID: String,
     category: {
         voice: String,
+        support: String,
+        recruiting: String,
     },
     channels: {
         logs: {
             server: String,
+            support: String,
+            recruiting: String,
         },
         home: String,
         rules: String,
@@ -18,6 +22,8 @@ let Guild = model("Guild", new Schema({
         autorole: String,
         configVoice: String,
         voice: String,
+        tickets: String,
+        team: String,
     },
     roles: {
         autorole: {
@@ -27,13 +33,20 @@ let Guild = model("Guild", new Schema({
             team: String,
             partnerships: String,
         },
+        developer: String,
+        moderator: String,
+        helper: String,
+        staffs: String,
         member: String,
         voice: String,
     },
     modules: {
         informations: Boolean,
         autorole: Boolean,
-    }
+        tickets: Boolean
+    },
+    support: Number,
+    recruitment: Number
 }));
 
 
@@ -41,10 +54,14 @@ export const def = {
     guildID: "",
     category: {
         voice: "",
+        support: "",
+        recruiting: "",
     },
     channels: {
         logs: {
             server: "",
+            support: "",
+            recruiting: "",
         },
         home: "",
         rules: "",
@@ -52,6 +69,8 @@ export const def = {
         autorole: "",
         configVoice: "",
         voice: "",
+        tickets: "",
+        team: "",
     },
     roles: {
         autorole: {
@@ -61,13 +80,20 @@ export const def = {
             team: "",
             partnerships: "",
         },
+        developer: "",
+        moderator: "",
+        helper: "",
+        staffs: "",
         member: "",
         voice: "",
     },
     modules: {
         informations: false,
         autorole: false,
-    }
+        tickets: false,
+    },
+    support: 0,
+    recruitment: 0
 };
 
 export async function create(id: Snowflake) {
