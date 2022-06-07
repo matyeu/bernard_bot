@@ -15,6 +15,7 @@ export const FOOTER_TICKET = "Bernard - Tickets";
 
 export const SERVER = {
     id: "983056621716512910",
+    server: "983069388309688320",
     suggestion: "983068278832377886",
     bug: "983070467491512361"
 }

@@ -7,12 +7,14 @@ const Logger = require("../Librairie/logger");
 
 let Client = model("Client", new Schema({
     support: String,
+    server: String,
     suggestion: String,
     bug: String,
 }));
 
 export const def = {
     support: SERVER.id,
+    server: SERVER.server,
     suggestion: SERVER.suggestion,
     bug: SERVER.bug,
 
@@ -29,13 +31,6 @@ export async function find(id: Snowflake) {
     let client = await Client.findOne({support: id});
     if(!client) client = await create(id);
     return client;
-};
-
-export async function edit(id: Snowflake, data: object) {
-    await find(id);
-    let member = await Client.findOneAndUpdate({id}, data, {new:true});
-    Logger.client("Updating a client in the database");
-    return await member!.save();
 };
 
 export default Client;

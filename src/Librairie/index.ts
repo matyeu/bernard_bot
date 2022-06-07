@@ -41,6 +41,15 @@ export class BernardClient extends Client {
             }
         }
     }
+
+    async getClientChannel(client: BernardClient, snowflake: Snowflake, messageData: MessageOptions) {
+        if(snowflake) {
+            let channel = <TextChannel>client.channels.cache.get(snowflake);
+            if(channel) {
+                await channel.send(messageData);
+            }
+        }
+    }
 }
 
 

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import {find as findClient} from "../../Models/client";
 import {update as updateGuild} from "../../Models/guild";
 import {update as updateMember} from "../../Models/members";
-import chalk from "chalk"
+import chalk from "chalk";
 
 const {SERVER} = require("../../config");
 const Logger = require("../../Librairie/logger");
@@ -33,7 +33,7 @@ export default async function (client: BernardClient) {
 
     console.log(chalk.grey('--------------------------------'));
 
-    await findClient(SERVER.id);
+   await findClient(SERVER.id);
 
     for (let guild of client.guilds.cache.map(guild => guild)) {
         await updateGuild(guild.id);
