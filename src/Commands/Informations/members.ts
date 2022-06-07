@@ -59,7 +59,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
         })
         .setTimestamp();
 
-    interaction.editReply({embeds: [embed]});
+    await interaction.reply({embeds: [embed]});
 }
 
 export const slash = {

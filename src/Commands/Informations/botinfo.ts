@@ -49,7 +49,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
             text: `${interaction.client.user?.username} ${FOOTER}`,
             iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})
         })
-    await interaction.editReply({embeds: [embed]})
+    await interaction.reply({embeds: [embed]})
 
 
 }

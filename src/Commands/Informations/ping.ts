@@ -5,7 +5,7 @@ import {EMBED_INFO, FOOTER, } from "../../config";
 export default async function (client: BernardClient, interaction: CommandInteraction) {
 
     const start = Date.now();
-    interaction.editReply({content: "Pong !"}).then(() => {
+    interaction.reply({content: "Pong !"}).then(() => {
 
         const end = Date.now();
         const time = end - start;

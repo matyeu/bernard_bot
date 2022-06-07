@@ -46,11 +46,7 @@ export default async function (client: BernardClient, interaction: Interaction) 
             tStamps.set(interaction.user.id, timeNow);
             setTimeout(() => tStamps.delete(interaction.user.id), cdAmount);
 
-            let ephemeral = command.slash.ephemeral ?? false
-            await interaction.deferReply({ephemeral});
-
             Logger.client(`The ${interaction.commandName} command was used by ${interaction.user.tag} on the ${interaction.guild?.name} server`);
-
             await command.default(client, interaction);
 
         } catch (e) {
