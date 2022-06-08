@@ -42,12 +42,14 @@ export default async function (client: BernardClient, oldMember: GuildMember, ne
 
     if (oldRoles.length > newRoles.length) {
         let diffRolesString = diffArr(oldRoles, newRoles)
+        if (diffRolesString[0] === "<@&983348981318967296>") return;
         embed.setColor(EMBED_ERROR)
             .addFields({name: `🤖 Role removed`, value: `${diffRolesString}`, inline: true});
         return client.getChannel(oldMember.guild, server, {embeds: [embed]});
     }
     else if (oldRoles.length < newRoles.length) {
         let diffRolesString = diffArr(newRoles, oldRoles)
+        if (diffRolesString[0] === "<@&983348981318967296>") return;
         embed.setColor(EMBED_SUCESS)
             .addFields({name: `🤖 Role added`, value: `${diffRolesString}`, inline: true});
         return client.getChannel(oldMember.guild, server, {embeds: [embed]});
