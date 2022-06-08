@@ -7,6 +7,10 @@ const Logger = require("../Librairie/logger");
 let Members = model("Members", new Schema({
     guildID: String,
     userID: String,
+    afk: {
+        statut: Boolean,
+        reason: String
+    },
     voice: {
         id: String,
         public: Boolean,
@@ -16,6 +20,10 @@ let Members = model("Members", new Schema({
 export const def = {
     guildID: "",
     userID: "",
+    afk: {
+        statut: false,
+        reason: ""
+    },
     voice: {
         id: "",
         public: true,
