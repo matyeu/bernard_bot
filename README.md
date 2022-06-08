@@ -18,12 +18,12 @@
 
 ### Informations
 
-| Name          | Description                          | Sub-commands   | Usage                 | Cd     |
-| ------------- | ------------------------------------ | -------------- | --------------------- | ------ |
-| avatar        | Displays a user's avatar.            | none           | /avatar <@user>       | 10secs |
-| botinfo       | Displays the bot's information.      | none           | none                  | 10secs |
-| membres       | Displays the number of members.      | none           | none                  | 10secs |
-| ping          | Ping the bot.                        | none           | none                  | 10secs |
+| Name          | Description                          | Sub-commands                | Usage                 | Cd     |
+| ------------- | ------------------------------------ | --------------------------- | --------------------- | ------ |
+| avatar        | Displays a user's avatar.            | none                        | <@user>               | 10secs |
+| info          | Send informations.                   | user, bot, server, channel  | <action> <value>      | 10secs |
+| membres       | Displays the number of members.      | none                        | none                  | 10secs |
+| ping          | Ping the bot.                        | none                        | none                  | 10secs |
 
 ### Community
 
