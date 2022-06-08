@@ -1,7 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import {MessageEmbed, ThreadChannel} from "discord.js";
 import {find} from "../../Models/guild";
-import {EMBED_SUCESS, EMOJIS, FOOTER_LOG} from "../../config";
+import {EMBED_SUCCESS, EMOJIS, FOOTER_LOG} from "../../config";
 
 export default async function (client: BernardClient, thread: ThreadChannel) {
     if (thread.isText()) await thread.join();
@@ -12,7 +12,7 @@ export default async function (client: BernardClient, thread: ThreadChannel) {
     let threadEmoji = client.getEmoji(EMOJIS.thread);
 
     const embed = new MessageEmbed()
-        .setColor(EMBED_SUCESS)
+        .setColor(EMBED_SUCCESS)
         .setTitle(`Thread creation`)
         .addFields(
             {name: `${threadEmoji} Name (ID)`, value: `<#${thread.id}>\n(${thread.id})`, inline: true},

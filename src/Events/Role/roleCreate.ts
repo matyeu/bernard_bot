@@ -1,7 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import {MessageEmbed, Role} from "discord.js";
 import {find} from "../../Models/guild";
-import {EMBED_SUCESS, FOOTER_LOG} from "../../config";
+import {EMBED_SUCCESS, FOOTER_LOG} from "../../config";
 
 export default async function (client: BernardClient, role: Role) {
 
@@ -9,7 +9,7 @@ export default async function (client: BernardClient, role: Role) {
     let server = guildConfig.channels.logs.server;
 
     const embed = new MessageEmbed()
-        .setColor(EMBED_SUCESS)
+        .setColor(EMBED_SUCCESS)
         .setTitle(`Role creatio,`)
         .addFields(
             {name: `🎲 Name (ID)`, value: `<@&${role.id}> (${role.id})`, inline: true}

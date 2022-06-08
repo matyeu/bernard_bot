@@ -2,7 +2,7 @@ import {BernardClient, diffArr} from "../../Librairie";
 import {GuildMember, MessageEmbed} from "discord.js";
 import {find} from "../../Models/guild";
 import {find as findMember, edit as editMember} from "../../Models/members";
-import {EMBED_ERROR, EMBED_INFO, EMBED_SUCESS, FOOTER_LOG} from "../../config";
+import {EMBED_ERROR, EMBED_INFO, EMBED_SUCCESS, FOOTER_LOG} from "../../config";
 
 export default async function (client: BernardClient, oldMember: GuildMember, newMember: GuildMember) {
 
@@ -50,7 +50,7 @@ export default async function (client: BernardClient, oldMember: GuildMember, ne
     else if (oldRoles.length < newRoles.length) {
         let diffRolesString = diffArr(newRoles, oldRoles)
         if (diffRolesString[0] === "<@&983348981318967296>") return;
-        embed.setColor(EMBED_SUCESS)
+        embed.setColor(EMBED_SUCCESS)
             .addFields({name: `🤖 Role added`, value: `${diffRolesString}`, inline: true});
         return client.getChannel(oldMember.guild, server, {embeds: [embed]});
     }

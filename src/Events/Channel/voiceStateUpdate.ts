@@ -1,7 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import {Guild, MessageEmbed, TextChannel, VoiceState} from "discord.js";
 import {find} from "../../Models/guild";
-import {EMBED_ERROR, EMBED_SUCESS, EMOJIS, FOOTER_LOG} from "../../config";
+import {EMBED_ERROR, EMBED_SUCCESS, EMOJIS, FOOTER_LOG} from "../../config";
 import {find as findMember} from "../../Models/members";
 
 const Logger = require('../../Librairie/logger');
@@ -65,7 +65,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
                 inline: true
             })
         }
-        embed.setColor(!oldMember.channelId ? EMBED_SUCESS : EMBED_ERROR)
+        embed.setColor(!oldMember.channelId ? EMBED_SUCCESS : EMBED_ERROR)
             .setTitle(!oldMember.channelId ? 'Connection' : 'Disconnect')
 
         return client.getChannel(<Guild>newMember!.guild, server, {embeds: [embed]});
@@ -74,21 +74,21 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
 
     if (!oldMember.selfVideo && newMember.selfVideo || oldMember.selfVideo && !newMember.selfVideo) {
 
-        embed.setColor(!oldMember.selfVideo ? EMBED_SUCESS : EMBED_ERROR)
+        embed.setColor(!oldMember.selfVideo ? EMBED_SUCCESS : EMBED_ERROR)
             .setTitle(!oldMember.selfVideo ? 'Camera On' : 'Camera Off');
         return client.getChannel(<Guild>newMember!.guild, server, {embeds: [embed]});
 
     }
     if (!oldMember.streaming && newMember.streaming || oldMember.streaming && !newMember.streaming) {
 
-        embed.setColor(!oldMember.streaming ? EMBED_SUCESS : EMBED_ERROR)
+        embed.setColor(!oldMember.streaming ? EMBED_SUCCESS : EMBED_ERROR)
             .setTitle(!oldMember.streaming ? 'Start Streaming' : 'Stop Streaming');
         return client.getChannel(<Guild>newMember!.guild, server, {embeds: [embed]});
 
     }
 
     if (!oldMember.selfDeaf && newMember.selfDeaf || oldMember.selfDeaf && !newMember.selfDeaf) {
-        embed.setColor(!oldMember.selfDeaf ? EMBED_SUCESS : EMBED_ERROR)
+        embed.setColor(!oldMember.selfDeaf ? EMBED_SUCCESS : EMBED_ERROR)
             .setTitle(!oldMember.selfDeaf ? 'Deaf On' : 'Dead Off')
             .addFields(
                 {name: `🤖 Deaf`, value: `${!oldMember.selfDeaf ? voiceOffEmoji : voiceOnEmoji}`, inline: true}
@@ -98,7 +98,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
 
     if (!oldMember.selfMute && newMember.selfMute || oldMember.selfMute && !newMember.selfMute) {
 
-        embed.setColor(!oldMember.selfMute ? EMBED_SUCESS : EMBED_ERROR)
+        embed.setColor(!oldMember.selfMute ? EMBED_SUCCESS : EMBED_ERROR)
             .setTitle(!oldMember.selfMute ? 'Mute On' : 'Mute Off')
             .addFields(
                 {name: `🤖 Mute`, value: `${!oldMember.selfMute ? microOffEmoji : microOnEmoji}`, inline: true}
@@ -109,7 +109,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
 
     if (!oldMember.serverDeaf && newMember.serverDeaf || oldMember.serverDeaf && !newMember.serverDeaf) {
 
-        embed.setColor(!oldMember.serverDeaf ? EMBED_SUCESS : EMBED_ERROR)
+        embed.setColor(!oldMember.serverDeaf ? EMBED_SUCCESS : EMBED_ERROR)
             .setTitle(!oldMember.serverDeaf ? 'Deaf (Server) On' : 'Deaf (Server) Off')
             .addFields(
                 {name: `🤖 Deaf`, value: `${!oldMember.serverDeaf ? voiceOffEmoji : voiceOnEmoji}`, inline: true}
@@ -121,7 +121,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
 
     if (!oldMember.serverMute && newMember.serverMute || oldMember.serverMute && !newMember.serverMute) {
 
-        embed.setColor(!oldMember.serverMute ? EMBED_SUCESS : EMBED_ERROR)
+        embed.setColor(!oldMember.serverMute ? EMBED_SUCCESS : EMBED_ERROR)
             .setTitle(!oldMember.serverMute ? 'Mute (Server) On' : 'Mute (Server) Off')
             .addFields(
                 {name: `🤖 Mute`, value: `${!oldMember.serverMute ? microOffEmoji : microOnEmoji}`, inline: true}

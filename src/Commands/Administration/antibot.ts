@@ -1,7 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import {CommandInteraction, MessageEmbed} from "discord.js";
 import {find, edit} from "../../Models/guild";
-import {EMBED_ERROR, EMBED_SUCESS, EMOJIS, FOOTER} from "../../config";
+import {EMBED_ERROR, EMBED_SUCCESS, EMOJIS, FOOTER} from "../../config";
 
 export default async function (client: BernardClient, interaction: CommandInteraction) {
 
@@ -12,7 +12,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
     await edit(interaction.guild!.id, guildConfig);
 
     const embed = new MessageEmbed()
-        .setColor(isActivated ? EMBED_ERROR : EMBED_SUCESS)
+        .setColor(isActivated ? EMBED_ERROR : EMBED_SUCCESS)
         .setTitle(`Antibot ${isActivated ? 'OFF' : 'ON'}`)
         .setDescription(`If you want to make the anti bot **${isActivated ? "ON" : "OFF"}** retype the command`)
         .setTimestamp()

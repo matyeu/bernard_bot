@@ -3,7 +3,7 @@ import {Guild, MessageEmbed} from "discord.js";
 import {find as findClient} from "../../Models/client";
 import {create as createGuild} from "../../Models/guild";
 import {create as createMember} from "../../Models/members";
-import {EMBED_SUCESS, FOOTER, SERVER} from "../../config";
+import {EMBED_SUCCESS, FOOTER, SERVER} from "../../config";
 import moment from "moment";
 
 export default async function (client: BernardClient, guild: Guild) {
@@ -18,7 +18,7 @@ export default async function (client: BernardClient, guild: Guild) {
     let getOwner = client.guilds.cache.get(SERVER.id)?.members.cache.get(guild.ownerId);
 
     let embed = new MessageEmbed()
-        .setColor(EMBED_SUCESS)
+        .setColor(EMBED_SUCCESS)
         .setTitle(`${client.user!.tag} joined a new server!`)
         .setDescription(`Thanks to **${ownerGuild?.user.tag}** to have added me in his server, I am now in **${client.guilds.cache.size}** servers!`)
         if (guild.iconURL()) {embed.setThumbnail(`${guild.iconURL({ dynamic: true })}`)}

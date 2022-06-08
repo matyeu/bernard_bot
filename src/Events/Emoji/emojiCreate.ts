@@ -1,7 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import {GuildEmoji, MessageEmbed} from "discord.js";
 import {find} from "../../Models/guild";
-import {EMBED_SUCESS, FOOTER_LOG} from "../../config";
+import {EMBED_SUCCESS, FOOTER_LOG} from "../../config";
 
 export default async function (client: BernardClient, emoji: GuildEmoji) {
 
@@ -9,7 +9,7 @@ export default async function (client: BernardClient, emoji: GuildEmoji) {
     let server = guildConfig.channels.logs.server;
 
     const embed = new MessageEmbed()
-        .setColor(EMBED_SUCESS)
+        .setColor(EMBED_SUCCESS)
         .setTitle(`Emoji added`)
         .addFields(
             {name: `❗️ Name (ID)`, value: `<:${emoji.name}:${emoji.id}> \`${emoji.name}\` (${emoji.id})`, inline: true}

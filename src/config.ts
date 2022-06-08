@@ -4,7 +4,7 @@ export const LINK_DISCORD = "https://discord.gg/xNSKAkrPUg"
 
 export const EMBED_GENERAL = "#2f3136";
 export const EMBED_ERROR = "#E04F5F";
-export const EMBED_SUCESS = "#33BEA6";
+export const EMBED_SUCCESS = "#33BEA6";
 export const EMBED_INFO = "#69A1CC";
 export const EMBED_CLOSE = "#d4d221";
 

@@ -2,7 +2,7 @@ import {BernardClient} from "../../Librairie";
 import {Guild, GuildMember, MessageEmbed, MessageAttachment} from "discord.js";
 import {find as findGuild} from "../../Models/guild";
 import {create as createMember} from "../../Models/members";
-import {EMBED_INFO, EMBED_SUCESS} from "../../config";
+import {EMBED_INFO, EMBED_SUCCESS} from "../../config";
 import Canvas from "canvas";
 import {resolve} from "path";
 import stringCleaner from "@sindresorhus/slugify";
@@ -103,7 +103,7 @@ export default async function (client: BernardClient, newMember: GuildMember) {
     await client.getChannel(<Guild>newMember!.guild, guildConfig.channels.arrival, {files: [attachment]});
 
     const embedLog = new MessageEmbed()
-        .setColor(EMBED_SUCESS)
+        .setColor(EMBED_SUCCESS)
         .setAuthor({
             name: `${newMember.user.tag} (${newMember.id})`,
             iconURL: newMember.user.displayAvatarURL({dynamic: true, format: 'png'})
