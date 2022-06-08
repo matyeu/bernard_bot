@@ -1,7 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import {GuildEmoji, MessageEmbed} from "discord.js";
 import {find} from "../../Models/guild";
-import {EMBED_SUCESS, FOOTER} from "../../config";
+import {EMBED_SUCESS, FOOTER_LOG} from "../../config";
 
 export default async function (client: BernardClient, emoji: GuildEmoji) {
 
@@ -15,7 +15,7 @@ export default async function (client: BernardClient, emoji: GuildEmoji) {
             {name: `❗️ Name (ID)`, value: `<:${emoji.name}:${emoji.id}> \`${emoji.name}\` (${emoji.id})`, inline: true}
         )
         .setTimestamp()
-        .setFooter({text: FOOTER, iconURL: emoji.client.user?.displayAvatarURL({dynamic: true})});
+        .setFooter({text: FOOTER_LOG, iconURL: emoji.client.user?.displayAvatarURL({dynamic: true})});
     return client.getChannel(emoji.guild, server, {embeds: [embed]});
 
 };

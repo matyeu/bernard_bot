@@ -1,7 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import {GuildEmoji, MessageEmbed} from "discord.js";
 import {find} from "../../Models/guild";
-import {EMBED_INFO, FOOTER} from "../../config";
+import {EMBED_INFO, FOOTER_LOG} from "../../config";
 
 export default async function (client: BernardClient, oldEmoji: GuildEmoji, newEmoji: GuildEmoji) {
 
@@ -12,7 +12,7 @@ export default async function (client: BernardClient, oldEmoji: GuildEmoji, newE
         .setColor(EMBED_INFO)
         .setTitle('Emoji update')
         .setTimestamp()
-        .setFooter({text: FOOTER, iconURL: oldEmoji.client.user?.displayAvatarURL({dynamic: true})})
+        .setFooter({text: FOOTER_LOG, iconURL: oldEmoji.client.user?.displayAvatarURL({dynamic: true})})
 
     if (oldEmoji.name !== newEmoji.name) embed.addFields(
         {name: `❗️ Old Name`, value: `<:${oldEmoji.name}:${oldEmoji.id}> \`${oldEmoji.name}\``, inline: true},
