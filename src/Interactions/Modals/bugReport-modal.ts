@@ -36,8 +36,6 @@ async function execute(client: BernardClient, interaction: ModalSubmitInteractio
 
     const msg = await channelBug.send({embeds: [embed]});
     await interaction.reply({content: `${check} | Your bugreport **has been sent**!`, ephemeral: true})
-    await msg.react(EMOJIS.check)
-    await msg.react(EMOJIS.error)
     await msg.react(EMOJIS.thread)
 
 
