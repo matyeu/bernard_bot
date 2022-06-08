@@ -1,6 +1,15 @@
-import {Client, ClientOptions, Collection, Guild, MessageOptions, Snowflake, TextChannel} from 'discord.js';
+import {
+    Client,
+    ClientOptions,
+    Collection,
+    CommandInteraction,
+    Guild,
+    MessageOptions,
+    Snowflake,
+    TextChannel
+} from 'discord.js';
 import * as fs from "fs";
-
+import {EMOJIS} from "../config";
 
 export class BernardClient extends Client {
     public config: Object;
@@ -52,6 +61,27 @@ export class BernardClient extends Client {
     }
 }
 
+declare module "discord.js" {
+    interface CommandInteraction {
+        replySuccessMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+        replyErrorMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+        editSuccessMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+        editErrorMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+    }
+}
+
+CommandInteraction.prototype.replySuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
+};
+CommandInteraction.prototype.replyErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
+};
+CommandInteraction.prototype.editSuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
+};
+CommandInteraction.prototype.editErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
+};
 
 export function getFilesRecursive(directory: string, aFiles?: string[]) {
     const files = fs.readdirSync(directory);
