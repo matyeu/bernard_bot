@@ -15,6 +15,9 @@ let Guild = model("Guild", new Schema({
             server: String,
             support: String,
             recruiting: String,
+            sanction: String,
+            public: String,
+            members: String,
         },
         home: String,
         rules: String,
@@ -26,6 +29,8 @@ let Guild = model("Guild", new Schema({
         team: String,
         suggestion: String,
         bug: String,
+        arrival: String,
+        departure: String,
     },
     roles: {
         autorole: {
@@ -34,6 +39,9 @@ let Guild = model("Guild", new Schema({
             bot: String,
             team: String,
             partnerships: String,
+            separatorCom: String,
+            separatorTag: String
+
         },
         developer: String,
         moderator: String,
@@ -43,8 +51,9 @@ let Guild = model("Guild", new Schema({
         voice: String,
     },
     modules: {
-        informations: Boolean,
         autorole: Boolean,
+        antibot: Boolean,
+        informations: Boolean,
         tickets: Boolean
     },
     support: Number,
@@ -64,6 +73,9 @@ export const def = {
             server: "",
             support: "",
             recruiting: "",
+            sanction: "",
+            punlic: "",
+            members: "",
         },
         home: "",
         rules: "",
@@ -75,6 +87,8 @@ export const def = {
         team: "",
         suggestion: "",
         bug: "",
+        arrival: "",
+        departure: "",
     },
     roles: {
         autorole: {
@@ -83,6 +97,8 @@ export const def = {
             bot: "",
             team: "",
             partnerships: "",
+            separatorCom: "",
+            separatorTag: ""
         },
         developer: "",
         moderator: "",
@@ -92,8 +108,9 @@ export const def = {
         voice: "",
     },
     modules: {
-        informations: false,
         autorole: false,
+        antibot: false,
+        informations: false,
         tickets: false,
     },
     support: 0,
