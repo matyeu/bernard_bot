@@ -33,7 +33,7 @@ export default async function (client: BernardClient, oldChannel: TextChannel, n
     )
 
     if (oldChannel.nsfw !== newChannel.nsfw) embed.addFields(
-        {name: `🎙 Salon NSFW`, value: newChannel.nsfw ? '`Actived`' : '`Deactivated`', inline: true}
+        {name: `🎙 Salon NSFW`, value: newChannel.nsfw ? '`Activated`' : '`Deactivated`', inline: true}
     )
 
     return client.getChannel(oldChannel.guild, server, {embeds: [embed]});
