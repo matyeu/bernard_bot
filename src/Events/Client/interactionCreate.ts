@@ -23,6 +23,10 @@ export default async function (client: BernardClient, interaction: Interaction) 
                     ephemeral: true
                 });
 
+            //@ts-ignore
+            if (!interaction.member.permissions.has([command.slash.data.permissions]))
+                return interaction.replyErrorMessage(client,  `**You don't have the permission to use this command !**`, true);
+
             if (!client.cooldowns.has(interaction.commandName)) client.cooldowns.set(interaction.commandName, client.cooldowns);
 
             const timeNow = Date.now();
