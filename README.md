@@ -27,7 +27,7 @@
 | Name          | Description                          | Sub-commands                | Usage                 | Cd     |
 | ------------- | ------------------------------------ | --------------------------- | --------------------- | ------ |
 | info          | Send informations.                   | user, bot, server, channel  | \<action> \<value>    | 10secs |
-| membres       | Displays the number of members.      | none                        | none                  | 10secs |
+| members       | Displays the number of members.      | none                        | none                  | 10secs |
 | ping          | Ping the bot.                        | none                        | none                  | 10secs |
 
 ### Community
