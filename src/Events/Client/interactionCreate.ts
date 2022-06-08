@@ -12,20 +12,14 @@ export default async function (client: BernardClient, interaction: Interaction) 
         try {
 
             let command = client.slashCommands.get(interaction.commandName);
-            if (!command) return interaction.reply({
-                content: `**${error} | The \`${interaction.commandName}\` command be found**`,
-                ephemeral: true
-            });
+            if (!command) return interaction.replyErrorMessage(client, `The \`${interaction.commandName}\` command be found`, true);
 
             if (command.slash.maintenance && interaction.user.id !== CREATOR_ID)
-                return interaction.reply({
-                    content: `** ${error} | This order is under maintenance...**`,
-                    ephemeral: true
-                });
+                return interaction.replyErrorMessage(client, `This order is under maintenance...`, true);
 
             //@ts-ignore
             if (!interaction.member.permissions.has([command.slash.data.permissions]))
-                return interaction.replyErrorMessage(client,  `**You don't have the permission to use this command !**`, true);
+                return interaction.replyErrorMessage(client,  `**You don't have** the permission to use this command !`, true);
 
             if (!client.cooldowns.has(interaction.commandName)) client.cooldowns.set(interaction.commandName, client.cooldowns);
 
@@ -39,10 +33,8 @@ export default async function (client: BernardClient, interaction: Interaction) 
                 if (timeNow < cdExpirationTime) {
                     let timeLeft = (cdExpirationTime - timeNow) / 1000;
 
-                    await interaction.reply({
-                        content: `**${error} | please wait ${timeLeft.toFixed(0)} seconds to run this command again.**`,
-                        ephemeral: true
-                    });
+                    await interaction.replyErrorMessage(client,
+                        `Please wait **${timeLeft.toFixed(0)} seconds** to run this command again.`, true);
                     return Logger.warn(`The cooldown was triggered by ${interaction.user.tag} on the ${interaction.commandName} command`);
                 }
             }
