@@ -13,7 +13,7 @@ export default async function (client: BernardClient) {
     Logger.client(`- Connected as "${client.user!.tag}"`);
     Logger.client(`- For ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b)} users, for ${client.channels.cache.size} channels, for ${client.guilds.cache.size} servers discord !`);
 
-    await mongoose.connect(process.env.DBCONNECTION!, {
+    const connectDB = await mongoose.connect(process.env.DBCONNECTION!, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
@@ -26,6 +26,8 @@ export default async function (client: BernardClient) {
     }).then(() => {
         Logger.client(`- Connected to the database`)
     }).catch(err => {
+        Logger.error("Connection failed. Try reconnecting in 5 seconds...");
+        setTimeout(() => connectDB, 5000);
         Logger.error(`${err}`)
     })
 
