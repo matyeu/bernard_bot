@@ -16,6 +16,12 @@
 
 ## Commands
 
+### Administration
+
+| Name          | Description                              | Sub-commands   | Usage                 | Cd     |
+| ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
+| antibot       | Allow or Deny the addition of bot.       | none           | none                  | 10secs |
+
 ### Informations
 
 | Name          | Description                          | Sub-commands                | Usage                 | Cd     |
