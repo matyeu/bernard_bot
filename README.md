@@ -43,7 +43,8 @@
 
 | Name          | Description                      | Sub-commands     | Usage                    | Cd     |
 | ------------- | -------------------------------- | ---------------- | ------------------------ | ------ |
-| ban           | Ban or unban a user.             |none              | <@user> \<reason> (time) | 10secs |
+| ban           | Ban or unban a user.             |none              | <@user> \<reason> (time) | 1sec   |
+| kick          | Kick a user.                     |none              | <@user> \<reason>        | 1sec   |
 
 
 ## Configuration
