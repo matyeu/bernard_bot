@@ -128,3 +128,15 @@ export function diffArr(A: any, B: any) {
         return B.indexOf(a) == -1
     })
 };
+
+export function msToTime(ms: any) {
+    let seconds = (ms / 1000).toFixed(1);
+    let minutes = (ms / (1000 * 60)).toFixed(1);
+    let hours = (ms / (1000 * 60 * 60)).toFixed(1);
+    let days = (ms / (1000 * 60 * 60 * 24)).toFixed(1);
+
+    if (parseInt(seconds) < 60) return seconds + " Sec";
+    else if (parseInt(minutes) < 60) return minutes + " Min";
+    else if (parseInt(hours) < 24) return hours + " Hrs";
+    else return days + " Days"
+}

@@ -39,6 +39,12 @@
 | suggestion    | Send a suggestion to the support server. | none           | none                  | 10secs |
 | bugreport     | Send a bug to the support server.        | none           | none                  | 10secs |
 
+### Moderation
+
+| Name          | Description                      | Sub-commands     | Usage                    | Cd     |
+| ------------- | -------------------------------- | ---------------- | ------------------------ | ------ |
+| ban           | Ban or unban a user.             |none              | <@user> \<reason> (time) | 10secs |
+
 
 ## Configuration
 

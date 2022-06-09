@@ -56,6 +56,9 @@ let Guild = model("Guild", new Schema({
         informations: Boolean,
         tickets: Boolean
     },
+    stats: {
+        sanctionsCase: Number
+    },
     support: Number,
     recruitment: Number
 }));
@@ -74,7 +77,7 @@ export const def = {
             support: "",
             recruiting: "",
             sanction: "",
-            punlic: "",
+            public: "",
             members: "",
         },
         home: "",
@@ -112,6 +115,9 @@ export const def = {
         antibot: false,
         informations: false,
         tickets: false,
+    },
+    stats: {
+        sanctionsCase: 0
     },
     support: 0,
     recruitment: 0
