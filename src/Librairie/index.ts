@@ -12,6 +12,7 @@ import * as fs from "fs";
 import {EMBED_GENERAL, EMOJIS} from "../config";
 import {edit as editGuild, find as findGuild} from "../Models/guild";
 import {findAll as findAllBan} from "../Models/bans";
+import {findAll as findAllMute} from "../Models/mutes";
 
 const Logger = require("./logger");
 
@@ -47,18 +48,18 @@ export class BernardClient extends Client {
     }
 
     async getChannel(guild: Guild, snowflake: Snowflake, messageData: MessageOptions) {
-        if(snowflake) {
+        if (snowflake) {
             let channel = <TextChannel>guild.channels.cache.get(snowflake);
-            if(channel) {
+            if (channel) {
                 await channel.send(messageData);
             }
         }
     }
 
     async getClientChannel(client: BernardClient, snowflake: Snowflake, messageData: MessageOptions) {
-        if(snowflake) {
+        if (snowflake) {
             let channel = <TextChannel>client.channels.cache.get(snowflake);
-            if(channel) {
+            if (channel) {
                 await channel.send(messageData);
             }
         }
@@ -68,8 +69,11 @@ export class BernardClient extends Client {
 declare module "discord.js" {
     interface CommandInteraction {
         replySuccessMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+
         replyErrorMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+
         editSuccessMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+
         editErrorMessage(client: BernardClient, content: string, ephemeral: boolean): any;
     }
 }
@@ -147,37 +151,46 @@ export function msToTime(ms: any) {
 
 export async function getSanction(client: BernardClient, guild: Guild, member: GuildMember, action: string) {
     let guildConfig: any = await findGuild(guild.id);
-    let banConfigs: any = await findAllBan(guild.id);
+    let banConfigs: any = await findAllBan(member.id);
+    let muteConfigs: any = await findAllMute(member.id);
 
     let getSanction;
 
-    if (action === "unban") getSanction = banConfigs;
-    else if (action === "unmute") getSanction = banConfigs;
-
-    //if (getSanction.length < 1) return Logger.client(`Update of the sanctions done (0 member ${action})`);
-    if (getSanction.length < 1) return
+    if (action === "unban") {
+        if (banConfigs.length < 1) return Logger.client(`Update of the sanctions done (0 member unban)`);
+        getSanction = banConfigs;
+    } else if (action === "unmute") {
+        if (muteConfigs.length < 1) return Logger.client(`Update of the sanctions done (0 member unmute)`);
+        getSanction = muteConfigs;
+    }
 
     guildConfig.stats.sanctionsCase++;
     await editGuild(guild.id, guildConfig);
 
     getSanction.forEach(async (sanctionConfig: any) => {
-        let embedMod = new MessageEmbed()
-            .setColor(EMBED_GENERAL)
-            .setAuthor({name: `${client.user?.tag}`, iconURL: client.user?.displayAvatarURL({dynamic: true})})
-            .setDescription(`
+        let timeSanction = sanctionConfig.time;
+        let dateSanction = sanctionConfig.date;
+
+        if (dateSanction !== 0 && timeSanction - (Date.now() - dateSanction) <= 0) {
+            let embedMod = new MessageEmbed()
+                .setColor(EMBED_GENERAL)
+                .setAuthor({name: `${client.user?.tag}`, iconURL: client.user?.displayAvatarURL({dynamic: true})})
+                .setDescription(`
 **Member:** \`${member.user.tag}\` (${member.id})
 **Action:** ${action}
 **Reason:** Automatic ${action}
 **Reference:** [#${sanctionConfig.case}](https://discord.com/channels/${guild.id}/${guildConfig.channels.logs.public}/${sanctionConfig.reference})`)
-            .setTimestamp()
-            .setFooter({text: `Case ${guildConfig.stats.sanctionsCase}`})
+                .setTimestamp()
+                .setFooter({text: `Case ${guildConfig.stats.sanctionsCase}`})
 
-        if (action === "unban") await guild!.bans.remove(sanctionConfig.memberBan, `Automatic unban`);
+            if (action === "unban") await guild!.bans.remove(sanctionConfig.memberBan, `Automatic unban`);
 
-        await client.getChannel(guild, guildConfig.channels.logs.public, {embeds: [embedMod]});
+            await client.getChannel(guild, guildConfig.channels.logs.public, {embeds: [embedMod]});
 
-        sanctionConfig.delete().then(Logger.client(`Update of the sanction done (${member.user.tag} ${action})`));
+            sanctionConfig.delete().then(Logger.client(`Update of the sanction done (${member.user.tag} ${action})`));
+        }
 
     });
+
 
 }

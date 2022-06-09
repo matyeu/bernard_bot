@@ -48,6 +48,7 @@ export default async function (client: BernardClient) {
 
             setInterval(async () => {
                 await getSanction(client, guild, member, "unban")
+                await getSanction(client, guild, member, "unmute")
             }, 1.8e+6);
 
         }
