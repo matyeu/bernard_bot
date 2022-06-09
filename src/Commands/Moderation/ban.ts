@@ -24,7 +24,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
     const memberStaff = interaction.guild?.members.cache.get(interaction.user.id)!;
 
     if (memberGuild && memberStaff.roles.highest.comparePositionTo(memberGuild.roles.highest) <= 0)
-        return interaction.replyErrorMessage(client, "You can't ban this user.", true);
+        return interaction.replyErrorMessage(client, "**You can't** ban this user.", true);
 
     let date = new Date().toLocaleString('en-US', {
         weekday: 'long',
