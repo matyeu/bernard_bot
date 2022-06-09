@@ -34,12 +34,6 @@ export default async function (client: BernardClient, newMember: GuildMember) {
     if (newMember.user.bot) return;
     await createMember(newMember.guild!.id, newMember.id);
 
-    let separatorCom = newMember.guild.roles.cache.find(separatorCom => separatorCom.id === `${guildConfig.roles.autorole.separatorCom}`);
-    let separatorTag = newMember.guild.roles.cache.find(separatorTag => separatorTag.id === `${guildConfig.roles.autorole.separatorTag}`);
-
-    if (separatorCom && separatorTag)
-        await newMember.roles.add([separatorCom, separatorTag], `${newMember.user.tag} joined the server`);
-
     const applyText = (canvas: { getContext: (arg0: string) => any; }, text: any, defaultFontSize: number) => {
         const ctx = canvas.getContext("2d");
         do {
