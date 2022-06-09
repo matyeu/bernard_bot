@@ -34,7 +34,7 @@
 
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
-| afk           | Put yourself in afk mode.                | none           | (value)               | 10secs |
+| afk           | Put yourself in afk mode.                | none           | (picture)             | 10secs |
 | avatar        | Displays a user's avatar.                | none           | <@user> (picture)     | 10secs |
 | suggestion    | Send a suggestion to the support server. | none           | none                  | 10secs |
 | bugreport     | Send a bug to the support server.        | none           | none                  | 10secs |
