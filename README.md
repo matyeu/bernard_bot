@@ -45,7 +45,7 @@
 | ------------- | -------------------------------- | ---------------- | ------------------------ | ------ |
 | ban           | Ban or unban a user.             |none              | <@user> \<reason> (time) | 1sec   |
 | kick          | Kick a user.                     |none              | <@user> \<reason>        | 1sec   |
-| mute          | Mute a user.                     |none              | <@user> \<reason> (time) | 1sec   |
+| mute          | Mute or unmute a user.           |none              | <@user> \<reason> (time) | 1sec   |
 
 
 ## Configuration
