@@ -93,7 +93,7 @@ export default async function (client: BernardClient, oldMember: GuildMember) {
             • Created: <t:${parseInt(String(oldMember.user.createdTimestamp / 1000))}:f> (<t:${parseInt(String(oldMember.user.createdTimestamp / 1000))}:R> )
             • left: <t:${parseInt(String(Date.now() / 1000))}:f> (<t:${parseInt(String(Date.now() / 1000))}:R>)`)
         .setTimestamp()
-        .setFooter({text: 'User joined'})
+        .setFooter({text: 'User left'})
     await client.getChannel(<Guild>oldMember!.guild, guildConfig.channels.logs.members, {embeds: [embedLog]});
 
 
