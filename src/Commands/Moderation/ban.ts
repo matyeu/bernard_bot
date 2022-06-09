@@ -93,6 +93,7 @@ export const slash = {
         description: "Bans or Unban a user from the server.",
         category: "Moderation",
         permissions: ["BAN_MEMBERS"],
+        cooldown: 1,
         options: [
             {
                 name: "user",
