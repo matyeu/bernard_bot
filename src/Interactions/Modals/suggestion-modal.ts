@@ -3,7 +3,7 @@ import {MessageEmbed, ModalSubmitInteraction} from "discord.js";
 import {EMBED_GENERAL, EMOJIS, FOOTER} from "../../config";
 import {find} from "../../Models/client";
 
-async function execute(client: BernardClient, interaction: ModalSubmitInteraction) {
+export default async function(client: BernardClient, interaction: ModalSubmitInteraction) {
 
     let titleSuggestion = interaction.fields.getTextInputValue('titleSuggestion');
     let descriptionSuggestion = interaction.fields.getTextInputValue('descriptionSuggestion');
@@ -38,7 +38,6 @@ async function execute(client: BernardClient, interaction: ModalSubmitInteractio
     await msg.react(EMOJIS.thread)
 
 };
-exports.execute = execute;
 exports.modal = {
     data: {
         name: "suggestion",

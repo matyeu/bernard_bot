@@ -6,7 +6,7 @@ import {EMBED_GENERAL, EMOJIS, FOOTER} from "../../config";
 const {MessageEmbed} = require("discord.js");
 const {EMBED_VALIDER} = require("../../config");
 
-async function execute(client: BernardClient, interaction: ModalSubmitInteraction) {
+export default async function (client: BernardClient, interaction: ModalSubmitInteraction) {
 
     let titleBug = interaction.fields.getTextInputValue('titleBug');
     let descriptionBug = interaction.fields.getTextInputValue('descriptionBug');
@@ -42,7 +42,6 @@ async function execute(client: BernardClient, interaction: ModalSubmitInteractio
 
 
 };
-exports.execute = execute;
 exports.modal = {
     data: {
         name: "bugReport",

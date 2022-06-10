@@ -72,7 +72,7 @@ export default async function (client: BernardClient, interaction: Interaction) 
         try {
             const modal = client.modals.get(interaction.customId.split(':')[0]);
             Logger.client(`The ${interaction.customId} modal was used by ${interaction.user.tag} on the ${interaction.guild?.name} server.`);
-            await modal.execute(client, interaction);
+            await modal.default(client, interaction);
         } catch (err) {
             console.error(err)
         }
