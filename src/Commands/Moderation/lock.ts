@@ -36,6 +36,7 @@ export const slash = {
         name: "lock",
         description: "Lock or unlock a channel.",
         category: "Moderation",
+        cooldown: 1,
         options: [
             {
                 name: "state",
