@@ -44,8 +44,10 @@
 | Name          | Description                      | Sub-commands     | Usage                    | Cd     |
 | ------------- | -------------------------------- | ---------------- | ------------------------ | ------ |
 | ban           | Ban or unban a user.             |none              | <@user> \<reason> (time) | 1sec   |
-| kick          | Kick a user.                     |none              | <@user> \<reason>        | 1sec   |
+| Lock          | Lock or unlock a channel.        |none              | <\state>                 | 1sec   |
 | mute          | Mute or unmute a user.           |none              | <@user> \<reason> (time) | 1sec   |
+| kick          | Kick a user.                     |none              | <@user> \<reason>        | 1sec   |
+
 
 
 ## Configuration
