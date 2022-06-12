@@ -18,6 +18,8 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
     const memberStaff = interaction.guild?.members.cache.get(interaction.user.id)!;
 
+    if (!memberMute) return interaction.replyErrorMessage(client, "This user does **not exist** or **cannot be found**.", true);
+
     if (memberStaff.roles.highest.comparePositionTo(memberMute.roles.highest) <= 0)
         return interaction.replyErrorMessage(client, "**You can't** mute this user.", true);
 
