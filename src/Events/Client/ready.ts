@@ -13,7 +13,6 @@ export default async function (client: BernardClient) {
     Logger.client(`- Connected as "${client.user!.tag}"`);
     Logger.client(`- For ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b)} users, for ${client.channels.cache.size} channels, for ${client.guilds.cache.size} servers discord !`);
 
-    let startTime = Date.now();
     const connectDB = await mongoose.connect(process.env.DBCONNECTION!, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -25,8 +24,7 @@ export default async function (client: BernardClient) {
         socketTimeoutMS: 45000,
         family: 4
     }).then(() => {
-        let finishTime = Date.now();
-        Logger.client(`- Connected to the database ${startTime - finishTime} ms`);
+        Logger.client(`- Connected to the database`);
     }).catch(err => {
         Logger.error("Connection failed. Try reconnecting in 5 seconds...");
         setTimeout(() => connectDB, 5000);
