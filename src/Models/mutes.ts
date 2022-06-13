@@ -40,7 +40,7 @@ export async function find(id: Snowflake, memberMute: Snowflake) {
 };
 
 export async function findAll(id: Snowflake) {
-    let mute = await Mutes.find({memberMute: id});
+    let mute = await Mutes.find({guildID: id});
     return mute;
 }
 

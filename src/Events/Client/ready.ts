@@ -43,13 +43,12 @@ export default async function (client: BernardClient) {
         for (let member of guild.members.cache.map(member => member)) {
             if (member.user.bot) continue;
             await updateMember(guild.id, member.user.id);
-
-            setInterval(async () => {
-                await getSanction(client, guild, member, "unban")
-                await getSanction(client, guild, member, "unmute")
-            }, 1.8e+6);
-
         }
+
+        setInterval(async () => {
+            await getSanction(client, guild, "unban")
+            await getSanction(client, guild, "unmute")
+        }, 1.8e+6);
 
         if (guild.id === SERVER.id) {
             await import("../../Modules/informations").then(exports => exports.default(client, guild));

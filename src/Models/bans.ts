@@ -40,7 +40,7 @@ export async function find(id: Snowflake, memberBan: Snowflake) {
 };
 
 export async function findAll(id: Snowflake) {
-    let ban = await Bans.find({memberBan: id});
+    let ban = await Bans.find({guildID: id});
     return ban;
 }
 

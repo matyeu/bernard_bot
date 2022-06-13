@@ -149,10 +149,10 @@ export function msToTime(ms: any) {
     else return days + " Days"
 };
 
-export async function getSanction(client: BernardClient, guild: Guild, member: GuildMember, action: string) {
+export async function getSanction(client: BernardClient, guild: Guild, action: string) {
     let guildConfig: any = await findGuild(guild.id);
-    let banConfigs: any = await findAllBan(member.id);
-    let muteConfigs: any = await findAllMute(member.id);
+    let banConfigs: any = await findAllBan(guild.id);
+    let muteConfigs: any = await findAllMute(guild.id);
 
     let getSanction;
 
@@ -170,13 +170,14 @@ export async function getSanction(client: BernardClient, guild: Guild, member: G
     getSanction.forEach(async (sanctionConfig: any) => {
         let timeSanction = sanctionConfig.time;
         let dateSanction = sanctionConfig.date;
+        let memnberSanction = await client.users.fetch(sanctionConfig.memberBan ? sanctionConfig.memberBan : sanctionConfig.memberMute)!;
 
         if (dateSanction !== 0 && timeSanction - (Date.now() - dateSanction) <= 0) {
             let embedMod = new MessageEmbed()
                 .setColor(EMBED_GENERAL)
                 .setAuthor({name: `${client.user?.tag}`, iconURL: client.user?.displayAvatarURL({dynamic: true})})
                 .setDescription(`
-**Member:** \`${member.user.tag}\` (${member.id})
+**Member:** \`${memnberSanction.tag}\` (${memnberSanction.id})
 **Action:** ${action}
 **Reason:** Automatic ${action}
 **Reference:** [#${sanctionConfig.case}](https://discord.com/channels/${guild.id}/${guildConfig.channels.logs.public}/${sanctionConfig.reference})`)
@@ -187,7 +188,7 @@ export async function getSanction(client: BernardClient, guild: Guild, member: G
 
             await client.getChannel(guild, guildConfig.channels.logs.public, {embeds: [embedMod]});
 
-            sanctionConfig.delete().then(Logger.client(`Update of the sanction done (${member.user.tag} ${action})`));
+            sanctionConfig.delete().then(Logger.client(`Update of the sanction done (${memnberSanction.tag} ${action})`));
         }
 
     });
