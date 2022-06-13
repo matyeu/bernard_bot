@@ -101,11 +101,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
         let CHOICE_RPS = ['ROCK', 'PAPER', 'SCISSORS'];
         let choiceBot = CHOICE_RPS[Math.floor(Math.random() * CHOICE_RPS.length)].toLowerCase();
-
-        let choiceUser = "";
-        if (inter.customId.startsWith('rock')) choiceUser = inter.customId.substring(4, 0).toLowerCase();
-        if (inter.customId.startsWith('paper')) choiceUser = inter.customId.substring(5, 0).toLowerCase();
-        if (inter.customId.startsWith('scissors')) choiceUser = inter.customId.substring(8, 0).toLowerCase();
+        let choiceUser = inter.customId.split(':')[0];
 
         // equality
         if (choiceUser === choiceBot) {
