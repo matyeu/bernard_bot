@@ -48,7 +48,7 @@
 | lock          | Lock or unlock a channel.        |none              | <\state>                 | 1sec   |
 | mute          | Mute or unmute a user.           |none              | <@user> \<reason> (time) | 1sec   |
 | peace         | Lock a channel for 1 minute.     |none              | none                     | 1sec   |
-| warn          | Warn or unwarn a user.           |user, server      | <\action> (value)        | 1sec   |
+| warn          | Warn or unwarn a user.           |user, server      | \<action> (value)        | 1sec   |
 
 
 
