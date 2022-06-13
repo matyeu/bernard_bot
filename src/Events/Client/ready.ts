@@ -1,12 +1,10 @@
 import {BernardClient, getSanction} from "../../Librairie";
 import mongoose from "mongoose";
 import {find as findClient} from "../../Models/client";
-import {update as updateGuild, find as findGuild} from "../../Models/guild";
+import {update as updateGuild} from "../../Models/guild";
 import {update as updateMember} from "../../Models/members";
-import {findAll as findAllBan} from "../../Models/bans";
 import chalk from "chalk";
-import {MessageEmbed} from "discord.js";
-import {SERVER, EMBED_GENERAL} from "../../config";
+import {SERVER} from "../../config";
 
 const Logger = require("../../Librairie/logger");
 
@@ -15,6 +13,7 @@ export default async function (client: BernardClient) {
     Logger.client(`- Connected as "${client.user!.tag}"`);
     Logger.client(`- For ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b)} users, for ${client.channels.cache.size} channels, for ${client.guilds.cache.size} servers discord !`);
 
+    let startTime = Date.now();
     const connectDB = await mongoose.connect(process.env.DBCONNECTION!, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -26,7 +25,8 @@ export default async function (client: BernardClient) {
         socketTimeoutMS: 45000,
         family: 4
     }).then(() => {
-        Logger.client(`- Connected to the database`)
+        let finishTime = Date.now();
+        Logger.client(`- Connected to the database ${startTime - finishTime} ms`);
     }).catch(err => {
         Logger.error("Connection failed. Try reconnecting in 5 seconds...");
         setTimeout(() => connectDB, 5000);
