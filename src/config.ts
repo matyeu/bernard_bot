@@ -10,6 +10,7 @@ export const EMBED_CLOSE = "#d4d221";
 
 export const FOOTER = "Bernard - All rights reserved";
 export const FOOTER_MODERATION = "Bernard - Modération";
+export const FOOTER_CASINO = "Bernard - Casino";
 export const FOOTER_LOG = "Bernard - Logs";
 export const FOOTER_TICKET = "Bernard - Tickets";
 

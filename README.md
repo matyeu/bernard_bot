@@ -39,6 +39,11 @@
 | suggestion    | Send a suggestion to the support server. | none           | none                  | 10secs |
 | bugreport     | Send a bug to the support server.        | none           | none                  | 10secs |
 
+### Casino
+| Name          | Description                              | Sub-commands   | Usage                 | Cd     |
+| ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
+| rps           | Allows you to play rps.                  | none           | none                  | 10secs |
+
 ### Moderation
 
 | Name          | Description                      | Sub-commands     | Usage                    | Cd     |
