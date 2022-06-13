@@ -1,5 +1,5 @@
 export const CREATOR_ID = "916444775861850175";
-export const GITHUB = "https://github.com/matyeu/bernard";
+export const LINK_GITHUB = "https://github.com/matyeu/bernard";
 export const LINK_DISCORD = "https://discord.gg/xNSKAkrPUg"
 
 export const EMBED_GENERAL = "#2f3136";
