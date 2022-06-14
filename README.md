@@ -41,6 +41,12 @@
 | suggestion    | Send a suggestion to the support server. | none           | none                  | 10secs |
 | bugreport     | Send a bug to the support server.        | none           | none                  | 10secs |
 
+### Fun
+
+| Name          | Description                              | Sub-commands   | Usage                 | Cd     |
+| ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
+| morpion       | Allows you to play morpion.                | none         | none                  | 10secs |
+
 ### Casino
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
