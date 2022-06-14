@@ -2,7 +2,7 @@ import {BernardClient} from "../../../Librairie";
 import {ButtonInteraction, MessageEmbed} from "discord.js";
 import {find as findGuild, edit as editGuild} from "../../../Models/guild";
 import {find as findBan} from "../../../Models/bans";
-import {EMBED_SUCCESS} from "../../../config";
+import {EMBED_SUCCESS, EMOJIS} from "../../../config";
 
 export default async function (client: BernardClient, interaction: ButtonInteraction) {
 
@@ -10,6 +10,15 @@ export default async function (client: BernardClient, interaction: ButtonInterac
     let memberUnbanId = interaction.customId.split(':')[1];
     let memberUnban = await client.users.fetch(memberUnbanId);
     let banConfig: any = await findBan(interaction.guild!.id, memberUnbanId);
+
+    let error = client.getEmoji(EMOJIS.error);
+    if (!banConfig) return interaction.reply({
+        content: `${error} | The data for this ban was **not found**!`,
+        ephemeral: true
+    })
+
+    if (banConfig.memberStaff !== interaction.user.id)
+        return interaction.reply({content: `${error} | **You are not** responsible for this unban!`, ephemeral: true});
 
     let memberStaff = await interaction.guild!.members.fetch(interaction.user.id);
     await interaction.update({components: []});

@@ -70,7 +70,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             await memberBan.send({embeds: [embedUser]});
         } catch (err: any) {
             if (err.message.match("Cannot send messages to this user"))
-                return Logger.warn(`Mat blocks his private messages, so he did not receive the reason for his ban.`);
+                return Logger.warn(`${memberBan.tag} blocks his private messages, so he did not receive the reason for his ban.`);
 
             return Logger.error(err);
         }

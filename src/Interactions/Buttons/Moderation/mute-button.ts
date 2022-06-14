@@ -69,7 +69,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             await memberMute.send({embeds: [embedUser]});
         } catch (err: any) {
             if (err.message.match("Cannot send messages to this user"))
-                return Logger.warn(`Mat blocks his private messages, so he did not receive the reason for his mute.`);
+                return Logger.warn(`${memberMute.tag} blocks his private messages, so he did not receive the reason for his mute.`);
 
             return Logger.error(err);
         }

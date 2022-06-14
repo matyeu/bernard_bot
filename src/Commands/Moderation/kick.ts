@@ -112,7 +112,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 await memberKick.send({embeds: [embedUser]});
             } catch (err: any) {
                 if (err.message.match("Cannot send messages to this user"))
-                    return Logger.warn(`Mat blocks his private messages, so he did not receive the reason for his kick.`);
+                    return Logger.warn(`${memberKick.user.tag} blocks his private messages, so he did not receive the reason for his kick.`);
 
                 return Logger.error(err);
             }
