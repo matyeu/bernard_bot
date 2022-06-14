@@ -1,6 +1,6 @@
 import {BernardClient} from "../../../Librairie";
 import {ButtonInteraction, MessageEmbed} from "discord.js";
-import {find as findGuild} from "../../../Models/guild";
+import {edit as editGuild, find as findGuild} from "../../../Models/guild";
 import {findOne as findOneWarn} from "../../../Models/warns";
 import {EMBED_INFO, EMBED_SUCCESS, EMOJIS, FOOTER_MODERATION} from "../../../config";
 
@@ -25,6 +25,9 @@ export default async function (client: BernardClient, interaction: ButtonInterac
     let memberStaff = await interaction.guild!.members.fetch(interaction.user.id);
     await interaction.update({components: []});
 
+    guildConfig.stats.sanctionsCase++;
+    await editGuild(interaction.guild!.id, guildConfig)
+
     let embedMod = new MessageEmbed()
         .setColor(EMBED_SUCCESS)
         .setAuthor({
@@ -37,7 +40,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 **Reason:** ${warnConfig.reason}
 **Reference:** [#${warnConfig.id}](https://discord.com/channels/${interaction.guild!.id}/${guildConfig.channels.logs.public}/${warnConfig.reference})`)
         .setTimestamp()
-        .setFooter({text: `Case ${warnConfig.id}`})
+        .setFooter({text: `Case ${guildConfig.stats.sanctionsCase}`})
 
     try {
         let embedUser = new MessageEmbed()
@@ -52,7 +55,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
         await memberWarn.send({embeds: [embedUser]});
     } catch (err: any) {
         if (err.message.match("Cannot send messages to this user"))
-            return Logger.warn(`Mat blocks his private messages, so he did not receive the reason for his unwarn.`);
+            return Logger.warn(`${memberWarn.user.tag} blocks his private messages, so he did not receive the reason for his unwarn.`);
 
         return Logger.error(err);
     }
