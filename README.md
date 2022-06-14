@@ -21,6 +21,7 @@
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
 | antibot       | Allow or Deny the addition of bot.       | none           | none                  | 10secs |
+| balance       | Add or remove money from account.        | add, remove    | \<action> \<value>    | 5secs  |
 
 ### Informations
 
