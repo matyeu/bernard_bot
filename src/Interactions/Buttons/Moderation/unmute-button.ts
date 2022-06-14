@@ -76,7 +76,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
         }
     }
 
-    return memberGuild.timeout(null, 'Unmute').catch((err) => Logger.error(err));
+    return memberGuild.timeout(null, 'Unmute').catch((err) => Logger.error(err)).then(async () => {await muteConfig.delete()});
 
 };
 
