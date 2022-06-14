@@ -43,7 +43,8 @@
 ### Casino
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
-| rps           | Allows you to play rps.                  | none           | none                  | 10secs |
+| crash         | Allows you to play crash.                | none           | \<bet>                | 10secs |
+| rps           | Allows you to play rps.                  | none           | \<bet>                | 10secs |
 
 ### Moderation
 
