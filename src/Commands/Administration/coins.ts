@@ -36,7 +36,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
 export const slash = {
     data: {
-        name: "balance",
+        name: "coins",
         description: "Add or remove money from account.",
         category: "Administration",
         cooldown: 5,
