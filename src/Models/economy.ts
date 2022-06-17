@@ -4,7 +4,7 @@ import {createMissingProperties} from "../Librairie";
 
 const Logger = require("../Librairie/logger");
 
-let Casino = model("Casino", new Schema({
+let Economy = model("Economy", new Schema({
     guildID: String,
     userID: String,
     money: Number,
@@ -17,14 +17,14 @@ export const def = {
 };
 
 export async function create(guildID: Snowflake, userID: Snowflake) {
-    let member = new Casino(createMissingProperties(def, {guildID, userID}));
+    let member = new Economy(createMissingProperties(def, {guildID, userID}));
     await member.save();
-    Logger.client("Creating a user in casino in the database");
+    Logger.client("Creating a user in economy in the database");
     return member;
 };
 
 export async function find(guildID: Snowflake, userID: Snowflake) {
-    let member = await Casino.findOne({guildID, userID});
+    let member = await Economy.findOne({guildID, userID});
     if(!member) {
         member = await create(guildID, userID);
     }
@@ -33,8 +33,8 @@ export async function find(guildID: Snowflake, userID: Snowflake) {
 
 export async function edit(guildID: Snowflake, userID: Snowflake, data: object) {
     await find(guildID, userID);
-    let member = await Casino.findOneAndUpdate({guildID, userID}, data, {new:true});
-    Logger.client("Updating a user in the casino in the database");
+    let member = await Economy.findOneAndUpdate({guildID, userID}, data, {new:true});
+    Logger.client("Updating a user in the economy in the database");
     return await member!.save();
 };
 
@@ -44,4 +44,4 @@ export async function update(guildID: Snowflake, userID: Snowflake) {
     return edit(guildID, userID, data);
 };
 
-export default Casino;
+export default Economy;

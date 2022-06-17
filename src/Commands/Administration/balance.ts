@@ -1,6 +1,6 @@
 import {BernardClient} from "../../Librairie";
 import {CommandInteraction, MessageEmbed} from "discord.js";
-import {find, edit} from "../../Models/casino";
+import {find, edit} from "../../Models/economy";
 import {EMBED_ERROR, EMBED_SUCCESS, FOOTER} from "../../config";
 
 export default async function (client: BernardClient, interaction: CommandInteraction) {
