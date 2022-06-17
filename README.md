@@ -51,7 +51,6 @@
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
 | start         | Allows you to start the RPG adventure.   | none           | \<username>           | 10secs |
-| rps           | Allows you to play rps.                  | none           | \<bet>                | 10secs |
 
 ### Casino
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
