@@ -8,12 +8,14 @@ let Economy = model("Economy", new Schema({
     guildID: String,
     userID: String,
     money: Number,
+    bank: Number,
 }));
 
 export const def = {
     guildID: "",
     userID: "",
     money: 0,
+    bank: 0,
 };
 
 export async function create(guildID: Snowflake, userID: Snowflake) {

@@ -55,7 +55,8 @@ let Guild = model("Guild", new Schema({
         tickets: Boolean
     },
     stats: {
-        sanctionsCase: Number
+        sanctionsCase: Number,
+        uui: Number,
     },
     support: Number,
     recruitment: Number
@@ -113,7 +114,8 @@ export const def = {
         tickets: false,
     },
     stats: {
-        sanctionsCase: 0
+        sanctionsCase: 0,
+        uui: 0,
     },
     support: 0,
     recruitment: 0

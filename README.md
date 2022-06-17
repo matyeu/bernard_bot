@@ -21,7 +21,7 @@
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
 | antibot       | Allow or Deny the addition of bot.       | none           | none                  | 10secs |
-| balance       | Add or remove money from account.        | add, remove    | \<action> \<value>    | 5secs  |
+| coins         | Add or remove money from account.        | add, remove    | \<action> \<value>    | 5secs  |
 
 ### Informations
 
@@ -38,14 +38,20 @@
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
 | afk           | Put yourself in afk mode.                | none           | (value)               | 10secs |
 | avatar        | Displays a user's avatar.                | none           | <@user> (picture)     | 10secs |
-| suggestion    | Send a suggestion to the support server. | none           | none                  | 10secs |
+| balance       | Show the balance of the user.            | none           | <@user>               | 10secs |
 | bugreport     | Send a bug to the support server.        | none           | none                  | 10secs |
-
+| suggestion    | Send a suggestion to the support server. | none           | none                  | 10secs |
 ### Fun
 
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
 | morpion       | Allows you to play morpion.                | none         | none                  | 10secs |
+
+### Roleplay
+| Name          | Description                              | Sub-commands   | Usage                 | Cd     |
+| ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
+| start         | Allows you to start the RPG adventure.   | none           | \<username>           | 10secs |
+| rps           | Allows you to play rps.                  | none           | \<bet>                | 10secs |
 
 ### Casino
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
