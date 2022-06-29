@@ -35,14 +35,6 @@ export const slash = {
         description: "Allows you to start the RPG adventure.",
         category: "Roleplay",
         permissions: ["SEND_MESSAGES"],
-        options: [
-            {
-                name: "username",
-                description: "The pseudo of the player you want to play with.",
-                type: "STRING",
-                required: true,
-            }
-        ],
         defaultPermission: false
     }
 }
