@@ -50,6 +50,7 @@
 ### Roleplay
 | Name          | Description                                               | Sub-commands   | Usage                 | Cd      |
 | ------------- | --------------------------------------------------------- | -------------- | --------------------- | ------- |
+| equipment     | Display your or a user's equipment.                       | none           | \<username>           | 10secs  |
 | farm          | The farm command allows you to fish, hunt, gather etc.    | none           | \<choice>             | 2m5secs |
 | start         | Allows you to start the RPG adventure.                    | none           | \<username>           | 10secs  |
 
