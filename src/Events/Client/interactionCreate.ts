@@ -1,6 +1,7 @@
 import {BernardClient} from "../../Librairie";
 import {Interaction} from "discord.js";
 import {EMOJIS, CREATOR_ID} from "../../config";
+import {find as findMember} from "../../Models/roleplay";
 
 const Logger = require("../../Librairie/logger");
 
@@ -14,12 +15,16 @@ export default async function (client: BernardClient, interaction: Interaction) 
             let command = client.slashCommands.get(interaction.commandName);
             if (!command) return interaction.replyErrorMessage(client, `The \`${interaction.commandName}\` command be found`, true);
 
-            if (command.slash.maintenance && interaction.user.id !== CREATOR_ID)
+            if (command.slash.data.maintenance && interaction.user.id !== CREATOR_ID)
                 return interaction.replyErrorMessage(client, `This order is under maintenance...`, true);
 
             //@ts-ignore
             if (!interaction.member.permissions.has([command.slash.data.permissions]))
                 return interaction.replyErrorMessage(client,  `**You don't have** the permission to use this command !`, true);
+
+            let memberConfig: any = await findMember(interaction.guild!.id, interaction.user!.id);
+            if (command.slash.data.roleplay && !memberConfig)
+                return interaction.replyErrorMessage(client, `**No RPG profile detected: \`/start\`**`, true);
 
             if (!client.cooldowns.has(interaction.commandName)) client.cooldowns.set(interaction.commandName, client.cooldowns);
 
