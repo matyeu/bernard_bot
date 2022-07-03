@@ -48,12 +48,12 @@
 | morpion       | Allows you to play morpion.                | none         | none                  | 10secs |
 
 ### Roleplay
-| Name          | Description                                               | Sub-commands   | Usage                 | Cd      |
-| ------------- | --------------------------------------------------------- | -------------- | --------------------- | ------- |
-| balance       | Displays the balance of a user.                           | none           | \<username>           | 10secs  |
-| equipment     | Display your or a user's equipment.                       | none           | \<username>           | 10secs  |
-| farm          | The farm command allows you to fish, hunt, gather etc.    | none           | \<choice>             | 2m5secs |
-| start         | Allows you to start the RPG adventure.                    | none           | \<username>           | 10secs  |
+| Name          | Description                                               | Sub-commands   | Usage                           | Cd      |
+| ------------- | --------------------------------------------------------- | -------------- | ------------------------------- | ------- |
+| balance       | Displays or add or remove the balance of a user.          | none           | \<action> (username) (montant)  | 10secs  |
+| equipment     | Display your or a user's equipment.                       | none           | \<username>                     | 10secs  |
+| farm          | The farm command allows you to fish, hunt, gather etc.    | none           | \<choice>                       | 2m5secs |
+| start         | Allows you to start the RPG adventure.                    | none           | \<username>                     | 10secs  |
 
 ### Casino
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
