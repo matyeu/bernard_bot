@@ -40,7 +40,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 salmon = client.getEmoji(EMOJIS.salmon),
                 cantaril = client.getEmoji(EMOJIS.cantaril);
 
-            let fish = new MessageAttachment('./Assets/Images/Roleplay/Farms/fish.png');
+            let fish = new MessageAttachment('./assets/Images/Roleplay/Farms/fish.png');
             await interaction.reply({content: `${fishingRod} | You have started **fishing**...`});
 
             let salmonToAdd = Math.floor((Math.random() * 10) + 0);
@@ -86,7 +86,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 meat = client.getEmoji(EMOJIS.meat),
                 skin = client.getEmoji(EMOJIS.skin);
 
-            let arrowTh = new MessageAttachment('./Assets/Images/Roleplay/Farms/arrow.png');
+            let arrowTh = new MessageAttachment('./assets/Images/Roleplay/Farms/arrow.png');
             await interaction.reply({content: `${arc} | You started **hunting**...`});
 
             let meatToAdd = Math.floor((Math.random() * 10) + 0);
@@ -127,7 +127,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 return interaction.replyErrorMessage(client,
                     `**Thinking about picking with your bare hands (imagine getting stung...)? You need gloves to start picking !**`, true);
 
-            let mushroom = new MessageAttachment('./Assets/Images/Roleplay/Farms/mushroom.png')
+            let mushroom = new MessageAttachment('./assets/Images/Roleplay/Farms/mushroom.png')
             await interaction.reply({content: `🍄 | You have started to **pick**...`});
 
             let girolleToAdd = Math.floor((Math.random() * 10) + 0);
@@ -173,7 +173,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 wood = client.getEmoji(EMOJIS.wood),
                 chene = client.getEmoji(EMOJIS.chene);
 
-            let forest = new MessageAttachment('./Assets/Images/Roleplay/forest.png');
+            let forest = new MessageAttachment('./assets/Images/Roleplay/forest.png');
             await interaction.reply({content: `${axe} **| You have started to **cut**...`});
 
             let woodToAdd = Math.floor((Math.random() * 10) + 0);

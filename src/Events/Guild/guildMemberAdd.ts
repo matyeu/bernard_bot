@@ -7,8 +7,8 @@ import Canvas from "canvas";
 import {resolve} from "path";
 import stringCleaner from "@sindresorhus/slugify";
 
-Canvas.registerFont(resolve("./Assets/Fonts/theboldfont.ttf"), {family: "Bold"});
-Canvas.registerFont(resolve("./Assets/Fonts/SketchMatch.ttf"), {family: "SketchMatch"});
+Canvas.registerFont(resolve("./assets/Fonts/theboldfont.ttf"), {family: "Bold"});
+Canvas.registerFont(resolve("./assets/Fonts/SketchMatch.ttf"), {family: "SketchMatch"});
 
 const Logger = require("../../Librairie/logger");
 
@@ -44,7 +44,7 @@ export default async function (client: BernardClient, newMember: GuildMember) {
     };
     const canvas: any = Canvas.createCanvas(1024, 450);
     const context = canvas.getContext('2d');
-    const background = await Canvas.loadImage('./Assets/Images/welcome.png');
+    const background = await Canvas.loadImage('./assets/Images/welcome.png');
     context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     context.fillStyle = "#ffffff";
