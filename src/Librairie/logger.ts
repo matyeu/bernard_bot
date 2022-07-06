@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import dayjs from 'dayjs'
 import fs from 'fs';
 
-const format = '{tstamp} {tag} {text}\n';
+const format = '{tstamp} {tag} - {text}\n';
 
 export function error(content: string) {
     write(content, 'black', 'bgRed', 'ERROR', true)

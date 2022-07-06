@@ -16,7 +16,7 @@ const loadCommands = async (client: BernardClient) => {
             let matches = commandFile.match(/([^\\\/:*?"<>|\r\n]+)\.\w*$/) ?? [];
             let commandName = matches[1];
             if (!commandName) return;
-            Logger.command(`- ${commandName}`)
+            Logger.command(`${commandName}`)
             if (exports.slash) client.slashCommands.set(exports.slash.data.name, exports);
             else client.messageCommands.set(commandName, exports);
         });
@@ -30,7 +30,7 @@ const loadEvents = async (client: BernardClient) => {
         let matches = eventFile.match(/([^\\\/:*?"<>|\r\n]+)\.\w*$/) ?? [];
         let eventName = matches[1];
         if (!eventName) continue;
-        Logger.event(`- ${eventName}`)
+        Logger.event(`${eventName}`)
         client.on(eventName, (...args) => import(eventFile).then(async listener => await listener.default(client, ...args)));
     }
 };
