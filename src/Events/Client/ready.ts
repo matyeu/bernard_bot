@@ -10,8 +10,8 @@ const Logger = require("../../Librairie/logger");
 
 export default async function (client: BernardClient) {
     console.log(chalk.grey('--------------------------------'));
-    Logger.client(`- Connected as "${client.user!.tag}"`);
-    Logger.client(`- For ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b)} users, for ${client.channels.cache.size} channels, for ${client.guilds.cache.size} servers discord !`);
+    Logger.client(`Connected as "${client.user!.tag}"`);
+    Logger.client(`For ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b)} users, for ${client.channels.cache.size} channels, for ${client.guilds.cache.size} servers discord !`);
 
     const connectDB = await mongoose.connect(process.env.DBCONNECTION!, {
         useNewUrlParser: true,
@@ -24,7 +24,7 @@ export default async function (client: BernardClient) {
         socketTimeoutMS: 45000,
         family: 4
     }).then(() => {
-        Logger.client(`- Connected to the database`);
+        Logger.client(`Connected to the database`);
     }).catch(err => {
         Logger.error("Connection failed. Try reconnecting in 5 seconds...");
         setTimeout(() => connectDB, 5000);
@@ -33,6 +33,7 @@ export default async function (client: BernardClient) {
 
     mongoose.Promise = global.Promise;
 
+    if (process.env.ENABLED === "ON") require("../../Librairie/dashboard")(client);
     console.log(chalk.grey('--------------------------------'));
 
     await findClient(SERVER.id);

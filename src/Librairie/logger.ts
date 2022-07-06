@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import dayjs from 'dayjs'
-import fs from 'fs';
 
 const format = '{tstamp} {tag} - {text}\n';
 
@@ -24,17 +23,12 @@ export function client(content: string) {
     write(content, 'black', 'bgBlue', 'CLIENT', false)
 }
 
-export function modules(content: string) {
-    write(content, 'black', 'bgWhite', 'MODULE', false)
+export function dashboard(content: string) {
+    write(content, 'black', 'bgCyan', 'DASHBOARD', false)
 }
 
-export function save(content: string) {
-    const timestamp = `[${dayjs().format('DD/MM/YYYY, HH:mm:ss')}]`;
-    fs.appendFile(`src/Logs/${process.env.MODE}.txt`, `\n${timestamp} ${content}`, function (err) {
-        if (err) throw err;
-        if (process.env.MODE == "developpement") {
-            write(`Une nouvelle ligne de log a été ajouté au fichier ${process.env.MODE}.txt`, 'black', 'bgCyan', 'DEV', false)
-        } ;})
+export function modules(content: string) {
+    write(content, 'black', 'bgWhite', 'MODULE', false)
 }
 
 function write(content: string, tagColor: string, bgTagColor: string, tag: string, error = false) {
