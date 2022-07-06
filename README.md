@@ -37,8 +37,8 @@
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
 | afk           | Put yourself in afk mode.                | none           | (value)               | 10secs |
-| avatar        | Displays a user's avatar.                | none           | <@user> (picture)     | 10secs |
-| balance       | Show the balance of the user.            | none           | <@user>               | 10secs |
+| avatar        | Displays a user's avatar.                | none           | \<user> (picture)     | 10secs |
+| balance       | Show the balance of the user.            | none           | \<user>               | 10secs |
 | bugreport     | Send a bug to the support server.        | none           | none                  | 10secs |
 | suggestion    | Send a suggestion to the support server. | none           | none                  | 10secs |
 ### Fun
@@ -65,15 +65,20 @@
 
 | Name          | Description                      | Sub-commands     | Usage                    | Cd     |
 | ------------- | -------------------------------- | ---------------- | ------------------------ | ------ |
-| ban           | Ban or unban a user.             |none              | <@user> \<reason> (time) | 1sec   |
-| kick          | Kick a user.                     |none              | <@user> \<reason>        | 1sec   |
+| ban           | Ban or unban a user.             |none              | \<user> \<reason> (time) | 1sec   |
+| kick          | Kick a user.                     |none              | \<user> \<reason>        | 1sec   |
 | lock          | Lock or unlock a channel.        |none              | <\state>                 | 1sec   |
-| mute          | Mute or unmute a user.           |none              | <@user> \<reason> (time) | 1sec   |
+| mute          | Mute or unmute a user.           |none              | \<user> \<reason> (time) | 1sec   |
 | peace         | Lock a channel for 1 minute.     |none              | none                     | 1sec   |
 | purge         | Delete messages.                 |messages, user    | \<action> (value)        | 1sec   |
 | warn          | Warn or unwarn a user.           |user, server      | \<action> (value)        | 1sec   |
 
 
+## A powerful Dashboard
+
+Bernard has its own dashboard which also offers many features! The dashboard runs with Express and EJS!
+
+*Coming soon... 👀*
 
 ## Configuration
 
@@ -99,7 +104,6 @@ This project has an MIT license. And you are welcome to contribue. To contribute
 
 ## Useful links
 
-Here are some useful links:
 * [Bot invitation link](https://discord.com/api/oauth2/authorize?client_id=983074050010144819&permissions=8&scope=bot%20applications.commands)
 * [Discord invitation link](https://discord.gg/xNSKAkrPUg)
 
