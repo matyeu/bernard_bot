@@ -1,6 +1,6 @@
 import {CommandInteraction, MessageEmbed} from "discord.js";
 import {BernardClient} from "../../Librairie";
-import {CREATOR_ID, EMBED_GENERAL, EMOJIS, FOOTER, LINK_GITHUB} from "../../config";
+import {CREATOR_ID, EMBED_GENERAL, EMOJIS, FOOTER, LINK_GITHUB_BOT, LINK_GITHUB_SITE} from "../../config";
 import moment from "moment";
 
 export default async function (client: BernardClient, interaction: CommandInteraction) {
@@ -116,7 +116,8 @@ ${customStatus ? `**Custom Description:** ${customStatus}` : ""}
 **» Librairie / Environment:** [Discord.js v13](https://discord.js.org/#/docs/main/stable/general/welcome) | [Node.js v16.11.0](https://nodejs.org/fr/)
 **» Database:** [Mongoose](https://mongodb.com)
 **» Emojis:** [Favicon](https://www.flaticon.com/search?word=coeur)
-**» Github:** [Bernard](${LINK_GITHUB})
+**» Github Bot:** [Bernard Bot](${LINK_GITHUB_BOT})
+**» Github Site:** [Bernard Site](${LINK_GITHUB_SITE})
 **» Host:** ubuntu \`21.04\`
            
            **Developed with ${heart} by \`${author}\`**

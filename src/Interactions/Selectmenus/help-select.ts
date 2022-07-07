@@ -1,6 +1,6 @@
 import {BernardClient} from "../../Librairie";
 import {MessageEmbed, SelectMenuInteraction} from "discord.js";
-import {EMBED_GENERAL, FOOTER, LINK_DISCORD, LINK_GITHUB} from "../../config";
+import {EMBED_GENERAL, FOOTER, LINK_DISCORD, LINK_GITHUB_BOT, LINK_GITHUB_SITE} from "../../config";
 import {readdirSync} from "fs";
 
 export default async function (client: BernardClient, interaction: SelectMenuInteraction) {
@@ -27,7 +27,8 @@ export default async function (client: BernardClient, interaction: SelectMenuInt
             case 'link':
                 embed.setDescription(`
 **• Link support :** ${LINK_DISCORD}
-**• Link github :** ${LINK_GITHUB}
+**• Link github bot :** ${LINK_GITHUB_BOT}
+**• Link github site :** ${LINK_GITHUB_SITE}
                 `)
                 break;
             default:

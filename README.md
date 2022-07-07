@@ -90,7 +90,8 @@ Bernard has its own dashboard which also offers many features! The dashboard run
 
 ## Développement
 
-* [Typescript]() - Typescript
+* [Typescript](#) - Typescript
+* [Ejs](#) - Ejs
 * [Discord.js](https://discord.js.org) - Discord.js
 * [Mongoose](https://mongodb.com) - Mongoose
 
@@ -104,6 +105,7 @@ This project has an MIT license. And you are welcome to contribue. To contribute
 
 ## Useful links
 
+* [Github of site](https://github.com/matyeu/bernard_site)
 * [Bot invitation link](https://discord.com/api/oauth2/authorize?client_id=983074050010144819&permissions=8&scope=bot%20applications.commands)
 * [Discord invitation link](https://discord.gg/xNSKAkrPUg)
 
