@@ -1,9 +1,9 @@
 import {BernardClient} from "../../Librairie";
 import {CommandInteraction, MessageEmbed} from "discord.js";
 import {find, edit} from "../../Models/guild";
-import {EMBED_ERROR, EMBED_SUCCESS, EMOJIS, FOOTER} from "../../config";
+import {EMBED_ERROR, EMBED_SUCCESS, FOOTER} from "../../config";
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let guildConfig: any = await find(interaction.guild!.id);
     let isActivated = guildConfig.modules.antibot;
@@ -14,7 +14,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
     const embed = new MessageEmbed()
         .setColor(isActivated ? EMBED_ERROR : EMBED_SUCCESS)
         .setTitle(`Antibot ${isActivated ? 'OFF' : 'ON'}`)
-        .setDescription(`If you want to make the anti bot **${isActivated ? "ON" : "OFF"}** retype the command`)
+        .setDescription(language("DESCRIPTION").replace('%state%', isActivated ? 'ON' : 'OFF'))
         .setTimestamp()
         .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})})
 
