@@ -2,7 +2,7 @@ import {BernardClient} from "../../Librairie";
 import {CommandInteraction, MessageEmbed} from "discord.js";
 import {EMBED_INFO, FOOTER, } from "../../config";
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     const start = Date.now();
     interaction.reply({content: "Pong !"}).then(() => {
@@ -15,10 +15,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
         const embed = new MessageEmbed()
             .setColor(EMBED_INFO)
-            .setTitle(`🏓 | Response times`)
+            .setTitle(language("TITLE"))
             .addFields(
-                {name: `Bot latency`, value: botLatency, inline: true},
-                {name: `Latency of the api`, value: apiLatency, inline: true},
+                {name: language("BOT_LATENCY"), value: botLatency, inline: true},
+                {name: language("API_LATENCY"), value: apiLatency, inline: true},
             )
             .setTimestamp()
             .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})});

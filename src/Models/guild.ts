@@ -58,6 +58,7 @@ let Guild = model("Guild", new Schema({
         sanctionsCase: Number,
         uui: Number,
     },
+    language: String,
     support: Number,
     recruitment: Number
 }));
@@ -117,6 +118,7 @@ export const def = {
         sanctionsCase: 0,
         uui: 0,
     },
+    language: "en-US",
     support: 0,
     recruitment: 0
 };

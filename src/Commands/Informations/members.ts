@@ -2,7 +2,7 @@ import {MessageEmbed, CommandInteraction} from "discord.js";
 import {EMOJIS, FOOTER, EMBED_GENERAL} from "../../config";
 import {BernardClient} from "../../Librairie";
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let onlineMembers: number = 0;
     let offlineMembers: number = 0;
@@ -29,28 +29,28 @@ export default async function (client: BernardClient, interaction: CommandIntera
     );
     const embed = new MessageEmbed()
         .setColor(EMBED_GENERAL)
-        .setTitle(`Status of the server members: [${interaction.guild?.members.cache.size}] members`)
+        .setTitle(language("TITLE").replace('%total%', interaction.guild?.members.cache.size))
         .setThumbnail(<string>interaction.guild?.iconURL({dynamic: true}))
         .addFields(
             {
-                name: `${online} **Online** `,
-                value: `\`${onlineMembers}\` members`,
+                name: `${online} ${language("ONLINE")}`,
+                value: language("TOTAL_MEMBERS").replace('%total%', onlineMembers),
                 inline: true
             },
 
             {
-                name: `${dnd} **Dnd**: `,
-                value: `\`${dndMembers}\` members`,
+                name: `${dnd} ${language("DND")}`,
+                value: language("TOTAL_MEMBERS").replace('%total%', dndMembers),
                 inline: true
             },
             {
-                name: `${afk} **Afk**: `,
-                value: "\`" + afkMembers + "\` members",
+                name: `${afk} ${language("AFK")}`,
+                value: language("TOTAL_MEMBERS").replace('%total%', afkMembers),
                 inline: true
             },
             {
-                name: `${offline} **Offline**: `,
-                value: "\`" + offlineMembers + "\` members",
+                name: `${offline} ${language("OFFLINE")}`,
+                value: language("TOTAL_MEMBERS").replace('%total%', offlineMembers),
                 inline: true
             },
         )

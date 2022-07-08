@@ -3,7 +3,7 @@ import {BernardClient} from "../../Librairie";
 import {CREATOR_ID, EMBED_GENERAL, EMOJIS, FOOTER, LINK_GITHUB_BOT, LINK_GITHUB_SITE} from "../../config";
 import moment from "moment";
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     switch (interaction.options.getSubcommand()) {
         case 'user':
@@ -11,30 +11,30 @@ export default async function (client: BernardClient, interaction: CommandIntera
             const argUser = memberOption!.replace("<@!", "").replace(">", "");
             const member = await interaction.guild?.members.cache.get(argUser.replace(/ /g,""));
 
-            if (!member) return interaction.replyErrorMessage(client, "The user is **not in the server**.", true);
+            if (!member) return interaction.replyErrorMessage(client, language("MEMBER_ERROR"), true);
 
             const userFlags = (await member.user.fetchFlags()).toArray();
             let statusFlags = {
-                online: "Online",
-                idle: "Idle",
-                dnd: "Do Not Disturb",
-                offline: "Offline",
+                online: language("ONLINE"),
+                idle: language("AFK"),
+                dnd: language("DND"),
+                offline: language("OFFLINE"),
             };
 
             let perkFlags = {
-                DISCORD_EMPLOYEE: "Discord Staff",
-                DISCORD_PARTNER: `Discord Partner`,
-                BUGHUNTER_LEVEL_1: `Bug hunter (Level 1)`,
-                BUGHUNTER_LEVEL_2: `Bug hunter (Level 2)`,
-                HYPESQUAD_EVENTS: `HypeSquad Events`,
-                HOUSE_BRAVERY: `House of Bravery`,
-                HOUSE_BRILLIANCE: `House of Brilliance`,
-                HOUSE_BALANCE: `House of Balance`,
-                EARLY_SUPPORTER: `Early support`,
-                TEAM_USER: 'Team user',
-                SYSTEM: 'System',
-                VERIFIED_BOT: `Certified Bot`,
-                VERIFIED_DEVELOPER: `Certified bot developer`,
+                DISCORD_EMPLOYEE: language("DISCORD_EMPLOYEE"),
+                DISCORD_PARTNER: language("DISCORD_PARTNER"),
+                BUGHUNTER_LEVEL_1: language("BUGHUNTER_LEVEL_1"),
+                BUGHUNTER_LEVEL_2: language("BUGHUNTER_LEVEL_2"),
+                HYPESQUAD_EVENTS: language("HYPESQUAD_EVENTS"),
+                HOUSE_BRAVERY: language("HOUSE_BRAVERY"),
+                HOUSE_BRILLIANCE: language("HOUSE_BRILLIANCE"),
+                HOUSE_BALANCE: language("HOUSE_BALANCE"),
+                EARLY_SUPPORTER: language("EARLY_SUPPORTER"),
+                TEAM_USER: language("TEAM_USER"),
+                SYSTEM: language("SYSTEM"),
+                VERIFIED_BOT: language("VERIFIED_BOT"),
+                VERIFIED_DEVELOPER: language("VERIFIED_DEVELOPER"),
             };
 
             let customStatus;
@@ -43,17 +43,17 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 for (const activity of member.presence.activities.values()) {
                     switch (activity.type) {
                         case 'PLAYING':
-                            activities.push(`**Play:** ${activity.name}`);
+                            activities.push(`${language("PLAY")} ${activity.name}`);
                             break;
                         case 'LISTENING':
-                            if (member.user.bot) activities.push(`**Listen:** ${activity.name}`);
-                            else activities.push(`**Listen: ** ${activity.details} by ${activity.state}`);
+                            if (member.user.bot) activities.push(`${language("LISTEN")} ${activity.name}`);
+                            else activities.push(`${language("LISTEN")} ${activity.details} by ${activity.state}`);
                             break;
                         case 'WATCHING':
-                            activities.push(`**Watch:** ${activity.name}`);
+                            activities.push(`${language("WATCH")} ${activity.name}`);
                             break;
                         case 'STREAMING':
-                            activities.push(`**Stream:** ${activity.name}`);
+                            activities.push(`${language("STREAM")} ${activity.name}`);
                             break;
                         case 'CUSTOM':
                             customStatus = activity.state;
@@ -68,17 +68,17 @@ export default async function (client: BernardClient, interaction: CommandIntera
             const embedUser = new MessageEmbed()
                 .setColor(EMBED_GENERAL)
                 .setAuthor({
-                    name: `Informations de ${member.user.tag}`,
+                    name: `${language("AUTHOR")} ${member.user.tag}`,
                     iconURL: member.displayAvatarURL({dynamic: true, format: "png"})})
                 .setDescription(`
 ${customStatus ? `**Custom Description:** ${customStatus}` : ""}
                 \`\`\`👤 Informations\`\`\`
 **» Name & ID:** ${member.user} - ${member.user.id}
-**» Joigned:** <t:${joinedTimestamp}:f>
-**» Account created:** <t:${createdTimestamp}:f>
+**» ${language("JOINED")}:** <t:${joinedTimestamp}:f>
+**» ${language("ACCOUNT")}** <t:${createdTimestamp}:f>
 **» Statut:** \`${statusFlags[<keyof object>member.presence?.status]}\`
 **» Badges:** ${userFlags.length > 0 ? `\`${userFlags.map(flag => perkFlags[<keyof object>flag]).join(', ')}\`` : '`Aucun`' }
-**»** ${activities.length > 0 ? activities.join(', ') : "**Activities :** `None`"}`)
+**»** ${activities.length > 0 ? activities.join(', ') : ""}`)
                 .addFields(
                     {name: "Roles", value: `${member.roles.cache.map(role => role).join(', ').replace(', @everyone', ' ')}`}
                 )
@@ -110,7 +110,7 @@ ${customStatus ? `**Custom Description:** ${customStatus}` : ""}
            \`\`\`📊 Statistics\`\`\`
 **» Servers:** \`${interaction.client?.guilds.cache.size.toString()}\` servers
 **» Last restart:** \`${days}\ and ${hours}\`
- **» Last update:** \`${date}\`
+**» Last update:** \`${date}\`
            
            \`\`\`📜 Resources\`\`\`
 **» Librairie / Environment:** [Discord.js v13](https://discord.js.org/#/docs/main/stable/general/welcome) | [Node.js v16.11.0](https://nodejs.org/fr/)
@@ -120,7 +120,7 @@ ${customStatus ? `**Custom Description:** ${customStatus}` : ""}
 **» Github Site:** [Bernard Site](${LINK_GITHUB_SITE})
 **» Host:** ubuntu \`21.04\`
            
-           **Developed with ${heart} by \`${author}\`**
+**Developed with ${heart} by \`${author}\`**
            `)
                 .setTimestamp()
                 .setFooter({
