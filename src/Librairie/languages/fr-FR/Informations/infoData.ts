@@ -1,5 +1,5 @@
 const infoDataFR = {
-    MEMBER_ERROR: "**L'utilisateur n'est pas sur le serveur!**.",
+    MEMBER_ERROR: "Cet utilisateur **n'existe pas** ou **n'a pas été trouvé**.",
     ONLINE: "En ligne",
     DND: "Ne pas déranger",
     AFK: "Absent",
