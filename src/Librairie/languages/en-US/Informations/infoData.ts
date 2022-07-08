@@ -1,5 +1,5 @@
 const infoDataEN = {
-    MEMBER_ERROR: "The user is **not in the server**.",
+    MEMBER_ERROR: "This user does **not exist** or **cannot be found**.",
     ONLINE: "Online",
     DND: "Dnd",
     AFK: "Afk",
