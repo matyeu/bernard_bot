@@ -162,7 +162,8 @@ ${customStatus ? `**Custom Description:** ${customStatus}` : ""}
             await interaction.reply({embeds: [embedServer]})
             break;
         default:
-            return interaction.replyErrorMessage(client, language("DEFAULT"), true)
+            return interaction.replyErrorMessage(client, language("DEFAULT")
+                .replace('%subcommand%', interaction.options.getSubcommand()), true)
     }
 }
 
