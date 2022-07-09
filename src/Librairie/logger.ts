@@ -24,7 +24,7 @@ export function client(content: string) {
 }
 
 export function dashboard(content: string) {
-    write(content, 'black', 'bgCyan', 'DASHBOARD', false)
+    write(content, 'black', 'bgCyan', 'DASHB', false)
 }
 
 export function modules(content: string) {
