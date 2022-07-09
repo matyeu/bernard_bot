@@ -5,11 +5,11 @@ const suggestionDataEN = {
 };
 
 
-const translateBSuggestionEN = (key: string | number, ...args: any[]) => {
+const translateSuggestionEN = (key: string | number, ...args: any[]) => {
     //@ts-ignore
     const translation = suggestionDataEN[key];
     if(typeof translation === "function") return translation(args);
     else return translation;
 };
 
-module.exports = translateBSuggestionEN;
+module.exports = translateSuggestionEN;
