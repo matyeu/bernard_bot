@@ -1,18 +1,19 @@
 import {BernardClient} from "../../Librairie";
-import {CommandInteraction, MessageEmbed} from "discord.js";
+import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageButton, MessageEmbed} from "discord.js";
 import {find, edit} from "../../Models/economy";
-import {EMBED_ERROR, EMBED_SUCCESS, FOOTER_CASINO} from "../../config";
+import {EMBED_ERROR, EMBED_SUCCESS, EMOJIS, FOOTER_CASINO} from "../../config";
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let casinoConfig: any = await find(interaction.guild!.id, interaction.user.id);
     let bet = interaction.options.getNumber('bet')!;
+    let member = await interaction.guild!.members.fetch(interaction.user.id)
 
     if (casinoConfig.money < bet)
-        return interaction.replyErrorMessage(client, `You do **not have** enough coin!`, true);
+        return interaction.replyErrorMessage(client, language("BET_ERROR_NOTHAVE"), true);
 
     if (bet > 500)
-        return interaction.replyErrorMessage(client, `**You can** bet up to **500** coins!`, true);
+        return interaction.replyErrorMessage(client, language("BET_ERROR_UP"), true);
 
     let stop: any = ((Math.random() * 6)).toFixed(1);
     stop = parseFloat(stop);
@@ -24,73 +25,107 @@ export default async function (client: BernardClient, interaction: CommandIntera
     let replyEmbed = new MessageEmbed()
         .setColor('BLUE')
         .setTitle("Crash")
-        .setDescription(`${interaction.user} you have bet $${bet}`)
+        .setDescription(language("BET").replace('%user%', `${member.displayName}#${member.user.discriminator}`).replace('%bet%', bet))
         .addFields(
-            {name: 'Multiplier ', value: `${multiplier}x`, inline: true},
-            {name: "Profit: ", value: `$${newProfit}`, inline: true},
-            {name: "How to play", value: `-stop: To stop before crash`, inline: false})
+            {inline: true, name: 'Multiplier', value: `${multiplier}x`},
+            {inline: true, name: "Profit: ", value: `${newProfit} ${client.getEmoji(EMOJIS.money)}`}
+        )
+        .addField(language("HOW_TO_PLAY"), language("VALUE_HOW_TO_PLAY"))
         .setTimestamp()
         .setFooter({text: FOOTER_CASINO, iconURL: client.user?.displayAvatarURL({dynamic: true})});
 
-    await interaction.reply({embeds: [replyEmbed], fetchReply: true})
+    let button = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId(`stop:${interaction.user.id}`)
+                .setLabel("STOP")
+                .setStyle("DANGER"))
+
+    let buttonDisabled = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId("stop")
+                .setLabel("STOP")
+                .setStyle("DANGER")
+                .setDisabled(true))
+
+    await interaction.reply({
+        embeds: [replyEmbed],
+        components: [button],
+        fetchReply: true
+    })
         .then((crashMessage: any) => {
-            let refreshID = setInterval(() => {
-                multiplier = (multiplier + 0.2).toFixed(1);
-                multiplier = parseFloat(multiplier);
-                newProfit = (multiplier * profit).toFixed(0);
-                newProfit = parseFloat(newProfit) - profit;
-                replyEmbed = new MessageEmbed()
-                    .setColor('BLUE')
-                    .setTitle("Crash")
-                    .setDescription(`${interaction.user} you have bet $${bet}`)
-                    .addFields(
-                        {name: 'Multiplier ', value: `${multiplier}x`, inline: true},
-                        {name: "Profit: ", value: `$${newProfit}`, inline: true},
-                        {name: "How to play", value: `-stop: To stop before crash`, inline: false}
-                    )
-                    .setTimestamp()
-                    .setFooter({text: FOOTER_CASINO, iconURL: client.user?.displayAvatarURL({dynamic: true})});
-
-                crashMessage.edit({embeds: [replyEmbed]});
-
-                if (multiplier >= stop) {
-                    clearInterval(refreshID);
+                let refreshID = setInterval(() => {
+                    multiplier = (multiplier + 0.2).toFixed(1);
+                    multiplier = parseFloat(multiplier);
+                    newProfit = (multiplier * profit).toFixed(0);
+                    newProfit = parseFloat(newProfit) - profit;
                     replyEmbed = new MessageEmbed()
-                        .setColor(EMBED_ERROR)
+                        .setColor(EMBED_SUCCESS)
                         .setTitle("Crash")
-                        .setDescription(`${interaction.user.id} you have lost $${bet}`)
+                        .setDescription(language("BET").replace('%user%', `${member.displayName}#${member.user.discriminator}`).replace('%bet%', bet))
                         .addFields(
-                            {name: 'Multiplier ', value: `${multiplier}x`, inline: true},
-                            {name: "Profit: ", value: `$${newProfit}`, inline: true},
-                            {name: "Balance", value: `$${casinoConfig.money - loss}`, inline: false})
+                            {inline: true, name: 'Multiplier ', value: `${multiplier}x`},
+                            {inline: true, name: "Profit: ", value: `${newProfit} ${client.getEmoji(EMOJIS.money)}`}
+                        )
+                        .addField(language("HOW_TO_PLAY"), language("VALUE_HOW_TO_PLAY"))
                         .setTimestamp()
                         .setFooter({text: FOOTER_CASINO, iconURL: client.user?.displayAvatarURL({dynamic: true})});
+                    crashMessage.edit({
+                        embeds: [replyEmbed]
+                    });
 
-                    crashMessage.edit({embeds: [replyEmbed]});
-                    casinoConfig.money -= loss;
-                    edit(interaction.guild!.id, interaction.user.id, casinoConfig);
-                }
-            }, 2000);
-            client.on('messageCreate', (msg) => {
-                if (msg.content.toLowerCase() === "-stop" && !(multiplier >= stop) && msg.author.id === interaction.user.id) {
+                    if (multiplier >= stop) {
+                        clearInterval(refreshID);
+                        replyEmbed = new MessageEmbed()
+                            .setColor(EMBED_ERROR)
+                            .setTitle("Crash")
+                            .setDescription(language("BET_LOST").replace('%user%', `${member.displayName}#${member.user.discriminator}`).replace('%bet%', bet))
+                            .addFields(
+                                {inline: true, name: 'Multiplier ', value: `${multiplier}x`},
+                                {inline: true, name: "Profit: ", value: `${newProfit} ${client.getEmoji(EMOJIS.money)}`}
+                            )
+                            .addField("Balance", `${casinoConfig.money - loss} ${client.getEmoji(EMOJIS.money)}`)
+                            .setTimestamp()
+                            .setFooter({text: FOOTER_CASINO, iconURL: client.user?.displayAvatarURL({dynamic: true})});
+                        crashMessage.edit({
+                            embeds:[ replyEmbed],
+                            components: [buttonDisabled]
+                        });
+
+                        casinoConfig.money -= loss;
+                        edit(interaction.guild!.id, interaction.user.id, casinoConfig);
+                    }
+                }, 2000);
+
+            const collector = crashMessage.createMessageComponentCollector({ filter: ()=> true, componentType: 'BUTTON', idle: 60000 });
+
+            collector.on('collect', async (inter: ButtonInteraction) => {
+                if (inter.customId.split(':')[1] !== inter.user.id)
+                    return inter.replyErrorMessage(client, language("BUTTON_ERROR"), true);
+
                     clearInterval(refreshID);
                     replyEmbed = new MessageEmbed()
                         .setColor(EMBED_SUCCESS)
                         .setTitle("Crash")
-                        .setDescription(`${interaction.user.id} you have won $${newProfit}`)
+                        .setDescription(language("BET_WON").replace('%user%', `${member.displayName}#${member.user.discriminator}`).replace('%bet%', bet))
                         .addFields(
-                            {name: 'Multiplier ', value: `${multiplier}x`, inline: true},
-                            {name: "Profit: ", value: `$${newProfit}`, inline: true},
-                            {name: "Balance", value: `$${casinoConfig.money + newProfit}`, inline: false})
-                        .setTimestamp()
-                        .setFooter({text: FOOTER_CASINO, iconURL: client.user?.displayAvatarURL({dynamic: true})});
-                    crashMessage.edit({embeds: [replyEmbed]});
+                            {inline: true, name: 'Multiplier ', value: `${multiplier}x`},
+                            {inline: true, name: "Profit: ", value: `${newProfit} ${client.getEmoji(EMOJIS.money)}`}
+                        )
+                        .addField("Balance", `${casinoConfig.money + newProfit} ${client.getEmoji(EMOJIS.money)}`);
+                    await inter.update({
+                        embeds: [ replyEmbed ],
+                        components: [buttonDisabled]
+                    });
+
                     casinoConfig.money += newProfit;
-                    edit(interaction.guild!.id, interaction.user.id, casinoConfig);
-                    return;
-                }
-            });
-        });
+                    await edit(interaction.guild!.id, interaction.user.id, casinoConfig);
+                    return collector.stop();
+                });
+
+            }
+        );
 
 
 };

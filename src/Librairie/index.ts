@@ -1,9 +1,10 @@
 import {
+    ButtonInteraction,
     Client,
     ClientOptions,
     Collection,
     CommandInteraction,
-    Guild, GuildMember, MessageEmbed,
+    Guild, MessageEmbed,
     MessageOptions,
     Snowflake,
     TextChannel
@@ -76,6 +77,15 @@ declare module "discord.js" {
 
         editErrorMessage(client: BernardClient, content: string, ephemeral: boolean): any;
     }
+    interface ButtonInteraction {
+        replySuccessMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+
+        replyErrorMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+
+        editSuccessMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+
+        editErrorMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+    }
 }
 
 CommandInteraction.prototype.replySuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
@@ -88,6 +98,19 @@ CommandInteraction.prototype.editSuccessMessage = function (client: BernardClien
     return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
 };
 CommandInteraction.prototype.editErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
+};
+
+ButtonInteraction.prototype.replySuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
+};
+ButtonInteraction.prototype.replyErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
+};
+ButtonInteraction.prototype.editSuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
+};
+ButtonInteraction.prototype.editErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
     return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
 };
 
