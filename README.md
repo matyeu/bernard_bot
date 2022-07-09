@@ -97,7 +97,7 @@ Bernard has its own dashboard which also offers many features! The dashboard run
 
 ## Versions
 * **Latest stable release:** 1.0.0
-* **Latest release:** 1.0.0
+* **Latest release:** 1.2.0
 
 ## Contributions/Licence
 

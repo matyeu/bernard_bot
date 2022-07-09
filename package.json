@@ -1,6 +1,6 @@
 {
   "name": "bernard",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A multi-function Discord bot. Leveling | Economy | Custom Commands | Reactions-Roles | Moderation | Fun",
   "main": "dist/app.js",
   "scripts": {
