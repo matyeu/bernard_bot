@@ -23,7 +23,8 @@ const infoDataFR = {
     STREAM: "**Stream:**",
     AUTHOR: "Informations de",
     JOINED: "Rejoint le",
-    ACCOUNT: "**Compte créé:**"
+    ACCOUNT: "**Compte créé:**",
+    DEFAULT: "La sous-commande %subcommand% **n'existe pas**."
 };
 
 

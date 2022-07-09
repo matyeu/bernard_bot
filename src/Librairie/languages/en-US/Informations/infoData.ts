@@ -23,7 +23,8 @@ const infoDataEN = {
     STREAM: "**Stream:**",
     AUTHOR: "Informations from",
     JOINED: "Joined",
-    ACCOUNT: "**Account created:**"
+    ACCOUNT: "**Account created:**",
+    DEFAULT: "The subcommand %subcommand% is **not valid**."
 };
 
 

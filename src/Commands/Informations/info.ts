@@ -162,7 +162,7 @@ ${customStatus ? `**Custom Description:** ${customStatus}` : ""}
             await interaction.reply({embeds: [embedServer]})
             break;
         default:
-            return interaction.replyErrorMessage(client, "This value does **not exist** or **cannot be found**!", true)
+            return interaction.replyErrorMessage(client, language("DEFAULT"), true)
     }
 }
 
