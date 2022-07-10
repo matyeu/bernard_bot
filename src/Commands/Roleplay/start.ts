@@ -5,7 +5,7 @@ import {create as createMember, find as findMember} from "../../Models/roleplay"
 import {find as findEconomy, edit as editEconomy} from "../../Models/economy";
 import {EMOJIS} from "../../config";
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let member = await interaction.guild!.members.fetch(interaction.user);
 
@@ -13,7 +13,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
     let memberConfig: any = await findMember(interaction.guild!.id, interaction.user!.id);
     let economyConfig: any = await findEconomy(interaction.guild!.id, interaction.user!.id);
 
-    if (memberConfig) return interaction.replyErrorMessage(client, `**You already** have an account on the RPG :\`/connexion\``, true)
+    if (memberConfig) return interaction.replyErrorMessage(client, language("ALREADY"), true)
 
     guildConfig.stats.uui += 1;
     await editGuild(interaction.guild!.id, guildConfig);
@@ -23,9 +23,8 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
     await createMember(interaction.guild!.id, interaction.user!.id, guildConfig.stats.uui);
 
-    return interaction.replySuccessMessage(client,
-`**Welcome to the RPG of ${client.user?.username} ${member.displayName}#${member.user.discriminator}
-You have just received the explanations of the RPG in private message but also +500 ${client.getEmoji(EMOJIS.money)} to begin the adventure well!**`, false)
+    return interaction.replySuccessMessage(client, language("CONTENT").replace('%bot%', client.user?.username)
+        .replace('%user%', `${member.displayName}#${member.user.discriminator}`).replace('%emoji%', client.getEmoji(EMOJIS.money)), false)
 
 };
 

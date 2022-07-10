@@ -4,7 +4,7 @@ import {find as findMember, edit as editMember} from "../../Models/roleplay";
 import {find as findLevel, edit as editLevel} from "../../Models/levels";
 import {EMBED_ERROR, EMBED_INFO, EMBED_SUCCESS, EMOJIS, FOOTER} from "../../config";
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let choices = interaction.options.getString('choice');
     let memberConfig: any = await findMember(interaction.guild!.id, interaction.user!.id);
@@ -23,25 +23,24 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
     if (farmLast !== null && farmCD - (Date.now() - farmLast) > 0) {
         return interaction.replyErrorMessage(client,
-            `Please wait **${Math.floor(timeFarmCd / (1000 * 60) % 60)} minute(s) ${Math.floor(timeFarmCd / (1000) % 60)}** to run this command again.`,
+            language("COOLDOWNS").replace('%minutes%', Math.floor(timeFarmCd / (1000 * 60) % 60)).replace('%seconds%', Math.floor(timeFarmCd / (1000) % 60)),
             true);
     }
 
     if (memberConfig.health.energy.now < 2) return interaction.replyErrorMessage(client,
-        `You don't have enough energy to **${choices}**`, true)
+        language("DONT_HAVE_ENERGY").replace('%choice%', choices), true)
 
     switch (choices) {
         case "fishing":
             if (!memberConfig.inventory.equipements.fishingRod)
-                return interaction.replyErrorMessage(client,
-                    `**You really think you can fish with your bare hands (even our prehistoric men couldn't do it...)? You need a fishing rod to start fishing!**`, true);
+                return interaction.replyErrorMessage(client, language("ERROR_FISHING"), true);
 
             let fishingRod = client.getEmoji(EMOJIS.fishingRod),
                 salmon = client.getEmoji(EMOJIS.salmon),
                 cantaril = client.getEmoji(EMOJIS.cantaril);
 
             let fish = new MessageAttachment('./assets/Images/Roleplay/Farms/fish.png');
-            await interaction.reply({content: `${fishingRod} | You have started **fishing**...`});
+            await interaction.reply({content: language("START_FISHING").replace('%emoji%', fishingRod)});
 
             let salmonToAdd = Math.floor((Math.random() * 10) + 0);
             let cantarilToAdd = Math.floor((Math.random() * 5) + 0);
@@ -49,8 +48,8 @@ export default async function (client: BernardClient, interaction: CommandIntera
             if (salmonToAdd && cantarilToAdd === 0) {
                 const embedFishError = new MessageEmbed()
                     .setColor(EMBED_INFO)
-                    .setTitle(`🐟 Failed fishing ${interaction.user.tag}!`)
-                    .setDescription(`You could not find fish!`)
+                    .setTitle(language("FAILED_FISHING").replace('%user%', interaction.user.tag))
+                    .setDescription(language("DESCRIPTION_FISHING"))
                     .setTimestamp()
                     .setFooter({text: FOOTER, iconURL: interaction.user?.displayAvatarURL({dynamic: true, format: "png"})});
                 return interaction.channel!.send({embeds: [embedFishError]});
@@ -61,13 +60,14 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
             let embedFish = new MessageEmbed()
                 .setColor(EMBED_INFO)
-                .setTitle(`🐟 Successful fishing! (-1 ${energy})`)
+                .setTitle(language("SUCCESSFUL_FISHING").replace('%emoji%', energy))
                 .setThumbnail("attachment://fish.png")
                 .addFields(
-                    {name: `${salmon} Caught salmon`, value: `${salmonToAdd}`, inline: true},
-                    {name: `${cantaril} Caught cantarils`, value: `${cantarilToAdd}`, inline: true},
-                    {name: `${xp} XP received`, value: `${xpToAdd}`, inline: true},
-                    {name: `${energy} Energy`, value: `You now have ${memberConfig.health.energy.now -1}/50`, inline: false},
+                    {name: language("SALMON").replace('%emoji%', salmon), value: `${salmonToAdd}`, inline: true},
+                    {name: language("CANTARIL").replace('%emoji%', cantaril), value: `${cantarilToAdd}`, inline: true},
+                    {name: language("XP_RECEIVED").replace('%emoji%', xp), value: `${xpToAdd}`, inline: true},
+                    {name: language("ENERGY_NAME").replace('%emoji%', energy), value: language("ENERGY_VALUE")
+                            .replace('%energy%', `${memberConfig.health.energy.now -1}/50`), inline: false},
                 )
                 .setTimestamp()
                 .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})})
@@ -77,9 +77,9 @@ export default async function (client: BernardClient, interaction: CommandIntera
             break;
         case "hunt":
             if (!memberConfig.inventory.equipements.arc)
-                return interaction.replyErrorMessage(client, `**Do you really think you can hunt with your hands? You need a bow!**`, true);
+                return interaction.replyErrorMessage(client, language("ERROR_HUNT"), true);
             if (memberConfig.inventory.consumables.arrow < 1)
-                return interaction.replyErrorMessage(client,`**You don't have an arrow to hunt with**`, true);
+                return interaction.replyErrorMessage(client, language("ERROR_ARROW"), true);
 
             let arc = client.getEmoji(EMOJIS.arc),
                 arrow = client.getEmoji(EMOJIS.arrow),
@@ -87,7 +87,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 skin = client.getEmoji(EMOJIS.skin);
 
             let arrowTh = new MessageAttachment('./assets/Images/Roleplay/Farms/arrow.png');
-            await interaction.reply({content: `${arc} | You started **hunting**...`});
+            await interaction.reply({content: language("START_HUNT").replace('%emoji%', arc)});
 
             let meatToAdd = Math.floor((Math.random() * 10) + 0);
             let skinToAdd = Math.floor((Math.random() * 5) + 0);
@@ -95,8 +95,8 @@ export default async function (client: BernardClient, interaction: CommandIntera
             if (meatToAdd && meatToAdd === 0) {
             const embedHuntError = new MessageEmbed()
                 .setColor(EMBED_INFO)
-                .setTitle(`🍖 Failed hunt ${interaction.user.tag}!`)
-                .setDescription(`You could not find meat!`)
+                .setTitle(language("FAILED_HUNT").replace('%user%', interaction.user.tag))
+                .setDescription(language("DESCRIPTION_HUNT"))
                 .setTimestamp()
                 .setFooter({text: FOOTER, iconURL: interaction.user?.displayAvatarURL({dynamic: true, format: "png"})});
             return interaction.channel!.send({embeds: [embedHuntError]});
@@ -108,13 +108,14 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
             let embedHunt = new MessageEmbed()
             .setColor(EMBED_ERROR)
-            .setTitle(`🍖 Successful hunt! (-1 ${energy} & -1 ${arrow})`)
+            .setTitle(language("SUCCESSFUL_HUNT").replace('%energy%', energy).replace('%arrow%', arrow))
             .setThumbnail("attachment://arrow.png")
             .addFields(
-                {name: `${meat} Collected meats`, value: `${meatToAdd}`, inline: true},
-                {name: `${skin} Collected skin`, value: `${skinToAdd}`, inline: true},
-                {name: `${xp} XP received`, value: `${xpToAdd}`, inline: true},
-                {name: `${energy} Energy`, value: `You now have ${memberConfig.health.energy.now -1}/50`, inline: false},
+                {name: language("MEAT").replace('%emoji%', meat), value: `${meatToAdd}`, inline: true},
+                {name: language("SKIN").replace("%emoji%", skin), value: `${skinToAdd}`, inline: true},
+                {name: language("XP_RECEIVED").replace("%emoji%", xp), value: `${xpToAdd}`, inline: true},
+                {name: language("ENERGY_NAME").replace('%emoji%', energy), value: language("ENERGY_VALUE")
+                        .replace('%energy%', `${memberConfig.health.energy.now -1}/50`), inline: false},
             )
             .setTimestamp()
             .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})})
@@ -124,11 +125,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
             break;
         case "pick":
             if (!memberConfig.inventory.equipements.gloves)
-                return interaction.replyErrorMessage(client,
-                    `**Thinking about picking with your bare hands (imagine getting stung...)? You need gloves to start picking !**`, true);
+                return interaction.replyErrorMessage(client, language("ERROR_PICK"), true);
 
             let mushroom = new MessageAttachment('./assets/Images/Roleplay/Farms/mushroom.png')
-            await interaction.reply({content: `🍄 | You have started to **pick**...`});
+            await interaction.reply({content: language("START_PICK").replace('%emoji%', "🍄")});
 
             let girolleToAdd = Math.floor((Math.random() * 10) + 0);
             let coulemelleToAdd = Math.floor((Math.random() * 5) + 0);
@@ -136,8 +136,8 @@ export default async function (client: BernardClient, interaction: CommandIntera
             if (girolleToAdd && coulemelleToAdd === 0) {
                 const embedPickError = new MessageEmbed()
                     .setColor(EMBED_INFO)
-                    .setTitle(`🍄 Failed pickup ${interaction.user.tag} !`)
-                    .setDescription(`You could not find a mushroom!`)
+                    .setTitle(language("FAILED_PICK").replace('%user%', interaction.user.tag))
+                    .setDescription(language("DESCRIPTION_PICK"))
                     .setTimestamp()
                     .setFooter({text: FOOTER, iconURL: interaction.user?.displayAvatarURL({dynamic: true, format: "png"})});
                 return interaction.channel!.send({embeds: [embedPickError]})
@@ -151,13 +151,14 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
             let embedPick = new MessageEmbed()
                 .setColor(EMBED_SUCCESS)
-                .setTitle(`🍄 Successful picking! (-1 ${energy})`)
+                .setTitle(language("SUCCESSFUL_PICK").replace('%emoji%', energy))
                 .setThumbnail("attachment://mushroom.png")
                 .addFields(
-                    {name: `${girolle} Girolle picked`, value: `${girolleToAdd}`, inline: true},
-                    {name: `${coulemelle} Coulemelle picked`, value: `${coulemelleToAdd}`, inline: true},
-                    {name: `${xp} XP received`, value: `${xpToAdd}`, inline: true},
-                    {name: `${energy} Energy`, value: `You now have ${memberConfig.health.energy.now -1}/50`, inline: false},
+                    {name: language("GIROLLE").replace('%emoji%', girolle), value: `${girolleToAdd}`, inline: true},
+                    {name: language("COULEMELLE").replace('%emoji%', coulemelle), value: `${coulemelleToAdd}`, inline: true},
+                    {name: language("XP_RECEIVED").replace("%emoji%", xp), value: `${xpToAdd}`, inline: true},
+                    {name: language("ENERGY_NAME").replace('%emoji%', energy), value: language("ENERGY_VALUE")
+                            .replace('%energy%', `${memberConfig.health.energy.now -1}/50`), inline: false},
                 )
                 .setTimestamp()
                 .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})})
@@ -167,14 +168,14 @@ export default async function (client: BernardClient, interaction: CommandIntera
             break;
         case "cut":
             if (!memberConfig.inventory.equipements.axe)
-                return interaction.replyErrorMessage(client, `Are you really thinking about cutting with your bare hands? You need an axe to start cutting!`, true);
+                return interaction.replyErrorMessage(client, language("ERROR_CUT"), true);
 
             let axe = client.getEmoji(EMOJIS.axe),
                 wood = client.getEmoji(EMOJIS.wood),
                 chene = client.getEmoji(EMOJIS.chene);
 
-            let forest = new MessageAttachment('./assets/Images/Roleplay/forest.png');
-            await interaction.reply({content: `${axe} **| You have started to **cut**...`});
+            let forest = new MessageAttachment('./assets/Images/Roleplay/Farms/forest.png');
+            await interaction.reply({content: language("START_CUT").replace('%emoji%', axe)});
 
             let woodToAdd = Math.floor((Math.random() * 10) + 0);
             let cheneToAdd = Math.floor((Math.random() * 5) + 0);
@@ -182,8 +183,8 @@ export default async function (client: BernardClient, interaction: CommandIntera
             if (woodToAdd && cheneToAdd === 0) {
                 const embedForestError = new MessageEmbed()
                     .setColor(EMBED_INFO)
-                    .setTitle(`🌲 Failed cut ${interaction.user.tag}!`)
-                    .setDescription(`You couldn't find any wood!`)
+                    .setTitle(language("FAILED_CUT").replace('%user%', interaction.user.tag))
+                    .setDescription(language("DESCRIPTION_CUT"))
                     .setTimestamp()
                     .setFooter({text: FOOTER, iconURL: interaction.user?.displayAvatarURL({dynamic: true, format: "png"})});
                 return interaction.channel!.send({embeds: [embedForestError]})
@@ -194,13 +195,14 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
             const embedForest = new MessageEmbed()
                 .setColor("#306d27")
-                .setTitle(`🌲 Successful cutting! (-1 ${energy})`)
+                .setTitle(language("SUCCESSFUL_CUT").replace('%emoji%', energy))
                 .setThumbnail("attachment://forest.png")
                 .addFields(
-                    {name: `${wood} Cut wood`, value: `${woodToAdd}`, inline: true},
-                    {name: `${chene} Cut oak wood`, value: `${cheneToAdd}`, inline: true},
-                    {name: `${xp} XP received`, value: `${xpToAdd}`, inline: true},
-                    {name: `${energy} Energy`, value: `You now have ${memberConfig.health.energy.now -1}/50`, inline: false},
+                    {name: language("WOOD").replace("%emoji%", wood), value: `${woodToAdd}`, inline: true},
+                    {name: language("CHENE").replace("%emoji%", chene), value: `${cheneToAdd}`, inline: true},
+                    {name: language("XP_RECEIVED").replace("%emoji%", xp), value: `${xpToAdd}`, inline: true},
+                    {name: language("ENERGY_NAME").replace('%emoji%', energy), value: language("ENERGY_VALUE")
+                            .replace('%energy%', `${memberConfig.health.energy.now -1}/50`), inline: false},
                 )
                 .setTimestamp()
                 .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})})
@@ -209,7 +211,8 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
             break;
         default:
-            return interaction.replyErrorMessage(client, `The indicated action does **not exist** or **cannot be found**!`, true)
+            return interaction.replyErrorMessage(client, language("DEFAULT")
+                .replace('%subcommand%', interaction.options.getSubcommand()), true)
     }
 
     memberConfig.health.energy.now -= 1;
