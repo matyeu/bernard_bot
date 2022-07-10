@@ -4,12 +4,12 @@ import {find as findGuild, edit as editGuild} from "../../Models/guild";
 import {create as createWarn, findOne as findOneWarn, find as findWarn, findGuild as findGuilWarn} from "../../Models/warns";
 import {EMBED_CLOSE, EMBED_INFO, EMBED_SUCCESS, FOOTER_MODERATION} from "../../config";
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
 
     let guildConfig: any = await findGuild(interaction.guild!.id);
     const memberStaff = interaction.guild?.members.cache.get(interaction.user.id)!;
 
-    let date = new Date().toLocaleString('en-US', {
+    let date = new Date().toLocaleString(guildConfig.language, {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -29,10 +29,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
             const memberToWarn = interaction.guild?.members.cache.get(userToWarn.replace(/ /g, ""))!;
 
             if (!memberToWarn)
-                return interaction.replyErrorMessage(client, "This user does **not exist** or **cannot be found**.", true);
+                return interaction.replyErrorMessage(client, langue("MEMBER_ERROR"), true);
 
             if (memberStaff.roles.highest.comparePositionTo(memberToWarn.roles.highest) <= 0)
-                return interaction.replyErrorMessage(client, "**You can't warn** this user.", true);
+                return interaction.replyErrorMessage(client, langue("WARN_ERROR"), true);
 
             if (reason && !deleteWarn) {
                 guildConfig.stats.sanctionsCase++;
@@ -47,10 +47,11 @@ export default async function (client: BernardClient, interaction: CommandIntera
                         iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
                     })
                     .setTitle(`Warn`)
-                    .setDescription(`${interaction.user} wants to warn ${memberToWarn.user.tag} for the following reason: **${reason}**`)
+                    .setDescription(langue("DESCRIPTION_WARN").replace('%user%', interaction.user)
+                        .replace('%member%', memberToWarn.user.tag).replace('%reason%', reason))
                     .addFields(
                         {
-                            name: `👤 Member (ID)`,
+                            name: langue("MEMBER"),
                             value: `${memberToWarn} (${memberToWarn.user.id})`,
                             inline: true
                         },
@@ -90,16 +91,17 @@ export default async function (client: BernardClient, interaction: CommandIntera
                             iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
                         })
                         .setTitle(`Unwarn`)
-                        .setDescription(`${interaction.user} wants to unwarn ${memberToWarn.user.tag} for the following reason: **${reason}**`)
+                        .setDescription(langue("DESCRIPTION_WARN").replace('%user%', interaction.user)
+                            .replace('%member%', memberToWarn.user.tag).replace('%reason%', reason))
                         .addFields(
                             {
-                                name: `👤 Member (ID)`,
+                                name: langue("MEMBER"),
                                 value: `${memberToWarn}\n(${memberToWarn.user.id})`,
                                 inline: true
                             },
                             {
                                 name: `👤 Staff (ID)`,
-                                value: `${byMember ? `${byMember}\n(${byMember.id})` : "An old staff"}`,
+                                value: `${byMember ? `${byMember}\n(${byMember.id})` : langue("OLD_STAFF")}`,
                                 inline: true
                             },
                             {
@@ -127,27 +129,28 @@ export default async function (client: BernardClient, interaction: CommandIntera
                     return interaction.reply({embeds: [embedUnwarn], components: [buttonsUnwarn]});
 
                 } else {
-                    return interaction.replyErrorMessage(client, `This warning does **not exist** in the database.`, true);
+                    return interaction.replyErrorMessage(client, langue("NOT_WARNING"), true);
                 }
             } else if (!reason && deleteWarn) {
-                return interaction.replyErrorMessage(client, "A reason is **required** to delete a warn.", true);
+                return interaction.replyErrorMessage(client, langue("REASON_REQUIRED"), true);
             } else {
                 let warns: any = await findWarn(interaction.guild!.id, memberToWarn.user.id);
 
                 let embedInfo = new MessageEmbed()
                     .setColor(EMBED_INFO)
                     .setAuthor({
-                        name: `${memberToWarn.displayName}#${memberToWarn.user.discriminator}`,
-                        iconURL: memberToWarn.user.displayAvatarURL({dynamic: true})
+                        name: `${memberStaff.displayName}#${memberStaff.user.discriminator}`,
+                        iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
                     })
-                    .setDescription(`${memberToWarn.user.tag} has **${warns.length}** warns.`)
+                    .setDescription(langue("WARN_USER_HAS").replace('%user%', `${memberToWarn.displayName}#${memberToWarn.user.discriminator}`)
+                        .replace('%number%', warns.length))
                 for (let i = 0; i < (warns.length > 25 ? 25 : warns.length); i++) {
                     let userWarn = warns[i];
                     let byMember = interaction.guild?.members.cache.get(userWarn.memberStaff)!;
-                    let by = byMember ? `${byMember.displayName}#${byMember.user.discriminator}` : "An old staff";
+                    let by = byMember ? `${byMember.displayName}#${byMember.user.discriminator}` : langue("OLD_STAFF");
                     embedInfo.addFields(
                         {
-                            name: `Warn n°${userWarn.id} by \`${by}\` the ${userWarn.date} :`,
+                            name: langue("NAME_VALUE_USER").replace('%number%', userWarn.id).replace('%staff%', by).replace('%date%', userWarn.date),
                             value: userWarn.reason,
                             inline: true
                         })
@@ -167,16 +170,16 @@ export default async function (client: BernardClient, interaction: CommandIntera
                     name: `${interaction.guild!.name}`,
                     iconURL: `${interaction.guild!.iconURL() ? interaction.guild!.iconURL({dynamic: true}) : ""}`
                 })
-                .setDescription(`${interaction.guild!.name} has **${warnsServer.length}** warns.`)
+                .setDescription(langue("WARN_SERVER_HAS").replace('%server%', interaction.guild!.name).replace('%number%', warnsServer.length))
             for (let i = 0; i < (warnsServer.length > 25 ? 25 : warnsServer.length); i++) {
                 let userWarn = warnsServer[i];
                 let userWarning = interaction.guild?.members.cache.get(userWarn.memberWarn)!;
-                let user = userWarning ? `${userWarning.displayName}#${userWarning.user.discriminator}` : "An old member";
+                let user = userWarning ? `${userWarning.displayName}#${userWarning.user.discriminator}` : langue("OLD_MEMBER");
                 let byMember = interaction.guild?.members.cache.get(userWarn.memberStaff)!;
-                let by = byMember ? `${byMember.displayName}#${byMember.user.discriminator}` : "An old staff";
+                let by = byMember ? `${byMember.displayName}#${byMember.user.discriminator}` : langue("OLD_STAFF");
                 embedServer.addFields(
                     {
-                        name: `Warn \`${user}\` by \`${by}\` the ${userWarn.date} :`,
+                        name: langue("NAME_VALUE_SERVER").replace('%user%', user).replace('%staff%', by).replace('%date%', userWarn.date),
                         value: userWarn.reason,
                         inline: true
                     })
@@ -186,8 +189,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
             return interaction.reply({embeds: [embedServer]});
             break;
         default:
-            return interaction.replyErrorMessage(client,
-                `The subcommand ${interaction.options.getSubcommand()} is **not valid**.`, true);
+            return interaction.replyErrorMessage(client, langue("DEFAULT"), true);
     }
 
 }

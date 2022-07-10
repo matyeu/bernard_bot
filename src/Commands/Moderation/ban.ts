@@ -1,17 +1,20 @@
 import {BernardClient} from "../../Librairie";
 import {CommandInteraction, MessageActionRow, MessageButton, MessageEmbed} from "discord.js";
+import {find as findGuild} from "../../Models/guild";
 import {create, find, edit} from "../../Models/bans";
 import {EMBED_ERROR, EMBED_SUCCESS, FOOTER_MODERATION} from "../../config";
 
 const ms = require("ms");
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+
+    let guildConfig: any = await findGuild(interaction.guild!.id);
 
     let memberOption = interaction.options.getString("user");
     const userToBan = memberOption!.replace("<@!", "").replace(">", "");
     let reason = interaction.options.getString("reason");
     let timeOption = interaction.options.getString('time');
-    let time = timeOption ? ms(timeOption) : "Always";
+    let time = timeOption ? ms(timeOption) : langue("ALWAYS");
 
     //ban
     const memberBan = await client.users.fetch(userToBan.replace(/ /g, ""));
@@ -24,9 +27,9 @@ export default async function (client: BernardClient, interaction: CommandIntera
     const memberStaff = interaction.guild?.members.cache.get(interaction.user.id)!;
 
     if (memberGuild && memberStaff.roles.highest.comparePositionTo(memberGuild.roles.highest) <= 0)
-        return interaction.replyErrorMessage(client, "**You can't** ban this user.", true);
+        return interaction.replyErrorMessage(client, langue("BAN_ERROR"), true);
 
-    let date = new Date().toLocaleString('en-US', {
+    let date = new Date().toLocaleString(guildConfig.language, {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -53,10 +56,11 @@ export default async function (client: BernardClient, interaction: CommandIntera
             iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
         })
         .setTitle(`${!memberUnban ? "Ban" : "Unban"}`)
-        .setDescription(`${interaction.user} wants to ban ${!memberUnban ? `ban` : `unban`} ${memberBan.tag} for the following reason: **${reason}**`)
+        .setDescription(langue("DESCRIPTION").replace('%user%', interaction.user)
+            .replace('%action%', !memberUnban ? "ban" : "unban").replace('%member%', memberBan.tag).replace('%reason%', reason))
         .addFields(
             {
-                name: `👤 Member (ID)`,
+                name: langue("MEMBER"),
                 value: `${memberBan.tag} (${memberBan.id})`,
                 inline: true
             },

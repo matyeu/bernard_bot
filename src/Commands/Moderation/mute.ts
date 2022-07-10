@@ -1,11 +1,14 @@
 import {BernardClient} from "../../Librairie";
 import {CommandInteraction, MessageActionRow, MessageButton, MessageEmbed} from "discord.js";
 import {EMOJIS, EMBED_ERROR, FOOTER_MODERATION, EMBED_SUCCESS} from "../../config";
+import {find as findGuild} from "../../Models/guild";
 import {create, edit, find} from "../../Models/mutes";
 
 const ms = require("ms");
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+
+    let guildConfig: any = await findGuild(interaction.guild!.id);
 
     let userOption = interaction.options.getString("user");
     const userToMute = userOption!.replace("<@!", "").replace(">", "");
@@ -18,12 +21,12 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
     const memberStaff = interaction.guild?.members.cache.get(interaction.user.id)!;
 
-    if (!memberMute) return interaction.replyErrorMessage(client, "This user does **not exist** or **cannot be found**.", true);
+    if (!memberMute) return interaction.replyErrorMessage(client, langue("MEMBER_ERROR"), true);
 
     if (memberStaff.roles.highest.comparePositionTo(memberMute.roles.highest) <= 0)
-        return interaction.replyErrorMessage(client, "**You can't** mute this user.", true);
+        return interaction.replyErrorMessage(client, langue("MUTE_ERROR"), true);
 
-    let date = new Date().toLocaleString('en-US', {
+    let date = new Date().toLocaleString(guildConfig.language, {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -48,10 +51,11 @@ export default async function (client: BernardClient, interaction: CommandIntera
             iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
         })
         .setTitle(`${!muteConfig ? "Mute" : "Unmute"}`)
-        .setDescription(`${interaction.user} wants to ${!muteConfig ? `mute` : `unmute`} ${memberMute.user.tag} for the following reason: **${reason}**`)
+        .setDescription(langue("DESCRIPTION").replace("%user%", interaction.user)
+            .replace("%action%", !muteConfig ? "mute" : "unmute").replace("%member%", memberMute.user.tag).replace("%reason%", reason))
         .addFields(
             {
-                name: `👤 Member (ID)`,
+                name: langue("MEMBER"),
                 value: `${memberMute} (${memberMute.id})`,
                 inline: true
             },

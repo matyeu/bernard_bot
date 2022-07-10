@@ -1,11 +1,18 @@
 import {BernardClient} from "../../Librairie";
-import {CommandInteraction, Message, MessageActionRow, MessageButton, MessageEmbed} from "discord.js";
+import {
+    ButtonInteraction,
+    CommandInteraction,
+    Message,
+    MessageActionRow,
+    MessageButton,
+    MessageEmbed
+} from "discord.js";
 import {edit as editGuild, find as findGuild} from "../../Models/guild";
 import {EMOJIS, EMBED_ERROR, FOOTER_MODERATION, EMBED_INFO} from "../../config";
 
 const Logger = require("../../Librairie/logger");
 
-export default async function (client: BernardClient, interaction: CommandInteraction) {
+export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
 
     let guildConfig: any = await findGuild(interaction.guild!.id);
     let error = client.getEmoji(EMOJIS.error);
@@ -18,7 +25,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
     let reason = interaction.options.getString("reason");
 
-    let date = new Date().toLocaleString('en-US', {
+    let date = new Date().toLocaleString(guildConfig.language, {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -28,10 +35,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
         second: 'numeric'
     });
 
-    if (!memberKick) return interaction.replyErrorMessage(client, "This user does **not exist** or **cannot be found**.", true);
+    if (!memberKick) return interaction.replyErrorMessage(client, langue("MEMBER_ERROR"), true);
 
     if (memberStaff.roles.highest.comparePositionTo(memberKick.roles.highest) <= 0)
-        return interaction.replyErrorMessage(client, "**You can't kick** this user.", true);
+        return interaction.replyErrorMessage(client, langue("KICK_ERROR"), true);
 
     let embed = new MessageEmbed()
         .setColor(EMBED_ERROR)
@@ -40,10 +47,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
             iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
         })
         .setTitle(`Kick`)
-        .setDescription(`${interaction.user} wants to kick ${memberKick.user.tag} for the following reason: **${reason}**`)
+        .setDescription(langue("DESCRIPTION").replace('%user%', interaction.user).replace('%member%', memberKick.user.tag).replace('%reason%', reason))
         .addFields(
             {
-                name: `👤 Member (ID)`,
+                name: langue("MEMBER"),
                 value: `${memberKick} (${memberKick.user.id})`,
                 inline: true
             },
@@ -70,14 +77,14 @@ export default async function (client: BernardClient, interaction: CommandIntera
         );
 
 
-    await interaction.replySuccessMessage(client, `Embed being created`, false)
+    await interaction.replySuccessMessage(client, langue("EMBED_BEING_CREATED"), false)
     let message = <Message>await interaction.editReply({content: null, embeds: [embed], components: [buttons]});
 
     let collector = message.createMessageComponentCollector({filter: ()=> true});
-    collector.on("collect", async (inter) => {
+    collector.on("collect", async (inter: ButtonInteraction) => {
         if (inter.customId.split(':')[0] === "kick") {
             if (inter.customId.split(':')[1] !== inter.user.id)
-                return inter.reply({content: `${error} | **You are not** responsible for this kick!`, ephemeral: true});
+                return inter.replyErrorMessage(client, langue("RESPONSIBLE_ERROR"), true);
 
             guildConfig.stats.sanctionsCase++;
             await editGuild(interaction.guild!.id, guildConfig);
@@ -90,12 +97,9 @@ export default async function (client: BernardClient, interaction: CommandIntera
                     name: `${memberStaff.displayName}#${memberStaff.user.discriminator}`,
                     iconURL: memberStaff.displayAvatarURL({dynamic: true, format: 'png'})
                 })
-                .setDescription(`
-**Member:** \`${memberKick.user.tag}\` (${memberKick.id})
-**Action:** Kick
-**Reason:** ${reason}`)
+                .setDescription(langue("DESCRIPTION_LOG").replace('%user%', interaction.user).replace('%reason%', reason))
                 .setTimestamp()
-                .setFooter({text: `Case ${guildConfig.stats.sanctionsCase}`})
+                .setFooter({text: langue("CASE").replace('%case%', guildConfig.stats.sanctionsCase)})
 
             await client.getChannel(inter.guild!, guildConfig.channels.logs.public, {embeds: [embedMod]});
 
@@ -103,7 +107,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 let embedUser = new MessageEmbed()
                     .setColor(EMBED_INFO)
                     .setTitle(`${client.user?.username} Protect - Kick`)
-                    .setDescription(`You have been kicked from the \`${interaction.guild?.name}\` server for the following reason: **${reason}**`)
+                    .setDescription(langue("DESCRIPTION_USER").replace('%server%', interaction.guild!.name).replace('%reason%', reason))
                     .setTimestamp()
                     .setFooter({
                         text: FOOTER_MODERATION,
