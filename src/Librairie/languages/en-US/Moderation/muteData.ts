@@ -1,6 +1,6 @@
 const muteDataEN = {
     MEMBER_ERROR: "This user does **not exist** or **cannot be found**.",
-    KICK_ERROR: "**You can't** mute this user.",
+    MUTE_ERROR: "**You can't** mute this user.",
     DESCRIPTION: "%user% wants to %action% **%member%** for the following reason: **%reason%**",
     MEMBER: "👤 Member (ID)",
 };

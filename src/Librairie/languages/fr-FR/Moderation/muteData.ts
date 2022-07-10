@@ -1,6 +1,6 @@
 const muteDataFR = {
     MEMBER_ERROR: "Cet utilisateur **n'existe pas** ou **n'a pas été trouvé**.",
-    BAN_ERROR: "**Vous ne pouvez pas** bannir cet utilisateur.",
+    MUTE_ERROR: "**Vous ne pouvez pas** mute cet utilisateur.",
     DESCRIPTION: "%user% souhaite %action% **%member%** pour la raison suivante : **%reason%**",
     MEMBER: "👤 Membre (ID)"
 };
