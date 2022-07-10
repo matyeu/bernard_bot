@@ -2,12 +2,12 @@ import {CommandInteraction, MessageAttachment} from "discord.js";
 import {BernardClient} from "../../Librairie";
 const AmeClient = require("amethyste-api");;
 
-export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
     let memberOption = interaction.options.getString("user");
     const argUser = memberOption!.replace("<@!", "").replace(">", "");
     const member = await interaction.guild?.members.cache.get(argUser.replace(/ /g,""));
 
-    if (!member) return interaction.replyErrorMessage(client, langue("MEMBER_ERROR"), true);
+    if (!member) return interaction.replyErrorMessage(client, language("MEMBER_ERROR"), true);
 
     let picture = interaction.options.getString("picture");
     const AmeAPI = new AmeClient(process.env.AMETHYSTE);

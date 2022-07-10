@@ -2,7 +2,7 @@ import {BernardClient} from "../../Librairie";
 import {CommandInteraction, MessageEmbed, TextChannel} from "discord.js";
 import {EMBED_INFO, EMOJIS, FOOTER} from "../../config";
 
-export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let channel = <TextChannel>interaction.channel!;
     let everyone = interaction.guild!.roles.everyone;
@@ -11,31 +11,31 @@ export default async function (client: BernardClient, interaction: CommandIntera
         ADD_REACTIONS: false
     });
 
-    await interaction.replySuccessMessage(client, langue("PEACE_LAUNCHED"), true);
+    await interaction.replySuccessMessage(client, language("PEACE_LAUNCHED"), true);
 
     let embedIMG = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setImage(langue("PICTURE"))
+        .setImage(language("PICTURE"))
         .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true})})
         .setTimestamp();
     let embed1 = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setDescription(langue("EMBED_1"));
+        .setDescription(language("EMBED_1"));
     let embed2 = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setDescription(langue("EMBED_2"));
+        .setDescription(language("EMBED_2"));
     let embed3 = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setDescription(langue("EMBED_3"));
+        .setDescription(language("EMBED_3"));
     let embed4 = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setDescription(langue("EMBED_4"));
+        .setDescription(language("EMBED_4"));
     let embed5 = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setDescription(langue("EMBED_5"));
+        .setDescription(language("EMBED_5"));
     let embed6 = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setDescription(langue("EMBED_6").replace('%emoji%', client.getEmoji(EMOJIS.heart)));
+        .setDescription(language("EMBED_6").replace('%emoji%', client.getEmoji(EMOJIS.heart)));
 
 
     await channel.send({embeds: [embedIMG]});

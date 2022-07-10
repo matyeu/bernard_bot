@@ -2,7 +2,7 @@ import {BernardClient} from "../../Librairie";
 import {CommandInteraction} from "discord.js";
 import {edit, find} from "../../Models/members";
 
-export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     const reasonOption = interaction.options.get("reason");
     const reason = reasonOption ? reasonOption.value : '';
@@ -17,9 +17,9 @@ export default async function (client: BernardClient, interaction: CommandIntera
     await edit(guildID, memberID, memberConfig);
 
     if (member.guild.ownerId !== interaction.user.id)
-        await member.setNickname(`[AFK] ${member.displayName}`, langue("LOG_MESSAGE").replace('%user%', member.displayName));
+        await member.setNickname(`[AFK] ${member.displayName}`, language("LOG_MESSAGE").replace('%user%', member.displayName));
     await interaction.replySuccessMessage(client,
-        reason ? langue("REASON_MESSAGE_WITH_REASON").replace('%reason%', reason) : langue("REASON_MESSAGE"), false);
+        reason ? language("REASON_MESSAGE_WITH_REASON").replace('%reason%', reason) : language("REASON_MESSAGE"), false);
 
 }
 

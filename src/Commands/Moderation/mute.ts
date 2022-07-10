@@ -6,7 +6,7 @@ import {create, edit, find} from "../../Models/mutes";
 
 const ms = require("ms");
 
-export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let guildConfig: any = await findGuild(interaction.guild!.id);
 
@@ -21,10 +21,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
     const memberStaff = interaction.guild?.members.cache.get(interaction.user.id)!;
 
-    if (!memberMute) return interaction.replyErrorMessage(client, langue("MEMBER_ERROR"), true);
+    if (!memberMute) return interaction.replyErrorMessage(client, language("MEMBER_ERROR"), true);
 
     if (memberStaff.roles.highest.comparePositionTo(memberMute.roles.highest) <= 0)
-        return interaction.replyErrorMessage(client, langue("MUTE_ERROR"), true);
+        return interaction.replyErrorMessage(client, language("MUTE_ERROR"), true);
 
     let date = new Date().toLocaleString(guildConfig.language, {
         weekday: 'long',
@@ -51,11 +51,11 @@ export default async function (client: BernardClient, interaction: CommandIntera
             iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
         })
         .setTitle(`${!muteConfig ? "Mute" : "Unmute"}`)
-        .setDescription(langue("DESCRIPTION").replace("%user%", interaction.user)
+        .setDescription(language("DESCRIPTION").replace("%user%", interaction.user)
             .replace("%action%", !muteConfig ? "mute" : "unmute").replace("%member%", memberMute.user.tag).replace("%reason%", reason))
         .addFields(
             {
-                name: langue("MEMBER"),
+                name: language("MEMBER"),
                 value: `${memberMute} (${memberMute.id})`,
                 inline: true
             },

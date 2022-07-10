@@ -6,7 +6,7 @@ import {EMBED_ERROR, EMBED_SUCCESS, FOOTER_MODERATION} from "../../config";
 
 const ms = require("ms");
 
-export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let guildConfig: any = await findGuild(interaction.guild!.id);
 
@@ -14,7 +14,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
     const userToBan = memberOption!.replace("<@!", "").replace(">", "");
     let reason = interaction.options.getString("reason");
     let timeOption = interaction.options.getString('time');
-    let time = timeOption ? ms(timeOption) : langue("ALWAYS");
+    let time = timeOption ? ms(timeOption) : language("ALWAYS");
 
     //ban
     const memberBan = await client.users.fetch(userToBan.replace(/ /g, ""));
@@ -27,7 +27,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
     const memberStaff = interaction.guild?.members.cache.get(interaction.user.id)!;
 
     if (memberGuild && memberStaff.roles.highest.comparePositionTo(memberGuild.roles.highest) <= 0)
-        return interaction.replyErrorMessage(client, langue("BAN_ERROR"), true);
+        return interaction.replyErrorMessage(client, language("BAN_ERROR"), true);
 
     let date = new Date().toLocaleString(guildConfig.language, {
         weekday: 'long',
@@ -56,11 +56,11 @@ export default async function (client: BernardClient, interaction: CommandIntera
             iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
         })
         .setTitle(`${!memberUnban ? "Ban" : "Unban"}`)
-        .setDescription(langue("DESCRIPTION").replace('%user%', interaction.user)
+        .setDescription(language("DESCRIPTION").replace('%user%', interaction.user)
             .replace('%action%', !memberUnban ? "ban" : "unban").replace('%member%', memberBan.tag).replace('%reason%', reason))
         .addFields(
             {
-                name: langue("MEMBER"),
+                name: language("MEMBER"),
                 value: `${memberBan.tag} (${memberBan.id})`,
                 inline: true
             },

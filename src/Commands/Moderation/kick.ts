@@ -12,7 +12,7 @@ import {EMOJIS, EMBED_ERROR, FOOTER_MODERATION, EMBED_INFO} from "../../config";
 
 const Logger = require("../../Librairie/logger");
 
-export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let guildConfig: any = await findGuild(interaction.guild!.id);
     let error = client.getEmoji(EMOJIS.error);
@@ -35,10 +35,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
         second: 'numeric'
     });
 
-    if (!memberKick) return interaction.replyErrorMessage(client, langue("MEMBER_ERROR"), true);
+    if (!memberKick) return interaction.replyErrorMessage(client, language("MEMBER_ERROR"), true);
 
     if (memberStaff.roles.highest.comparePositionTo(memberKick.roles.highest) <= 0)
-        return interaction.replyErrorMessage(client, langue("KICK_ERROR"), true);
+        return interaction.replyErrorMessage(client, language("KICK_ERROR"), true);
 
     let embed = new MessageEmbed()
         .setColor(EMBED_ERROR)
@@ -47,10 +47,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
             iconURL: memberStaff.user.displayAvatarURL({dynamic: true})
         })
         .setTitle(`Kick`)
-        .setDescription(langue("DESCRIPTION").replace('%user%', interaction.user).replace('%member%', memberKick.user.tag).replace('%reason%', reason))
+        .setDescription(language("DESCRIPTION").replace('%user%', interaction.user).replace('%member%', memberKick.user.tag).replace('%reason%', reason))
         .addFields(
             {
-                name: langue("MEMBER"),
+                name: language("MEMBER"),
                 value: `${memberKick} (${memberKick.user.id})`,
                 inline: true
             },
@@ -77,14 +77,14 @@ export default async function (client: BernardClient, interaction: CommandIntera
         );
 
 
-    await interaction.replySuccessMessage(client, langue("EMBED_BEING_CREATED"), false)
+    await interaction.replySuccessMessage(client, language("EMBED_BEING_CREATED"), false)
     let message = <Message>await interaction.editReply({content: null, embeds: [embed], components: [buttons]});
 
     let collector = message.createMessageComponentCollector({filter: ()=> true});
     collector.on("collect", async (inter: ButtonInteraction) => {
         if (inter.customId.split(':')[0] === "kick") {
             if (inter.customId.split(':')[1] !== inter.user.id)
-                return inter.replyErrorMessage(client, langue("RESPONSIBLE_ERROR"), true);
+                return inter.replyErrorMessage(client, language("RESPONSIBLE_ERROR"), true);
 
             guildConfig.stats.sanctionsCase++;
             await editGuild(interaction.guild!.id, guildConfig);
@@ -97,9 +97,9 @@ export default async function (client: BernardClient, interaction: CommandIntera
                     name: `${memberStaff.displayName}#${memberStaff.user.discriminator}`,
                     iconURL: memberStaff.displayAvatarURL({dynamic: true, format: 'png'})
                 })
-                .setDescription(langue("DESCRIPTION_LOG").replace('%user%', interaction.user).replace('%reason%', reason))
+                .setDescription(language("DESCRIPTION_LOG").replace('%user%', interaction.user).replace('%reason%', reason))
                 .setTimestamp()
-                .setFooter({text: langue("CASE").replace('%case%', guildConfig.stats.sanctionsCase)})
+                .setFooter({text: language("CASE").replace('%case%', guildConfig.stats.sanctionsCase)})
 
             await client.getChannel(inter.guild!, guildConfig.channels.logs.public, {embeds: [embedMod]});
 
@@ -107,7 +107,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                 let embedUser = new MessageEmbed()
                     .setColor(EMBED_INFO)
                     .setTitle(`${client.user?.username} Protect - Kick`)
-                    .setDescription(langue("DESCRIPTION_USER").replace('%server%', interaction.guild!.name).replace('%reason%', reason))
+                    .setDescription(language("DESCRIPTION_USER").replace('%server%', interaction.guild!.name).replace('%reason%', reason))
                     .setTimestamp()
                     .setFooter({
                         text: FOOTER_MODERATION,

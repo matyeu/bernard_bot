@@ -1,21 +1,21 @@
 import {BernardClient} from "../../Librairie";
 import {CommandInteraction, MessageActionRow, Modal, TextInputComponent} from "discord.js";
 
-export default async function (client: BernardClient, interaction: CommandInteraction, langue: any) {
+export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
     let modal = new Modal()
         .setCustomId('suggestion')
-        .setTitle(langue("TITLE_MODAL"));
+        .setTitle(language("TITLE_MODAL"));
 
     const titleSuggestion = new TextInputComponent()
         .setCustomId('titleSuggestion')
-        .setLabel(langue("TITLE_SUGGESTION"))
+        .setLabel(language("TITLE_SUGGESTION"))
         .setRequired(true)
         .setStyle('SHORT');
 
     const descriptionSuggestion = new TextInputComponent()
         .setCustomId('descriptionSuggestion')
-        .setLabel(langue("DESCRIPTION_SUGGESTION"))
+        .setLabel(language("DESCRIPTION_SUGGESTION"))
         .setRequired(true)
         .setStyle('PARAGRAPH');
 
