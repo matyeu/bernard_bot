@@ -49,7 +49,6 @@ export async function find(guildID: Snowflake, userID: Snowflake) {
 export async function edit(guildID: Snowflake, userID: Snowflake, data: object) {
     await find(guildID, userID);
     let member = await Members.findOneAndUpdate({guildID, userID}, data, {new:true});
-    Logger.client("Updating a user in the database");
     return await member!.save();
 };
 
