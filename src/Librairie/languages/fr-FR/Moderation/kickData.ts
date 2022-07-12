@@ -7,7 +7,7 @@ const kickDataFR = {
     RESPONSIBLE_ERROR: "Vous n'êtes pas responsable de ce kick!",
     DESCRIPTION_LOG: "**Membre:** %user%\n**Action:** Kick\n**Raison:** %reason%",
     CASE: "Cas %case%",
-    DESCRIPTION_USER: "Vous avez été kick du serveur \`%server%\` pour la raison suivante : **%reason%**",
+    DESCRIPTION_USER: "Vous avez été kick du serveur `%server%` pour la raison suivante : **%reason%**",
 };
 
 

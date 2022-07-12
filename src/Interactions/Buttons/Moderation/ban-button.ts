@@ -7,7 +7,7 @@ import ban from "../../../Commands/Moderation/ban";
 
 const Logger = require("../../../Librairie/logger");
 
-export default async function (client: BernardClient, interaction: ButtonInteraction) {
+export default async function (client: BernardClient, interaction: ButtonInteraction, language: any) {
 
     let guildConfig: any = await findGuild(interaction.guild!.id);
 
@@ -16,14 +16,10 @@ export default async function (client: BernardClient, interaction: ButtonInterac
     let memberGuild = await interaction.guild?.members.cache.get(memberBanId)!;
     let banConfig: any = await findBan(interaction.guild!.id, memberBan.id);
 
-    let error = client.getEmoji(EMOJIS.error);
-    if (!banConfig) return interaction.reply({
-        content: `${error} | The data for this ban was **not found**!`,
-        ephemeral: true
-    })
+    if (!banConfig) return interaction.replyErrorMessage(client, language("BAN_NOT_FOUND"), true);
 
     if (banConfig.memberStaff !== interaction.user.id)
-        return interaction.reply({content: `${error} | **You are not** responsible for this ban!`, ephemeral: true});
+        return interaction.replyErrorMessage(client, language("RESPONSIBLE_ERROR"), true);
 
     let memberStaff = await interaction.guild!.members.fetch(interaction.user.id);
     await interaction.update({components: []});
@@ -37,13 +33,10 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             name: `${memberStaff.displayName}#${memberStaff.user.discriminator}`,
             iconURL: memberStaff.displayAvatarURL({dynamic: true, format: 'png'})
         })
-        .setDescription(`
-**Member:** \`${memberBan.tag}\` (${memberBan.id})
-**Action:** Ban
-**Expiration:** \`${banConfig.time !== "Always" ?  msToTime(banConfig.time) : "Never"}\` 
-**Reason:** ${banConfig.reason}`)
+        .setDescription(language("DESCRIPTION_LOG").replace('%user%', `\`${memberBan.tag}\` (${memberBan.id})`)
+            .replace('%time%', banConfig.time !== language("ALWAYS") ? msToTime(banConfig.time) : language("ALWAYS")))
         .setTimestamp()
-        .setFooter({text: `Case ${guildConfig.stats.sanctionsCase}`})
+        .setFooter({text: language("CASE").replace('%case%', guildConfig.stats.sanctionsCase)});
 
     let channelPublic = guildConfig.channels.logs.public;
     if (!channelPublic) return;
@@ -61,7 +54,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             let embedUser = new MessageEmbed()
                 .setColor(EMBED_INFO)
                 .setTitle(`${client.user?.username} Protect - Ban`)
-                .setDescription(`You have been banned from the \`${interaction.guild?.name}\` server for the following reason: **${banConfig.reason}**`)
+                .setDescription(language("DESCRIPTION_USER").replace('%server%', interaction.guild?.name) .replace('%reason%', banConfig.reason))
                 .setTimestamp()
                 .setFooter({
                     text: FOOTER_MODERATION,
@@ -84,5 +77,6 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 export const button = {
     data: {
         name: "ban",
+        filepath: "Interactions/Buttons/Moderation/banButtonData",
     }
 }

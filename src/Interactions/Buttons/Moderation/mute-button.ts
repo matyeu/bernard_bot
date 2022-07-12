@@ -6,7 +6,7 @@ import {EMBED_CLOSE, EMBED_INFO, EMOJIS, FOOTER_MODERATION} from "../../../confi
 
 const Logger = require("../../../Librairie/logger");
 
-export default async function (client: BernardClient, interaction: ButtonInteraction) {
+export default async function (client: BernardClient, interaction: ButtonInteraction, language: any) {
 
     let guildConfig: any = await findGuild(interaction.guild!.id);
 
@@ -15,14 +15,10 @@ export default async function (client: BernardClient, interaction: ButtonInterac
     let memberGuild = await interaction.guild?.members.cache.get(memberMuteId)!;
     let muteConfig: any = await findMute(interaction.guild!.id, memberMute.id);
 
-    let error = client.getEmoji(EMOJIS.error);
-    if (!muteConfig) return interaction.reply({
-        content: `${error} | The data for this mute was **not found**!`,
-        ephemeral: true
-    })
+    if (!muteConfig) return interaction.replyErrorMessage(client, language("MUTE_NOT_FOUND"), true);
 
     if (muteConfig.memberStaff !== interaction.user.id)
-        return interaction.reply({content: `${error} | **You are not** responsible for this mute!`, ephemeral: true});
+        return interaction.replyErrorMessage(client, language("RESPONSIBLE_ERROR"), true);
 
     let memberStaff = await interaction.guild!.members.fetch(interaction.user.id);
     await interaction.update({components: []});
@@ -36,13 +32,10 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             name: `${memberStaff.displayName}#${memberStaff.user.discriminator}`,
             iconURL: memberStaff.displayAvatarURL({dynamic: true, format: 'png'})
         })
-        .setDescription(`
-**Member:** \`${memberMute.tag}\` (${memberMute.id})
-**Action:** Mute
-**Expiration:** \`${msToTime(muteConfig.time)}\` 
-**Reason:** ${muteConfig.reason}`)
+        .setDescription(language("DESCRIPTION_LOG").replace('%user%', `\`${memberMute.tag}\` (${memberMute.id})`)
+            .replace('%time%', `\`${msToTime(muteConfig.time)}\``).replace('%reason%', muteConfig.reason))
         .setTimestamp()
-        .setFooter({text: `Case ${guildConfig.stats.sanctionsCase}`})
+        .setFooter({text: language("CASE").replace('%case%', guildConfig.stats.sanctionsCase)});
 
     let channelPublic = guildConfig.channels.logs.public;
     if (!channelPublic) return;
@@ -60,7 +53,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             let embedUser = new MessageEmbed()
                 .setColor(EMBED_INFO)
                 .setTitle(`${client.user?.username} Protect - Mute`)
-                .setDescription(`You have been muted from the \`${interaction.guild?.name}\` server for the following reason: **${muteConfig.reason}**`)
+                .setDescription(language("DESCRIPTION_USER").replace('%server%', interaction.guild?.name) .replace('%reason%', muteConfig.reason))
                 .setTimestamp()
                 .setFooter({
                     text: FOOTER_MODERATION,
@@ -82,5 +75,6 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 export const button = {
     data: {
         name: "mute",
+        filepath: "Interactions/Buttons/Moderation/muteButtonData",
     }
 }

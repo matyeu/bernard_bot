@@ -61,31 +61,31 @@ export default async function (client: BernardClient, interaction: Interaction) 
 
     } else if (interaction.isButton()) {
         try {
-            const button = client.buttons.get(interaction.customId.split(':')[0]);
-            if (!button) return;
-            const languageButton = require(`../../Librairie/languages/${guildConfig.language}/Interactions/Buttons/${interaction.customId}Data`);
+            const getButton = client.buttons.get(interaction.customId.split(':')[0]);
+            if (!getButton) return;
+            const languageButton = require(`../../Librairie/languages/${guildConfig.language}/${getButton.button.data.filepath}`);
             Logger.client(`The ${interaction.customId} button was used by ${interaction.user?.tag} on the ${interaction.guild?.name} server.`);
-            button.default(client, interaction, languageButton)
+            getButton.default(client, interaction, languageButton)
         } catch (err) {
             return console.error(err)
         }
 
     } else if (interaction.isSelectMenu()) {
         try {
-            const selectMenu = client.selects.get(interaction.customId);
-            if (!selectMenu) return;
-            const languageSelect = require(`../../Librairie/languages/${guildConfig.language}/Interactions/Selectmenus/${interaction.customId}Data`);
+            const getSelectMenu = client.selects.get(interaction.customId);
+            if (!getSelectMenu) return;
+            const languageSelect = require(`../../Librairie/languages/${guildConfig.language}/${getSelectMenu.select.data.filepath}`);
             Logger.client(`The ${interaction.customId} select-menu was used by ${interaction.user.tag} on the ${interaction.guild?.name} server.`);
-            selectMenu.default(client, interaction, languageSelect)
+            getSelectMenu.default(client, interaction, languageSelect)
         } catch (err) {
             return console.error(err)
         }
     } else if (interaction.isModalSubmit()) {
         try {
-            const modal = client.modals.get(interaction.customId.split(':')[0]);
-            const languageModal = require(`../../Librairie/languages/${guildConfig.language}/Interactions/Modals/${interaction.customId}Data`);
+            const getModal = client.modals.get(interaction.customId.split(':')[0]);
+            const languageModal = require(`../../Librairie/languages/${guildConfig.language}/${getModal.modal.data.filepath}`);
             Logger.client(`The ${interaction.customId} modal was used by ${interaction.user.tag} on the ${interaction.guild?.name} server.`);
-            await modal.default(client, interaction, languageModal);
+            await getModal.default(client, interaction, languageModal);
         } catch (err) {
             console.error(err)
         }

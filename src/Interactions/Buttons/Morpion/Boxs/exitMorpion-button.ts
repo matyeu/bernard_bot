@@ -3,7 +3,7 @@ import {ButtonInteraction, MessageEmbed} from "discord.js";
 import {find} from "../../../../Models/morpion";
 import {EMBED_SUCCESS, EMOJIS} from "../../../../config";
 
-export default async function (client: BernardClient, interaction: ButtonInteraction) {
+export default async function (client: BernardClient, interaction: ButtonInteraction, language: any) {
 
     let interactionTcheck = interaction.customId;
     let interactionUserId = interaction.user.id;
@@ -12,7 +12,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
         check = client.getEmoji(EMOJIS.check);
 
     if (interactionTcheck.substring(30, 12) !== interactionUserId && interactionTcheck.split('-')[1] !== interactionUserId)
-        return interaction.reply({content: `${error} | You are **not part** of the game!`, ephemeral: true});
+        return interaction.replyErrorMessage(client, language("ERROR_GAME"), true);
 
 
     let requestGameUser = interactionTcheck.substring(30, 12)
@@ -26,12 +26,13 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 
     let embed = new MessageEmbed()
         .setColor(EMBED_SUCCESS)
-        .setDescription(`${check} | ${interaction.user} your game has been **cancelled**!`)
+        .setDescription(language("GAME_CANCEL").replace('%member%', interaction.user))
     await interaction.update({embeds: [embed], components: []});
 };
 
 export const button = {
     data: {
         name: "exitMorpion",
+        filepath: "Interactions/Buttons/Morpion/Boxs/boxsButtonData",
     }
 }

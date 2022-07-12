@@ -5,7 +5,7 @@ import {
     Collection,
     CommandInteraction,
     Guild, MessageEmbed,
-    MessageOptions,
+    MessageOptions, ModalSubmitInteraction, SelectMenuInteraction,
     Snowflake,
     TextChannel
 } from 'discord.js';
@@ -86,6 +86,24 @@ declare module "discord.js" {
 
         editErrorMessage(client: BernardClient, content: string, ephemeral: boolean): any;
     }
+    interface SelectMenuInteraction {
+        replySuccessMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+
+        replyErrorMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+
+        editSuccessMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+
+        editErrorMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+    }
+    interface ModalSubmitInteraction {
+        replySuccessMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+
+        replyErrorMessage(client: BernardClient, content: string, ephemeral: boolean): Promise<void>;
+
+        editSuccessMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+
+        editErrorMessage(client: BernardClient, content: string, ephemeral: boolean): any;
+    }
 }
 
 CommandInteraction.prototype.replySuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
@@ -111,6 +129,32 @@ ButtonInteraction.prototype.editSuccessMessage = function (client: BernardClient
     return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
 };
 ButtonInteraction.prototype.editErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
+};
+
+SelectMenuInteraction.prototype.replySuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
+};
+SelectMenuInteraction.prototype.replyErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
+};
+SelectMenuInteraction.prototype.editSuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
+};
+SelectMenuInteraction.prototype.editErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
+};
+
+ModalSubmitInteraction.prototype.replySuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
+};
+ModalSubmitInteraction.prototype.replyErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
+};
+ModalSubmitInteraction.prototype.editSuccessMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
+    return this.reply({content: `${client.getEmoji(EMOJIS.check)} | ${content}`, ephemeral: ephemeral});
+};
+ModalSubmitInteraction.prototype.editErrorMessage = function (client: BernardClient, content: string, ephemeral: boolean) {
     return this.reply({content: `${client.getEmoji(EMOJIS.error)} | ${content}`, ephemeral: ephemeral});
 };
 

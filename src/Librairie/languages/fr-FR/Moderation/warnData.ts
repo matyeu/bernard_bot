@@ -8,10 +8,10 @@ const warnDataFR = {
     NOT_WARNING: "Ce warn n'existe pas dans la base de données.",
     REASON_REQUIRED: "Une raison est **nécessaire** pour supprimer un warn.",
     WARN_USER_HAS: "%user% possède **%number%** warns.",
-    NAME_VALUE_USER: "Warn n°%number% par \`%staff%\` le %date%:",
+    NAME_VALUE_USER: "Warn n°%number% par `%staff%` le %date%:",
     WARN_SERVER_HAS: "%server% possède **%number%** warns.",
     OLD_MEMBER: "Un ancien membre",
-    NAME_VALUE_SERVER: "Warn %user% par \`%staff%\` le %date%:",
+    NAME_VALUE_SERVER: "Warn %user% par `%staff%` le %date%:",
     DEFAULT: "La sous-commande %subcommand% **n'existe pas**."
 };
 

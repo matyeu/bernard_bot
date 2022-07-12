@@ -3,11 +3,11 @@ import {MessageEmbed, SelectMenuInteraction} from "discord.js";
 import {EMBED_GENERAL, FOOTER, LINK_DISCORD, LINK_GITHUB_BOT, LINK_GITHUB_SITE} from "../../config";
 import {readdirSync} from "fs";
 
-export default async function (client: BernardClient, interaction: SelectMenuInteraction) {
+export default async function (client: BernardClient, interaction: SelectMenuInteraction, language: any) {
 
     const embed = new MessageEmbed()
         .setColor(EMBED_GENERAL)
-        .setAuthor({name: `❓ Getting help`})
+        .setAuthor({name: language("AUTHOR")})
         .setTimestamp()
         .setFooter({text: FOOTER, iconURL: interaction.client.user?.displayAvatarURL({dynamic: true, format: "png"})})
 
@@ -15,7 +15,7 @@ export default async function (client: BernardClient, interaction: SelectMenuInt
         switch (interaction.values[0]) {
             case 'general':
                 const commandFolder = readdirSync('./src/Commands');
-                embed.setTitle(`🎈 The list of orders 🎈 `)
+                embed.setTitle(language("TITLE_GENERAL"));
                 for (const category of commandFolder) {
                     if (category === "Development") continue;
                     embed.addFields({
@@ -25,14 +25,11 @@ export default async function (client: BernardClient, interaction: SelectMenuInt
                 }
                 break;
             case 'link':
-                embed.setDescription(`
-**• Link support :** ${LINK_DISCORD}
-**• Link github bot :** ${LINK_GITHUB_BOT}
-**• Link github site :** ${LINK_GITHUB_SITE}
-                `)
+                embed.setDescription(language("DESCRIPTION_LINK").replace("%discord%", LINK_DISCORD)
+                    .replace("%bot%", LINK_GITHUB_BOT).replace("%site%", LINK_GITHUB_SITE));
                 break;
             default:
-                interaction.reply({content: `**This value cannot be found !**`, ephemeral: true})
+                return interaction.replyErrorMessage(client, language("DEFAULT").replace('%subcommand%', interaction.values[0]), true)
         };
     });
     return interaction.followUp({embeds: [embed]})
@@ -42,5 +39,6 @@ export default async function (client: BernardClient, interaction: SelectMenuInt
 export const select = {
     data: {
         name: "selectHelp",
+        filepath: "Interactions/Selectmenus/selectHelpData",
     }
 }

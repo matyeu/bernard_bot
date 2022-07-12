@@ -1,16 +1,15 @@
 import {BernardClient} from "../../../../../Librairie";
 import {ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed} from "discord.js";
-import {EMBED_GENERAL, EMOJIS} from "../../../../../config";
+import {EMBED_GENERAL} from "../../../../../config";
 import {find, edit} from "../../../../../Models/morpion";
 
-export default async function (client: BernardClient, interaction: ButtonInteraction) {
+export default async function (client: BernardClient, interaction: ButtonInteraction, language: any) {
 
     let interactionTcheck = interaction.customId;
     let interactionUserId = interaction.user.id;
 
-    let error = client.getEmoji(EMOJIS.error);
     if (interactionTcheck.substring(33, 15) !== interactionUserId && interactionTcheck.split('-')[1] !== interactionUserId)
-        return interaction.reply({content: `${error} | You are **not part** of the game!`, ephemeral: true});
+        return interaction.replyErrorMessage(client, language("ERROR_GAME"), true);
 
     let requestGameUser = interactionTcheck.substring(33, 15);
     let member = await interaction.guild!.members.fetch(requestGameUser);
@@ -19,7 +18,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
     let gridBox = morpionConfig.grid;
 
     if (morpionConfig.currentPlayer !== interactionUserId)
-        return interaction.reply({content: `${error} | It's **not your turn**!`, ephemeral: true});
+        return interaction.replyErrorMessage(client, language("ERROR_TURN"), true)
 
     morpionConfig.currentPlayer = interactionUserId === morpionConfig.userID_1 ? morpionConfig.userID_2 : morpionConfig.userID_1;
     gridBox[1][2] = interactionUserId === morpionConfig.firstPlayer ? "⭕" : "❌";
@@ -119,7 +118,8 @@ export default async function (client: BernardClient, interaction: ButtonInterac
                 .setDisabled(true)
         )
 
-    let messageVictory = `❗️ | ${interaction.user} **won** the game against <@${interactionUserId === morpionConfig.userID_1 ? morpionConfig.userID_2 : morpionConfig.userID_1}>.`;
+    let messageVictory = language("CONTENT_VICTORY").replace('%memberWin%', interaction.user)
+        .replace('%memberLost%', `<@${interactionUserId === morpionConfig.userID_1 ? morpionConfig.userID_2 : morpionConfig.userID_1}>`);
 
     if (gridBox[1][2] === gridBox[1][0] && gridBox[1][2] === gridBox[1][1]){
         await interaction.update({content: `${messageVictory}`, components: [], embeds: []})
@@ -130,7 +130,8 @@ export default async function (client: BernardClient, interaction: ButtonInterac
         return morpionConfig.delete();
     }
     else if (morpionConfig.boxChecked === 9) {
-        await interaction.update({content: `❗️ | The game between <@${morpionConfig.userID_1}> and <@${morpionConfig.userID_2}> is over : **Draw**`, components: [], embeds: []})
+        await interaction.update({content: language("CONTENT_BETWEEN")
+                .replace('%member1%', `<@${morpionConfig.userID_1}>`).replace('%member2%', `<@${morpionConfig.userID_2}>`), components: [], embeds: []})
         return morpionConfig.delete();
     }
 
@@ -140,5 +141,6 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 export const button = {
     data: {
         name: "boxCenterRight",
+        filepath: "Interactions/Buttons/Morpion/Boxs/boxsButtonData",
     }
 }

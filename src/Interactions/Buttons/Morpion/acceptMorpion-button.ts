@@ -1,21 +1,19 @@
 import {BernardClient} from "../../../Librairie";
 import {ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed} from "discord.js";
 import {edit, find} from "../../../Models/morpion";
-import {EMBED_GENERAL, EMOJIS} from "../../../config";
+import {EMBED_GENERAL} from "../../../config";
 
-export default async function (client: BernardClient, interaction: ButtonInteraction) {
-
-    let error = client.getEmoji(EMOJIS.error);
+export default async function (client: BernardClient, interaction: ButtonInteraction, language: any) {
 
     if (interaction.customId.split(':')[1] === interaction.user.id)
-        return interaction.reply({content: `${error} | **You can't play** against yourself!`, ephemeral: true});
+        return interaction.replyErrorMessage(client, language("ERROR_YOURSELF"), true)
 
     let button = new MessageActionRow()
         .addComponents(
             new MessageButton()
                 .setCustomId(`acceptMorpion`)
                 .setEmoji('🎮')
-                .setLabel("Join the game")
+                .setLabel(language("LABEL_JOIN"))
                 .setStyle("SECONDARY")
                 .setDisabled(true)
 
@@ -43,7 +41,8 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 
     let embed = new MessageEmbed()
         .setColor(EMBED_GENERAL)
-        .setDescription(`**${member} vs ${interaction.user}\n\n❗️ <@${firstPlayer}> starts with the circles**`)
+        .setDescription(language("CONTENT_START").replace('%member1%', member)
+            .replace('%member2%', interaction.user).replace('%firstPlayer%', firstPlayer))
 
     let buttonsTop = new MessageActionRow()
         .addComponents(
@@ -144,5 +143,6 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 export const button = {
     data: {
         name: "acceptMorpion",
+        filepath: "Interactions/Buttons/Morpion/acceptMorpionButtonData",
     }
 }

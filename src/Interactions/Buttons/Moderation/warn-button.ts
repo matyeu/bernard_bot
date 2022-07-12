@@ -6,7 +6,7 @@ import {EMBED_CLOSE, EMBED_INFO, EMOJIS} from "../../../config";
 
 const Logger = require("../../../Librairie/logger");
 
-export default async function (client: BernardClient, interaction: ButtonInteraction) {
+export default async function (client: BernardClient, interaction: ButtonInteraction, language: any) {
 
     let guildConfig: any = await findGuild(interaction.guild!.id);
     let idWarning = interaction.customId.split('-')[1];
@@ -15,11 +15,13 @@ export default async function (client: BernardClient, interaction: ButtonInterac
     let warnConfig: any = await findOneWarn(interaction.guild!.id, memberWarnId, idWarning);
 
     let error = client.getEmoji(EMOJIS.error);
+    if (!warnConfig) return interaction.replyErrorMessage(client, language("UNWARN_NOT_FOUND"), true);
+
     if (warnConfig.memberStaff !== interaction.user.id)
-        return interaction.reply({content: `${error} | **You are not** responsible for this ban!`, ephemeral: true});
+        return interaction.replyErrorMessage(client, language("ERROR_AUTHOR"), true);
 
     if (!memberWarn)
-        return interaction.reply({content: `${error} | This user does **not exist** or **cannot be found**.`, ephemeral: true});
+        return interaction.replyErrorMessage(client, language("ERROR_MEMBER"), true);
 
     let memberStaff = await interaction.guild!.members.fetch(interaction.user.id);
     await interaction.update({components: []});
@@ -30,12 +32,10 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             name: `${memberStaff.displayName}#${memberStaff.user.discriminator}`,
             iconURL: memberStaff.displayAvatarURL({dynamic: true, format: 'png'})
         })
-        .setDescription(`
-**Member:** \`${memberWarn.user.tag}\` (${memberWarn.id})
-**Action:** Warn
-**Reason:** ${warnConfig.reason}`)
+        .setDescription(language("DESCRIPTION_LOG").replace('%user%', `\`${memberWarn.user.tag}\` (${memberWarn.id})`)
+            .replace('%reason%', warnConfig.reason))
         .setTimestamp()
-        .setFooter({text: `Case ${warnConfig.id}`})
+        .setFooter({text: language("CASE").replace('%case%', guildConfig.stats.sanctionsCase)});
 
     let channelPublic = guildConfig.channels.logs.public;
     if (!channelPublic) return;
@@ -51,12 +51,12 @@ export default async function (client: BernardClient, interaction: ButtonInterac
         let embedUser = new MessageEmbed()
             .setColor(EMBED_INFO)
             .setTitle(`${client.user?.username} Protect - Warn`)
-            .setDescription(`You have been warned from the \`${interaction.guild?.name}\` server for the following reason: **${warnConfig.reason}**`)
+            .setDescription(language("DESCRIPTION_USER").replace('%server%', interaction.guild!.name).replace('%reason%', warnConfig.reason))
             .addFields(
-                {name: `Server`, value: `${interaction.guild?.name}`, inline: true},
+                {name: language("NAME_SERVER"), value: `${interaction.guild?.name}`, inline: true},
                 {name: `Date`, value: `\`${warnConfig.date}\``, inline: true},
-                {name: `Warning number`, value: `\`${warnConfig.id}\``, inline: true})
-            .setFooter({text: `The warning number is to be kept for any claim`})
+                {name: language("NAME_WARN"), value: `\`${warnConfig.id}\``, inline: true})
+            .setFooter({text: language("FOOTER")})
         await memberWarn.send({embeds: [embedUser]});
     } catch (err: any) {
         if (err.message.match("Cannot send messages to this user"))
@@ -70,5 +70,6 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 export const button = {
     data: {
         name: "warn",
+        filepath: "Interactions/Buttons/Moderation/warnButtonData",
     }
 }
