@@ -13,6 +13,10 @@ export default async function (client: BernardClient, interaction: CommandIntera
         return interaction.replyErrorMessage(client, language("MEMBER_ERROR"), true);
 
     let memberConfig: any = await find(member.guild.id, member.id);
+    if (!memberConfig) return interaction.replyErrorMessage(client,
+        language("ACCOUNT_UNDEFINED").replace('%user%',`${member.displayName}#${member.user.discriminator}`), true);
+
+
     let memberEquipment = memberConfig.inventory.equipements;
 
     const headset = client.getEmoji(EMOJIS.headsetEq);

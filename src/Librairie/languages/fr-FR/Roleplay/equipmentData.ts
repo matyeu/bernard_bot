@@ -1,5 +1,6 @@
 const equipmentDataFR = {
     MEMBER_ERROR: "Cet utilisateur **n'existe pas** ou **n'a pas été trouvé**.",
+    ACCOUNT_UNDEFINED: "**%user% n'a pas** encore de **compte role-play**.",
     AUTHOR: "Équipement de  %user%",
     HEADSET: "Casque",
     LEGWARMERS: "Jambières",
