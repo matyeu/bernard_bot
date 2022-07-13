@@ -67,6 +67,7 @@ export const slash = {
         name: "members",
         description: "Displays the number of members.",
         category: "Informations",
+        permissions: ["SEND_MESSAGES"],
         defaultPermission: false
     }
 }

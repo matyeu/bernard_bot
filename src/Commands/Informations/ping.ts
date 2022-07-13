@@ -34,6 +34,7 @@ export const slash = {
         name: "ping",
         description: "Ping ? Pong !",
         category: "Informations",
+        permissions: ["SEND_MESSAGES"],
         defaultPermission: false
     }
 }

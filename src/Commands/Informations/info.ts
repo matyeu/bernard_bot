@@ -172,6 +172,7 @@ export const slash = {
         name: "info",
         description: "Get informations",
         category: "Informations",
+        permissions: ["SEND_MESSAGES"],
         options: [
             {
                 name: "user",
