@@ -6,7 +6,7 @@ import {EMBED_INFO, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, oldGuild: Guild, newGuild: Guild) {
 
     let guildConfig: any = await find(oldGuild.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/guildData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/guildData`);
     let server = guildConfig.channels.logs.server;
 
     let hastag = "🎙",

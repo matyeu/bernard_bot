@@ -11,7 +11,7 @@ export default async function (client: BernardClient, message: Message) {
     const memberId = message.member!.id;
 
     let guildConfig: any = await finGuild(guildId);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/messageData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/messageData`);
     let memberConfig: any = await findMember(guildId, memberId);
     if (message.channel.id === guildConfig.channels.configVoice && !message.author.bot) await message.delete();
 
@@ -23,7 +23,8 @@ export default async function (client: BernardClient, message: Message) {
 
             if (memberConfig.afk.statut) {
                 await message.channel.send(memberConfig.afk.reason.length > 0 ? language("AFK_MESSAGE_WITH_REASON")
-                        .replace('%member%', mentiondMember.tag).replace('%reason%', memberConfig.afk.reason) : language("AFK_MESSAGE"))
+                        .replace('%member%', mentiondMember.tag).replace('%reason%', memberConfig.afk.reason) : language("AFK_MESSAGE")
+                    .replace('%member%', mentiondMember.tag));
             }
         }
     }

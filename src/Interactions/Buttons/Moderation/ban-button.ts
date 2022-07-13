@@ -34,7 +34,8 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             iconURL: memberStaff.displayAvatarURL({dynamic: true, format: 'png'})
         })
         .setDescription(language("DESCRIPTION_LOG").replace('%user%', `\`${memberBan.tag}\` (${memberBan.id})`)
-            .replace('%time%', banConfig.time !== language("ALWAYS") ? msToTime(banConfig.time) : language("ALWAYS")))
+            .replace('%time%', banConfig.time !== language("ALWAYS") ? msToTime(banConfig.time) : language("ALWAYS"))
+            .replace('%reason%', banConfig.reason))
         .setTimestamp()
         .setFooter({text: language("CASE").replace('%case%', guildConfig.stats.sanctionsCase)});
 

@@ -57,7 +57,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
             userToRemoveConfig.money += montant;
             await edit(interaction.guild!.id, interaction.user.id, userToRemoveConfig);
             return interaction.replySuccessMessage(client,
-                language("MONTANT_ADDED").replace('%montant%', montant).replace('%emoji%', money), false);
+                language("MONTANT_REMOVED").replace('%montant%', montant).replace('%emoji%', money), false);
             break;
         default: return interaction.replyErrorMessage(client,
             language("DEFAULT").replace('%subcommand%', interaction.options.getSubcommand()), true);

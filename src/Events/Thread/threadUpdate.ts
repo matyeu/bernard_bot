@@ -7,7 +7,7 @@ export default async function (client: BernardClient, oldThread: ThreadChannel, 
     if (oldThread.archived && !newThread.archived) await newThread.join();
 
     let guildConfig: any = await find(oldThread.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/threadData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/threadData`);
     let server = guildConfig.channels.logs.server;
 
     let threadEmoji = client.getEmoji(EMOJIS.thread);

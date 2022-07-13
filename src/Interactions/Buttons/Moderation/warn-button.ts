@@ -2,7 +2,7 @@ import {BernardClient} from "../../../Librairie";
 import {ButtonInteraction, Message, MessageEmbed} from "discord.js";
 import {find as findGuild} from "../../../Models/guild";
 import {findOne as findOneWarn, edit as editWarn} from "../../../Models/warns";
-import {EMBED_CLOSE, EMBED_INFO, EMOJIS} from "../../../config";
+import {EMBED_CLOSE, EMBED_INFO} from "../../../config";
 
 const Logger = require("../../../Librairie/logger");
 
@@ -14,8 +14,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
     let memberWarn = interaction.guild?.members.cache.get(memberWarnId)!;
     let warnConfig: any = await findOneWarn(interaction.guild!.id, memberWarnId, idWarning);
 
-    let error = client.getEmoji(EMOJIS.error);
-    if (!warnConfig) return interaction.replyErrorMessage(client, language("UNWARN_NOT_FOUND"), true);
+    if (!warnConfig) return interaction.replyErrorMessage(client, language("WARN_NOT_FOUND"), true);
 
     if (warnConfig.memberStaff !== interaction.user.id)
         return interaction.replyErrorMessage(client, language("ERROR_AUTHOR"), true);
@@ -25,6 +24,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
 
     let memberStaff = await interaction.guild!.members.fetch(interaction.user.id);
     await interaction.update({components: []});
+    await interaction.followUp({content: language("CONTENT").replace('%user%', memberWarn.user.tag), ephemeral: true});
 
     let embedMod = new MessageEmbed()
         .setColor(EMBED_CLOSE)

@@ -15,7 +15,7 @@ const Logger = require("../../Librairie/logger");
 export default async function (client: BernardClient, newMember: GuildMember) {
 
     let guildConfig: any = await findGuild(newMember.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/guildData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/guildData`);
 
     if (newMember.user.bot && guildConfig.modules.antibot) {
         await newMember.kick(`${newMember.user.tag} is a bot`)
@@ -61,7 +61,7 @@ export default async function (client: BernardClient, newMember: GuildMember) {
     context.fillText(username, canvas.width - 660, canvas.height - 248);
 
     context.font = applyText(canvas, language("WELCOME_SERVER").replace('%server%', newMember.guild.name), 53);
-    context.fillText(`Welcome to ${newMember.guild.name}`, canvas.width - 690, canvas.height - 65);
+    context.fillText(language("WELCOME_SERVER").replace('%server%', newMember.guild.name), canvas.width - 690, canvas.height - 65);
 
     context.font = "22px Bold";
     context.fillText(`- ${newMember.guild.memberCount} members!`, 40, canvas.height - 50)
@@ -107,7 +107,7 @@ export default async function (client: BernardClient, newMember: GuildMember) {
             name: `${newMember.user.tag} (${newMember.id})`,
             iconURL: newMember.user.displayAvatarURL({dynamic: true, format: 'png'})
         })
-        .setDescription(language("WELCOME_DESCRIPTION").replace('%member%', user).replace('%created%', created).replace('%joined%', joined))
+        .setDescription(language("WELCOME_DESCRIPTION").replace('%member%', user).replace('%createdAt%', created).replace('%joinedAt%', joined))
         .setTimestamp()
         .setFooter({text: 'User joined'})
     await client.getChannel(<Guild>newMember!.guild, guildConfig.channels.logs.members, {embeds: [embedLog]});

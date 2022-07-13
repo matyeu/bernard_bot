@@ -2,6 +2,7 @@ import {BernardClient} from "../../Librairie";
 import {MessageEmbed, MessageReaction, User} from "discord.js";
 import {EMBED_GENERAL, EMOJIS, FOOTER, SERVER} from "../../config";
 import {find} from "../../Models/client";
+import {find as findGuild} from "../../Models/guild";
 
 const Logger = require("../../Librairie/logger");
 
@@ -21,8 +22,8 @@ export default async function (client: BernardClient, messageReaction: MessageRe
     const emoji = messageReaction.emoji.id;
 
     let clientConfig: any = await find(SERVER.id);
-    let guildConfig: any = await find(message.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/messageReactionData`);
+    let guildConfig: any = await findGuild(message.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/messageReactionData`);
     let channelSuggest = clientConfig.suggestion;
     let channelBug = clientConfig.bug;
 

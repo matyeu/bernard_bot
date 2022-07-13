@@ -6,7 +6,7 @@ import {EMBED_INFO, EMOJIS, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, oldChannel: TextChannel, newChannel: TextChannel) {
 
     let guildConfig: any = await find(oldChannel.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/channelData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/channelData`);
     let server = guildConfig.channels.logs.server;
 
     if (oldChannel.rawPosition !== newChannel.rawPosition) return;

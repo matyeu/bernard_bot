@@ -78,7 +78,7 @@ ${customStatus ? `**Custom Description:** ${customStatus}` : ""}
 **» ${language("ACCOUNT")}** <t:${createdTimestamp}:f>
 **» Statut:** \`${statusFlags[<keyof object>member.presence?.status]}\`
 **» Badges:** ${userFlags.length > 0 ? `\`${userFlags.map(flag => perkFlags[<keyof object>flag]).join(', ')}\`` : '`Aucun`' }
-**»** ${activities.length > 0 ? activities.join(', ') : ""}`)
+**»** ${activities.length > 0 ? activities.join(', ') : "`None`"}`)
                 .addFields(
                     {name: "Roles", value: `${member.roles.cache.map(role => role).join(', ').replace(', @everyone', ' ')}`}
                 )

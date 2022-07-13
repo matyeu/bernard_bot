@@ -10,7 +10,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
 
     if (oldMember.member?.user.bot) return;
     let guildConfig: any = await find(oldMember.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/channelData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/channelData`);
     let memberConfig: any = await findMember(oldMember.guild!.id, oldMember.id);
     let voiceRole = client.getRole(oldMember.guild, guildConfig.roles.voice);
     let server = guildConfig.channels.logs.server;

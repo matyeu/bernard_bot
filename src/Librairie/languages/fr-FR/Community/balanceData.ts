@@ -5,7 +5,7 @@ const balanceDataFR = {
     MONEY_VALUE: "Liquide",
     BANK_VALUE: "Banque",
     SPECIFY_MONTANT: "Vous devez **spécifier un montant**.",
-    MONTANT_ENOUGH: "Vous n'avez pas assez d'argent pour ajouter ce montant.",
+    MONTANT_ENOUGH: "**Vous n'avez pas** assez d'argent pour ajouter ce montant.",
     MONTANT_ADDED: "Vous avez **ajouté %montant% %emoji%** à votre banque.",
     MONTANT_REMOVED: "Vous avez **retiré %montant% %emoji%** à votre banque.",
     DEFAULT: "La sous-commande %subcommand% **n'existe pas**.",

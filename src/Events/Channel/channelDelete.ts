@@ -6,7 +6,7 @@ import {EMBED_ERROR, EMOJIS, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, channel: GuildChannel) {
 
     let guildConfig: any = await find(channel.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/channelData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/channelData`);
     let server = guildConfig.channels.logs.server;
 
     let channelEmoji = client.getEmoji(EMOJIS.channel);

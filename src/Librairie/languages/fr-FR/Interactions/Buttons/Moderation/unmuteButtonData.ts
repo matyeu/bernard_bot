@@ -3,7 +3,8 @@ const unmuteButtonDataFR = {
     UNMUTE_NOT_FOUND: "Ce mute **n'existe pas** dans la base de données!",
     RESPONSIBLE_ERROR: "Vous n'êtes pas responsable de ce unmute!",
     DESCRIPTION_LOG: "**Membre:** %user%\n**Action:** Unmute\n**Raison:** %reason%\n**Reference:** %reference%",
-    CASE: "Cas %case%"
+    CASE: "Cas %case%",
+    DESCRIPTION_USER: "Vous avez été unmute du serveur `%server%` pour la raison suivante : **%reason%**"
 };
 
 

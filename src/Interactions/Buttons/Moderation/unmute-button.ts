@@ -54,7 +54,7 @@ export default async function (client: BernardClient, interaction: ButtonInterac
             let embedUser = new MessageEmbed()
                 .setColor(EMBED_INFO)
                 .setTitle(`${client.user?.username} Protect - Unmute`)
-                .setDescription(language("DESCRIPTION_USER").replace('%server%', interaction.guild?.name) .replace('%reason%', muteConfig.reason))
+                .setDescription(language("DESCRIPTION_USER").replace('%server%', interaction.guild?.name).replace('%reason%', muteConfig.reason))
                 .setTimestamp()
                 .setFooter({
                     text: FOOTER_MODERATION,

@@ -6,7 +6,7 @@ import {EMBED_SUCCESS, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, role: Role) {
 
     let guildConfig: any = await find(role.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/roleData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/roleData`);
     let server = guildConfig.channels.logs.server;
 
     const embed = new MessageEmbed()

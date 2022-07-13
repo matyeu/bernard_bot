@@ -6,7 +6,7 @@ import {EMBED_INFO, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, oldRole: Role, newRole: Role) {
 
     let guildConfig: any = await find(oldRole.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/roleData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/roleData`);
     let server = guildConfig.channels.logs.server;
 
     if (oldRole.rawPosition !== newRole.rawPosition) return;

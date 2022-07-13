@@ -6,7 +6,7 @@ import {EMBED_INFO, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, oldEmoji: GuildEmoji, newEmoji: GuildEmoji) {
 
     let guildConfig: any = await find(oldEmoji.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/emojiData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/emojiData`);
     let server = guildConfig.channels.logs.server;
 
     let embed = new MessageEmbed()

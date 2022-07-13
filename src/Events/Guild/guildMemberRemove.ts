@@ -17,7 +17,7 @@ export default async function (client: BernardClient, oldMember: GuildMember) {
     if (oldMember.user.bot) return;
 
     let guildConfig: any = await findGuild(oldMember.guild!.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/guildData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/guildData`);
     let memberConfig: any = await findMember(oldMember.guild!.id, oldMember.id);
     if (memberConfig) await memberConfig.delete();
 
@@ -93,7 +93,7 @@ export default async function (client: BernardClient, oldMember: GuildMember) {
             name: `${oldMember.user.tag} (${oldMember.id})`,
             iconURL: oldMember.user.displayAvatarURL({dynamic: true, format: 'png'})
         })
-        .setDescription(language("GOODBYE_DESCRIPTION").replace('%user%', user).replace('%created%', created).replace('%left%', left))
+        .setDescription(language("GOODBYE_DESCRIPTION").replace('%member%', user).replace('%createdAt%', created).replace('%left%', left))
         .setTimestamp()
         .setFooter({text: 'User left'})
     await client.getChannel(<Guild>oldMember!.guild, guildConfig.channels.logs.members, {embeds: [embedLog]});

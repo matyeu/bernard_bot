@@ -8,7 +8,7 @@ export default async function (client: BernardClient, oldMember: GuildMember, ne
 
     let guildConfig: any = await find(oldMember.guild!.id);
     let memberConfig: any = await findMember(oldMember.guild!.id, oldMember.id);
-    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/guildData`);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/guildData`);
     let server = guildConfig.channels.logs.server;
 
     const embed = new MessageEmbed()

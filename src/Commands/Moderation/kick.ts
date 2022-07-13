@@ -97,7 +97,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
                     name: `${memberStaff.displayName}#${memberStaff.user.discriminator}`,
                     iconURL: memberStaff.displayAvatarURL({dynamic: true, format: 'png'})
                 })
-                .setDescription(language("DESCRIPTION_LOG").replace('%user%', interaction.user).replace('%reason%', reason))
+                .setDescription(language("DESCRIPTION_LOG").replace('%user%', memberKick).replace('%reason%', reason))
                 .setTimestamp()
                 .setFooter({text: language("CASE").replace('%case%', guildConfig.stats.sanctionsCase)})
 
