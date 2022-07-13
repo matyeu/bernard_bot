@@ -15,6 +15,7 @@ const Logger = require("../../Librairie/logger");
 export default async function (client: BernardClient, newMember: GuildMember) {
 
     let guildConfig: any = await findGuild(newMember.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/guildData`);
 
     if (newMember.user.bot && guildConfig.modules.antibot) {
         await newMember.kick(`${newMember.user.tag} is a bot`)
@@ -26,7 +27,7 @@ export default async function (client: BernardClient, newMember: GuildMember) {
                 name: `${newMember.user.tag}`,
                 iconURL: `${newMember.user.displayAvatarURL({dynamic: true, format: "png"})}`
             })
-            .setDescription(`**${newMember.user}** was kicked because it is a bot and the anti-bot is **enabled**`)
+            .setDescription(language("ANTIBOT").replace("%user%", newMember.user))
         return client.getChannel(<Guild>newMember!.guild, guildConfig.channels.log.sanction,
             {content: `<@&${guildConfig.roles.staffs}>`, embeds: [embed]});
     }
@@ -59,7 +60,7 @@ export default async function (client: BernardClient, newMember: GuildMember) {
     context.font = applyText(canvas, username, 48);
     context.fillText(username, canvas.width - 660, canvas.height - 248);
 
-    context.font = applyText(canvas, `Welcome to ${newMember.guild.name}`, 53);
+    context.font = applyText(canvas, language("WELCOME_SERVER").replace('%server%', newMember.guild.name), 53);
     context.fillText(`Welcome to ${newMember.guild.name}`, canvas.width - 690, canvas.height - 65);
 
     context.font = "22px Bold";
@@ -74,12 +75,12 @@ export default async function (client: BernardClient, newMember: GuildMember) {
     context.font = "90px Bold";
     context.strokeStyle = "#1d2124";
     context.lineWidth = 15;
-    context.strokeText("WELCOME", canvas.width - 620, canvas.height - 330);
+    context.strokeText(language("WELCOME"), canvas.width - 620, canvas.height - 330);
     let gradient = context.createLinearGradient(canvas.width - 780, 0, canvas.width - 30, 0);
     gradient.addColorStop(0, "#e15500");
     gradient.addColorStop(1, "#e7b121");
     context.fillStyle = gradient;
-    context.fillText("WELCOME", canvas.width - 620, canvas.height - 330);
+    context.fillText(language("WELCOME"), canvas.width - 620, canvas.height - 330);
 
     context.beginPath();
     context.lineWidth = 10;
@@ -96,16 +97,17 @@ export default async function (client: BernardClient, newMember: GuildMember) {
     const attachment = new MessageAttachment(canvas.toBuffer(), 'welcome.png');
     await client.getChannel(<Guild>newMember!.guild, guildConfig.channels.arrival, {files: [attachment]});
 
+    let user = `${newMember} - \`${newMember.user.tag}\` (${newMember.id})`;
+    let created = `<t:${parseInt(String(newMember.user.createdTimestamp / 1000))}:f> (<t:${parseInt(String(newMember.user.createdTimestamp / 1000))}:R>)`;
+    let joined = `<t:${parseInt(String(newMember.joinedTimestamp! / 1000))}:f> (<t:${parseInt(String(newMember.joinedTimestamp! / 1000))}:R>)`;
+
     const embedLog = new MessageEmbed()
         .setColor(EMBED_SUCCESS)
         .setAuthor({
             name: `${newMember.user.tag} (${newMember.id})`,
             iconURL: newMember.user.displayAvatarURL({dynamic: true, format: 'png'})
         })
-        .setDescription(`
-            • Username: ${newMember} - \`${newMember.user.tag}\` (${newMember.id})
-            • Created: <t:${parseInt(String(newMember.user.createdTimestamp / 1000))}:f> (<t:${parseInt(String(newMember.user.createdTimestamp / 1000))}:R> )
-            • Joined: <t:${parseInt(String(newMember.joinedTimestamp! / 1000))}:f> (<t:${parseInt(String(newMember.joinedTimestamp! / 1000))}:R>)`)
+        .setDescription(language("WELCOME_DESCRIPTION").replace('%member%', user).replace('%created%', created).replace('%joined%', joined))
         .setTimestamp()
         .setFooter({text: 'User joined'})
     await client.getChannel(<Guild>newMember!.guild, guildConfig.channels.logs.members, {embeds: [embedLog]});

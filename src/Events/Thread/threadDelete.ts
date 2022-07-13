@@ -6,6 +6,7 @@ import {EMBED_ERROR, EMOJIS, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, thread: ThreadChannel) {
 
     let guildConfig: any = await find(thread.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/threadData`);
     let server = guildConfig.channels.logs.server;
 
     let threadEmoji = client.getEmoji(EMOJIS.thread);
@@ -14,7 +15,7 @@ export default async function (client: BernardClient, thread: ThreadChannel) {
         .setColor(EMBED_ERROR)
         .setTitle(`Thread delete`)
         .addFields(
-            {name: `${threadEmoji} Name (ID)`, value: `\`${thread.name}\``, inline: true},
+            {name: language("NAME_ADDFIELD").replace('%emoji%', threadEmoji), value: `\`${thread.name}\``, inline: true},
         )
         .setTimestamp()
         .setFooter({text: FOOTER_LOG, iconURL: thread.client.user?.displayAvatarURL({dynamic: true})});

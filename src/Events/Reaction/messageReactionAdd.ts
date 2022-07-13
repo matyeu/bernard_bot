@@ -1,6 +1,6 @@
 import {BernardClient} from "../../Librairie";
 import {MessageEmbed, MessageReaction, User} from "discord.js";
-import {EMBED_GENERAL, EMOJIS, FOOTER} from "../../config";
+import {EMBED_GENERAL, EMOJIS, FOOTER, SERVER} from "../../config";
 import {find} from "../../Models/client";
 
 const Logger = require("../../Librairie/logger");
@@ -20,7 +20,9 @@ export default async function (client: BernardClient, messageReaction: MessageRe
     const message = messageReaction.message;
     const emoji = messageReaction.emoji.id;
 
-    let clientConfig: any = await find(message.guild!.id);
+    let clientConfig: any = await find(SERVER.id);
+    let guildConfig: any = await find(message.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/messageReactionData`);
     let channelSuggest = clientConfig.suggestion;
     let channelBug = clientConfig.bug;
 
@@ -34,17 +36,19 @@ export default async function (client: BernardClient, messageReaction: MessageRe
 
         await message.reactions.cache.get(EMOJIS.thread)?.remove()
         let thread = await message.startThread({
-            name: `${isSuggest ? "Suggestion" : "Bug-report"} of ${message.embeds[0].author?.name}`,
-            reason: `Débat son the ${isSuggest ? "suggestion" : "bug-report"} of ${message.embeds[0].author?.name}`,
+            name: language("THREAD_NAME").replace('%isSuggest%', isSuggest ? "Suggestion" : "Bug-report")
+                .replace('%member%', message.embeds[0].author?.name),
+            reason: language("THREAD_REASON").replace('%isSuggest%', isSuggest ? "suggestion" : "bug-report")
+                .replace('%member%', message.embeds[0].author?.name)
         });
 
         const embed = new MessageEmbed()
             .setColor(EMBED_GENERAL)
             .setAuthor({name: `${message.embeds[0].author?.name}`, iconURL: message.embeds[0].author?.iconURL})
             .setTitle(`${message.embeds[0].title}`)
-            .setDescription(`${message.embeds[0].description?.
-            replace(`*Press the ${threadEmoji} reaction to create a thread for discussion!*`, 
-                `${quoteS} *[Click here](https://discord.com/channels/${message.guild?.id}/${thread.id}) to join the debate! ${quoteE}*`)}`)
+            .setDescription(`${message.embeds[0].description?.replace(language("DESCRIPTION").replace('%emoji%', threadEmoji), language("LINK")
+                .replace('%quoteS%', quoteS).replace('%link%', `https://discord.com/channels/${message.guild?.id}/${thread.id}`)
+                .replace('%quoteE%', quoteE))}`)
             .setTimestamp()
             .setFooter({text: FOOTER, iconURL: message.client.user?.displayAvatarURL({dynamic: true, format: 'png'})});
 

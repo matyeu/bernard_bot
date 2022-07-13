@@ -7,6 +7,7 @@ export default async function (client: BernardClient, thread: ThreadChannel) {
     if (thread.isText()) await thread.join();
 
     let guildConfig: any = await find(thread.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/threadData`);
     let server = guildConfig.channels.logs.server;
 
     let threadEmoji = client.getEmoji(EMOJIS.thread);
@@ -15,8 +16,8 @@ export default async function (client: BernardClient, thread: ThreadChannel) {
         .setColor(EMBED_SUCCESS)
         .setTitle(`Thread creation`)
         .addFields(
-            {name: `${threadEmoji} Name (ID)`, value: `<#${thread.id}>\n(${thread.id})`, inline: true},
-            {name: `👤 Member (ID)`, value: `<@${thread.ownerId}>\n(${thread.ownerId})`, inline: true},
+            {name: language("NAME_ADDFIELD").replace('%emoji%', threadEmoji), value: `<#${thread.id}>\n(${thread.id})`, inline: true},
+            {name: language("MEMBER_ADDFIELD"), value: `<@${thread.ownerId}>\n(${thread.ownerId})`, inline: true},
         )
         .setTimestamp()
         .setFooter({text: FOOTER_LOG, iconURL: thread.client.user?.displayAvatarURL({dynamic: true})});

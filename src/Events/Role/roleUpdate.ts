@@ -6,14 +6,15 @@ import {EMBED_INFO, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, oldRole: Role, newRole: Role) {
 
     let guildConfig: any = await find(oldRole.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/roleData`);
     let server = guildConfig.channels.logs.server;
 
     if (oldRole.rawPosition !== newRole.rawPosition) return;
 
     let embed = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setTitle('Role update')
-        .addFields({name: `🎲 Name (ID)`, value: `<@&${oldRole.id}> (${oldRole.id})`, inline: true})
+        .setTitle(language("TITLE_UPDATE"))
+        .addFields({name: language("NAME_ADDFIELD"), value: `<@&${oldRole.id}> (${oldRole.id})`, inline: true})
         .setTimestamp()
         .setFooter({text: FOOTER_LOG, iconURL: oldRole.client.user?.displayAvatarURL({dynamic: true})})
 

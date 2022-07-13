@@ -11,6 +11,7 @@ export default async function (client: BernardClient, message: Message) {
     const memberId = message.member!.id;
 
     let guildConfig: any = await finGuild(guildId);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/messageData`);
     let memberConfig: any = await findMember(guildId, memberId);
     if (message.channel.id === guildConfig.channels.configVoice && !message.author.bot) await message.delete();
 
@@ -21,8 +22,8 @@ export default async function (client: BernardClient, message: Message) {
             const memberConfig: any = await findMember(guildId, mentiondMember.id);
 
             if (memberConfig.afk.statut) {
-                await message.channel.send(`**${memberConfig.afk.reason.length > 0 ? `${mentiondMember.tag} is currently absent for the following reason: ${memberConfig.afk.reason}.`
-                    : `${mentiondMember.tag} is currently absent.`}**`)
+                await message.channel.send(memberConfig.afk.reason.length > 0 ? language("AFK_MESSAGE_WITH_REASON")
+                        .replace('%member%', mentiondMember.tag).replace('%reason%', memberConfig.afk.reason) : language("AFK_MESSAGE"))
             }
         }
     }
@@ -32,8 +33,8 @@ export default async function (client: BernardClient, message: Message) {
         await editMember(guildId, memberId, memberConfig);
         if (message.guild?.ownerId !== message.author.id)
             await message.member?.setNickname(`${message.member?.displayName.replace('[AFK]', "")}`,
-                `${message.member?.displayName} has just withdrawn from the afk list.`);
-        await message.channel.send(`**${message.author} you have just been removed from the afk list !**`)
+                language("AFK_WITHDRAWN_LOG").replace('%member%', message.member?.displayName));
+        await message.channel.send(language("AFK_WITHDRAWN").replace('%member%', message.author));
 
     }
 }

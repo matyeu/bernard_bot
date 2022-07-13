@@ -6,15 +6,17 @@ import {EMBED_SUCCESS, EMOJIS, FOOTER_LOG} from "../../config";
 export default async function (client: BernardClient, channel: GuildChannel) {
 
     let guildConfig: any = await find(channel.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/channelData`);
     let server = guildConfig.channels.logs.server;
 
     let channelEmoji = client.getEmoji(EMOJIS.channel);
 
     const embed = new MessageEmbed()
         .setColor(EMBED_SUCCESS)
-        .setTitle(`Channel creation`)
+        .setTitle(language("TITLE_CREATION"))
         .addFields(
-            {name: `${channelEmoji} Name (ID)`, value: `<#${channel.id}> (${channel.id})`, inline: true}
+            {name: language("NAME_ADDFIELD").replace('%emoji%', channelEmoji),
+                value: `<#${channel.id}> (${channel.id})`, inline: true}
         )
         .setTimestamp()
         .setFooter({text: FOOTER_LOG, iconURL: channel.client.user?.displayAvatarURL({dynamic: true})});

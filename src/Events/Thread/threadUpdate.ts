@@ -7,13 +7,15 @@ export default async function (client: BernardClient, oldThread: ThreadChannel, 
     if (oldThread.archived && !newThread.archived) await newThread.join();
 
     let guildConfig: any = await find(oldThread.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/threadData`);
     let server = guildConfig.channels.logs.server;
 
     let threadEmoji = client.getEmoji(EMOJIS.thread);
     const embed = new MessageEmbed()
         .setColor(EMBED_INFO)
-        .setTitle('Mise à jour Thread')
-        .addFields({name: `${threadEmoji} Name (ID)`, value: `<#${oldThread.id}>\n(${oldThread.id})`, inline: true})
+        .setTitle(language("TITLE_UPDATE"))
+        .addFields({name: language("NAME_ADDFIELD").replace('%emoji%', threadEmoji),
+            value: `<#${oldThread.id}>\n(${oldThread.id})`, inline: true})
         .setTimestamp()
         .setFooter({text: FOOTER_LOG, iconURL: oldThread.client.user?.displayAvatarURL({dynamic: true, format: "png"})});
 

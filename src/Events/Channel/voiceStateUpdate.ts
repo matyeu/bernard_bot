@@ -10,6 +10,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
 
     if (oldMember.member?.user.bot) return;
     let guildConfig: any = await find(oldMember.guild!.id);
+    let language = require(`../../Librairie/languages/${guildConfig.language}/Events/Channel/channelData`);
     let memberConfig: any = await findMember(oldMember.guild!.id, oldMember.id);
     let voiceRole = client.getRole(oldMember.guild, guildConfig.roles.voice);
     let server = guildConfig.channels.logs.server;
@@ -21,7 +22,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
 
     let embed = new MessageEmbed()
         .addFields(
-            {name: `👤 Member (ID)`, value: `<@${newMember.id}>\n(${newMember.id})`, inline: true},
+            {name: language("MEMBER"), value: `<@${newMember.id}>\n(${newMember.id})`, inline: true},
             {
                 name: `${voiceOnEmoji} Channel (ID)`,
                 value: `${!oldMember.channelId ? `<#${newMember.channelId}>\n(${newMember.channelId})` : `<#${oldMember.channelId}>\n(${oldMember.channelId})`}`,
@@ -57,16 +58,16 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
         };
 
         if (voiceRole) {
-            !oldMember.channelId ? await oldMember.member?.roles.add(voiceRole, "Automatic voice role")
-                : await oldMember.member?.roles.remove(voiceRole, "Automatic voice role");
+            !oldMember.channelId ? await oldMember.member?.roles.add(voiceRole, language("LOG_ROLE"))
+                : await oldMember.member?.roles.remove(voiceRole, language("LOG_ROLE"));
             embed.addFields({
-                name: `🤖 Rôle (ID) ${!oldMember.channelId ? 'added' : 'removed'}`,
+                name: `🤖 Rôle (ID) ${!oldMember.channelId ? language("ADDED") : language("REMOVED")}`,
                 value: `${voiceRole}\n(${voiceRole?.id})`,
                 inline: true
             })
         }
         embed.setColor(!oldMember.channelId ? EMBED_SUCCESS : EMBED_ERROR)
-            .setTitle(!oldMember.channelId ? 'Connection' : 'Disconnect')
+            .setTitle(!oldMember.channelId ? language("CONNECTION") : language("DISCONNECT"))
 
         return client.getChannel(<Guild>newMember!.guild, server, {embeds: [embed]});
 
@@ -75,23 +76,23 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
     if (!oldMember.selfVideo && newMember.selfVideo || oldMember.selfVideo && !newMember.selfVideo) {
 
         embed.setColor(!oldMember.selfVideo ? EMBED_SUCCESS : EMBED_ERROR)
-            .setTitle(!oldMember.selfVideo ? 'Camera On' : 'Camera Off');
+            .setTitle(!oldMember.selfVideo ? language("CAMERA_ON") : language("CAMERA_OFF"));
         return client.getChannel(<Guild>newMember!.guild, server, {embeds: [embed]});
 
     }
     if (!oldMember.streaming && newMember.streaming || oldMember.streaming && !newMember.streaming) {
 
         embed.setColor(!oldMember.streaming ? EMBED_SUCCESS : EMBED_ERROR)
-            .setTitle(!oldMember.streaming ? 'Start Streaming' : 'Stop Streaming');
+            .setTitle(!oldMember.streaming ? language("STREAMING_START") : language("STREAMING_STOP"));
         return client.getChannel(<Guild>newMember!.guild, server, {embeds: [embed]});
 
     }
 
     if (!oldMember.selfDeaf && newMember.selfDeaf || oldMember.selfDeaf && !newMember.selfDeaf) {
         embed.setColor(!oldMember.selfDeaf ? EMBED_SUCCESS : EMBED_ERROR)
-            .setTitle(!oldMember.selfDeaf ? 'Deaf On' : 'Dead Off')
+            .setTitle(!oldMember.selfDeaf ? language('DEAF_ON') : language("DEAD_OFF"))
             .addFields(
-                {name: `🤖 Deaf`, value: `${!oldMember.selfDeaf ? voiceOffEmoji : voiceOnEmoji}`, inline: true}
+                {name: language("DEAF"), value: `${!oldMember.selfDeaf ? voiceOffEmoji : voiceOnEmoji}`, inline: true}
             )
         return client.getChannel(<Guild>newMember!.guild, server, {embeds: [embed]});
     }
@@ -99,7 +100,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
     if (!oldMember.selfMute && newMember.selfMute || oldMember.selfMute && !newMember.selfMute) {
 
         embed.setColor(!oldMember.selfMute ? EMBED_SUCCESS : EMBED_ERROR)
-            .setTitle(!oldMember.selfMute ? 'Mute On' : 'Mute Off')
+            .setTitle(!oldMember.selfMute ? language("MUTE_ON") : language("MUTE_OFF"))
             .addFields(
                 {name: `🤖 Mute`, value: `${!oldMember.selfMute ? microOffEmoji : microOnEmoji}`, inline: true}
             )
@@ -110,9 +111,9 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
     if (!oldMember.serverDeaf && newMember.serverDeaf || oldMember.serverDeaf && !newMember.serverDeaf) {
 
         embed.setColor(!oldMember.serverDeaf ? EMBED_SUCCESS : EMBED_ERROR)
-            .setTitle(!oldMember.serverDeaf ? 'Deaf (Server) On' : 'Deaf (Server) Off')
+            .setTitle(!oldMember.serverDeaf ? language("DEAF_SERVER_ON") : language("DEAF_SERVER_OFF"))
             .addFields(
-                {name: `🤖 Deaf`, value: `${!oldMember.serverDeaf ? voiceOffEmoji : voiceOnEmoji}`, inline: true}
+                {name: language("DEAF"), value: `${!oldMember.serverDeaf ? voiceOffEmoji : voiceOnEmoji}`, inline: true}
             )
         return client.getChannel(<Guild>newMember!.guild, server, {embeds: [embed]});
 
@@ -122,7 +123,7 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
     if (!oldMember.serverMute && newMember.serverMute || oldMember.serverMute && !newMember.serverMute) {
 
         embed.setColor(!oldMember.serverMute ? EMBED_SUCCESS : EMBED_ERROR)
-            .setTitle(!oldMember.serverMute ? 'Mute (Server) On' : 'Mute (Server) Off')
+            .setTitle(!oldMember.serverMute ? language("MUTE_SERVER_ON") : language("MUTE_SERVER_OFF"))
             .addFields(
                 {name: `🤖 Mute`, value: `${!oldMember.serverMute ? microOffEmoji : microOnEmoji}`, inline: true}
             )
