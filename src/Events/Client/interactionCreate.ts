@@ -1,6 +1,6 @@
 import {BernardClient} from "../../Librairie";
-import {Interaction} from "discord.js";
-import {EMOJIS, CREATOR_ID} from "../../config";
+import {Collection, Interaction} from "discord.js";
+import {CREATOR_ID} from "../../config";
 import {find as findMember} from "../../Models/roleplay";
 import {find as findGuild} from "../../Models/guild";
 
@@ -8,8 +8,8 @@ const Logger = require("../../Librairie/logger");
 
 export default async function (client: BernardClient, interaction: Interaction) {
 
-    let error = client.getEmoji(EMOJIS.error);
     let guildConfig: any = await findGuild(interaction.guild!.id);
+    let languageInter = require(`../../Librairie/languages/${guildConfig.language}/Events/interactionData`);
 
     if (interaction.isCommand() && interaction.inGuild()) {
         try {
@@ -21,17 +21,17 @@ export default async function (client: BernardClient, interaction: Interaction) 
             if (!command) return interaction.replyErrorMessage(client, `The \`${interaction.commandName}\` command be found`, true);
 
             if (command.slash.data.maintenance && interaction.user.id !== CREATOR_ID)
-                return interaction.replyErrorMessage(client, `This order is under maintenance...`, true);
+                return interaction.replyErrorMessage(client, languageInter("CONTENT_MAINTENANCE_COMMAND"), true);
 
             //@ts-ignore
             if (!interaction.member.permissions.has([command.slash.data.permissions]))
-                return interaction.replyErrorMessage(client,  `**You don't have** the permission to use this command !`, true);
+                return interaction.replyErrorMessage(client,  languageInter("CONTENT_PERMISSION"), true);
 
             let memberConfig: any = await findMember(interaction.guild!.id, interaction.user!.id);
             if (command.slash.data.roleplay && !memberConfig)
-                return interaction.replyErrorMessage(client, `**No RPG profile detected: \`/start\`**`, true);
+                return interaction.replyErrorMessage(client, languageInter("COMPTE_RPG"), true);
 
-            if (!client.cooldowns.has(interaction.commandName)) client.cooldowns.set(interaction.commandName, client.cooldowns);
+            if (!client.cooldowns.has(interaction.commandName)) client.cooldowns.set(interaction.commandName, new Collection());
 
             const timeNow = Date.now();
             const tStamps = client.cooldowns.get(interaction.commandName);
@@ -44,7 +44,7 @@ export default async function (client: BernardClient, interaction: Interaction) 
                     let timeLeft = (cdExpirationTime - timeNow) / 1000;
 
                     await interaction.replyErrorMessage(client,
-                        `Please wait **${timeLeft.toFixed(0)} seconds** to run this command again.`, true);
+                        languageInter("CONTENT_COOLDOWNS").replace('%time%', `${timeLeft.toFixed(0)} seconds`), true);
                     return Logger.warn(`The cooldown was triggered by ${interaction.user.tag} on the ${interaction.commandName} command`);
                 }
             }
