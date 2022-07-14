@@ -6,6 +6,7 @@ import {EMBED_INFO, EMBED_SUCCESS} from "../../config";
 import Canvas from "canvas";
 import {resolve} from "path";
 import stringCleaner from "@sindresorhus/slugify";
+import { weirdToNormalChars } from "weird-to-normal-chars";
 
 Canvas.registerFont(resolve("./assets/Fonts/theboldfont.ttf"), {family: "Bold"});
 Canvas.registerFont(resolve("./assets/Fonts/SketchMatch.ttf"), {family: "SketchMatch"});
@@ -32,6 +33,8 @@ export default async function (client: BernardClient, newMember: GuildMember) {
             {content: `<@&${guildConfig.roles.staffs}>`, embeds: [embed]});
     }
 
+    await newMember.setNickname(weirdToNormalChars(`${newMember.user.username}`));
+
     if (newMember.user.bot) return;
     await createMember(newMember.guild!.id, newMember.id);
 
@@ -50,7 +53,7 @@ export default async function (client: BernardClient, newMember: GuildMember) {
 
     context.fillStyle = "#ffffff";
 
-    const username = stringCleaner(newMember.user.username, {
+    const username = stringCleaner(newMember.displayName, {
         separator: " ",
         lowercase: false,
         decamelize: false,
@@ -109,7 +112,7 @@ export default async function (client: BernardClient, newMember: GuildMember) {
         })
         .setDescription(language("WELCOME_DESCRIPTION").replace('%member%', user).replace('%createdAt%', created).replace('%joinedAt%', joined))
         .setTimestamp()
-        .setFooter({text: 'User joined'})
+        .setFooter({text: language("FOOTER_WELCOME")})
     await client.getChannel(<Guild>newMember!.guild, guildConfig.channels.logs.members, {embeds: [embedLog]});
 
 

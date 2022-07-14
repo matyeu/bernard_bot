@@ -95,7 +95,7 @@ export default async function (client: BernardClient, oldMember: GuildMember) {
         })
         .setDescription(language("GOODBYE_DESCRIPTION").replace('%member%', user).replace('%createdAt%', created).replace('%left%', left))
         .setTimestamp()
-        .setFooter({text: 'User left'})
+        .setFooter({text: language("FOOTER_GOODBYE")})
     await client.getChannel(<Guild>oldMember!.guild, guildConfig.channels.logs.members, {embeds: [embedLog]});
 
 
