@@ -16,6 +16,12 @@
 
 ## Commands
 
+### Owner
+
+| Name          | Description                              | Sub-commands   | Usage                 | Cd     |
+| ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
+| setup         | Config the bot.                          | none           | (channels) (name)     | 5secs |
+
 ### Administration
 
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |

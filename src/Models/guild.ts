@@ -49,6 +49,9 @@ let Guild = model("Guild", new Schema({
         voice: String,
     },
     modules: {
+        welcome: Boolean,
+        goodbye: Boolean,
+        logs: Boolean,
         autorole: Boolean,
         antibot: Boolean,
         informations: Boolean,
@@ -109,6 +112,9 @@ export const def = {
         voice: "",
     },
     modules: {
+        welcome: false,
+        goodbye: false,
+        logs: false,
         autorole: false,
         antibot: false,
         informations: false,

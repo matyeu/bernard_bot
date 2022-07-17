@@ -28,6 +28,8 @@ const guildDataFR = {
     NEW_CHANNEL_RULES: "%emoji% Nouveau Channel Règles",
     OLD_OWNER: "%emoji% Ancien Propriétaire",
     NEW_OWNER: "%emoji% Nouveau Propriétaire",
+    FOOTER_WELCOME: "L'utilisateur a rejoint !",
+    FOOTER_GOODBYE: "L'utilisateur a quitté !",
 
 };
 
