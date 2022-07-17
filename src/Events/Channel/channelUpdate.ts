@@ -9,6 +9,8 @@ export default async function (client: BernardClient, oldChannel: TextChannel, n
     let language = require(`../../Librairie/languages/${guildConfig.language}/Events/channelData`);
     let server = guildConfig.channels.logs.server;
 
+    if (guildConfig.modules.logs) return;
+
     if (oldChannel.rawPosition !== newChannel.rawPosition) return;
 
     let channelEmoji = client.getEmoji(EMOJIS.channel),

@@ -10,6 +10,7 @@ export default async function (client: BernardClient, oldRole: Role, newRole: Ro
     let server = guildConfig.channels.logs.server;
 
     if (oldRole.rawPosition !== newRole.rawPosition) return;
+    if (guildConfig.modules.logs) return;
 
     let embed = new MessageEmbed()
         .setColor(EMBED_INFO)

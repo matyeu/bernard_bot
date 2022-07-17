@@ -11,6 +11,8 @@ export default async function (client: BernardClient, thread: ThreadChannel) {
 
     let threadEmoji = client.getEmoji(EMOJIS.thread);
 
+    if (guildConfig.modules.logs) return;
+
     const embed = new MessageEmbed()
         .setColor(EMBED_ERROR)
         .setTitle(language("TITLE_DELETE"))

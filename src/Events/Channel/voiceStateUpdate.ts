@@ -15,6 +15,8 @@ export default async function (client: BernardClient, oldMember: VoiceState, new
     let voiceRole = client.getRole(oldMember.guild, guildConfig.roles.voice);
     let server = guildConfig.channels.logs.server;
 
+    if (guildConfig.modules.logs) return;
+
     let voiceOnEmoji = client.getEmoji(EMOJIS.voiceOn),
         voiceOffEmoji = client.getEmoji(EMOJIS.voiceOff),
         microOnEmoji = client.getEmoji(EMOJIS.microOn),

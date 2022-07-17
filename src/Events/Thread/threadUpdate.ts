@@ -10,6 +10,8 @@ export default async function (client: BernardClient, oldThread: ThreadChannel, 
     let language = require(`../../Librairie/languages/${guildConfig.language}/Events/threadData`);
     let server = guildConfig.channels.logs.server;
 
+    if (guildConfig.modules.logs) return;
+
     let threadEmoji = client.getEmoji(EMOJIS.thread);
     const embed = new MessageEmbed()
         .setColor(EMBED_INFO)

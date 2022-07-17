@@ -21,67 +21,71 @@ export default async function (client: BernardClient, oldMember: GuildMember) {
     let memberConfig: any = await findMember(oldMember.guild!.id, oldMember.id);
     if (memberConfig) await memberConfig.delete();
 
-    const applyText = (canvas: { getContext: (arg0: string) => any; }, text: any, defaultFontSize: number) => {
-        const ctx = canvas.getContext("2d");
-        do {
-            ctx.font = `${defaultFontSize -= 10}px Bold`;
-        }
-        while (ctx.measureText(text).width > 600);
-        return ctx.font;
-    };
-    const canvas: any = Canvas.createCanvas(1024, 450);
-    const context = canvas.getContext('2d');
-    const background = await Canvas.loadImage('./assets/Images/welcome.png');
-    context.drawImage(background, 0, 0, canvas.width, canvas.height);
+    if (guildConfig.modules.goodbye) {
+        const applyText = (canvas: { getContext: (arg0: string) => any; }, text: any, defaultFontSize: number) => {
+            const ctx = canvas.getContext("2d");
+            do {
+                ctx.font = `${defaultFontSize -= 10}px Bold`;
+            }
+            while (ctx.measureText(text).width > 600);
+            return ctx.font;
+        };
+        const canvas: any = Canvas.createCanvas(1024, 450);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage('./assets/Images/welcome.png');
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-    context.fillStyle = "#ffffff";
+        context.fillStyle = "#ffffff";
 
-    const username = stringCleaner(oldMember.user.username, {
-        separator: " ",
-        lowercase: false,
-        decamelize: false,
-        preserveLeadingUnderscore: true,
-    });
+        const username = stringCleaner(oldMember.user.username, {
+            separator: " ",
+            lowercase: false,
+            decamelize: false,
+            preserveLeadingUnderscore: true,
+        });
 
-    context.font = applyText(canvas, username, 48);
-    context.fillText(username, canvas.width - 660, canvas.height - 248);
+        context.font = applyText(canvas, username, 48);
+        context.fillText(username, canvas.width - 660, canvas.height - 248);
 
-    context.font = applyText(canvas, language("GOODBYE_MESSAGE"), 53);
-    context.fillText(language("GOODBYE_MESSAGE"), canvas.width - 690, canvas.height - 65);
+        context.font = applyText(canvas, language("GOODBYE_MESSAGE"), 53);
+        context.fillText(language("GOODBYE_MESSAGE"), canvas.width - 690, canvas.height - 65);
 
-    context.font = "22px Bold";
-    context.fillText(`- ${oldMember.guild.memberCount} members!`, 40, canvas.height - 50)
-    context.font = "40px Bold";
-    context.fillText(oldMember.user.discriminator, canvas.width - 623, canvas.height - 178);
+        context.font = "22px Bold";
+        context.fillText(`- ${oldMember.guild.memberCount} members!`, 40, canvas.height - 50)
+        context.font = "40px Bold";
+        context.fillText(oldMember.user.discriminator, canvas.width - 623, canvas.height - 178);
 
-    context.fillStyle = "#44d14a";
-    context.font = "75px SketchMatch";
-    context.fillText("#", canvas.width - 690, canvas.height - 165);
+        context.fillStyle = "#44d14a";
+        context.font = "75px SketchMatch";
+        context.fillText("#", canvas.width - 690, canvas.height - 165);
 
-    context.font = "90px Bold";
-    context.strokeStyle = "#1d2124";
-    context.lineWidth = 15;
-    context.strokeText(language("GOODBYE"), canvas.width - 620, canvas.height - 330);
-    let gradient = context.createLinearGradient(canvas.width - 780, 0, canvas.width - 30, 0);
-    gradient.addColorStop(0, "#e15500");
-    gradient.addColorStop(1, "#e7b121");
-    context.fillStyle = gradient;
-    context.fillText(language("GOODBYE"), canvas.width - 620, canvas.height - 330);
+        context.font = "90px Bold";
+        context.strokeStyle = "#1d2124";
+        context.lineWidth = 15;
+        context.strokeText(language("GOODBYE"), canvas.width - 620, canvas.height - 330);
+        let gradient = context.createLinearGradient(canvas.width - 780, 0, canvas.width - 30, 0);
+        gradient.addColorStop(0, "#e15500");
+        gradient.addColorStop(1, "#e7b121");
+        context.fillStyle = gradient;
+        context.fillText(language("GOODBYE"), canvas.width - 620, canvas.height - 330);
 
-    context.beginPath();
-    context.lineWidth = 10;
-    context.strokeStyle = "#03A9F4";
-    context.arc(180, 225, 135, 0, Math.PI * 2, true);
-    context.stroke();
-    context.closePath();
-    context.clip();
+        context.beginPath();
+        context.lineWidth = 10;
+        context.strokeStyle = "#03A9F4";
+        context.arc(180, 225, 135, 0, Math.PI * 2, true);
+        context.stroke();
+        context.closePath();
+        context.clip();
 
-    const options: any = {format: "png", size: 512},
-        avatar = await Canvas.loadImage(oldMember.user.displayAvatarURL(options));
-    context.drawImage(avatar, 45, 90, 270, 270);
+        const options: any = {format: "png", size: 512},
+            avatar = await Canvas.loadImage(oldMember.user.displayAvatarURL(options));
+        context.drawImage(avatar, 45, 90, 270, 270);
 
-    const attachment = new MessageAttachment(canvas.toBuffer(), 'goodbye.png');
-    await client.getChannel(<Guild>oldMember!.guild, guildConfig.channels.arrival, {files: [attachment]});
+        const attachment = new MessageAttachment(canvas.toBuffer(), 'goodbye.png');
+        await client.getChannel(<Guild>oldMember!.guild, guildConfig.channels.arrival, {files: [attachment]});
+    }
+
+    if (guildConfig.modules.logs) return;
 
     let user = `${oldMember} - \`${oldMember.user.tag}\` (${oldMember.id})`;
     let created = `<t:${parseInt(String(oldMember.user.createdTimestamp / 1000))}:f> (<t:${parseInt(String(oldMember.user.createdTimestamp / 1000))}:R>)`;

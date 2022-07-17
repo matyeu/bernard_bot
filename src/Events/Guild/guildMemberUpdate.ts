@@ -11,6 +11,8 @@ export default async function (client: BernardClient, oldMember: GuildMember, ne
     let language = require(`../../Librairie/languages/${guildConfig.language}/Events/guildData`);
     let server = guildConfig.channels.logs.server;
 
+    if (guildConfig.modules.logs) return;
+
     const embed = new MessageEmbed()
         .setColor(EMBED_INFO)
         .setTitle(language("TITLE_UPDATE").replace('%event%', 'Member'))

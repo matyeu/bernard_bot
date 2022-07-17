@@ -9,6 +9,8 @@ export default async function (client: BernardClient, oldEmoji: GuildEmoji, newE
     let language = require(`../../Librairie/languages/${guildConfig.language}/Events/emojiData`);
     let server = guildConfig.channels.logs.server;
 
+    if (guildConfig.modules.logs) return;
+
     let embed = new MessageEmbed()
         .setColor(EMBED_INFO)
         .setTitle(language("TITLE_UPDATE"))

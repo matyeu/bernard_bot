@@ -9,6 +9,8 @@ export default async function (client: BernardClient, channel: GuildChannel) {
     let language = require(`../../Librairie/languages/${guildConfig.language}/Events/channelData`);
     let server = guildConfig.channels.logs.server;
 
+    if (guildConfig.modules.logs) return;
+
     let channelEmoji = client.getEmoji(EMOJIS.channel);
 
     const embed = new MessageEmbed()

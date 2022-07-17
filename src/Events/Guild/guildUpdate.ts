@@ -12,6 +12,8 @@ export default async function (client: BernardClient, oldGuild: Guild, newGuild:
     let hastag = "🎙",
         avatar = "👤";
 
+    if (guildConfig.modules.logs) return;
+
     const embed = new MessageEmbed()
         .setColor(EMBED_INFO)
         .setTitle(language("TITLE_UPDATE").replace('%event%', 'Server'))

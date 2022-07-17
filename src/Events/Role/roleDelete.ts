@@ -9,6 +9,8 @@ export default async function (client: BernardClient, role: Role) {
     let language = require(`../../Librairie/languages/${guildConfig.language}/Events/roleData`);
     let server = guildConfig.channels.logs.server;
 
+    if (guildConfig.modules.logs) return;
+
     const embed = new MessageEmbed()
         .setColor(EMBED_ERROR)
         .setTitle(language("TITLE_DELETE"))
