@@ -1,10 +1,13 @@
-import {BernardClient, getSanction} from "../../Librairie";
+import {BernardClient} from "../../Librairie";
 import mongoose from "mongoose";
 import {find as findClient} from "../../Models/client";
-import {update as updateGuild} from "../../Models/guild";
+import {find as findGuild, update as updateGuild} from "../../Models/guild";
 import {update as updateMember} from "../../Models/members";
+import {findAll as findAllBan} from "../../Models/bans";
+import {findAll as findAllMute} from "../../Models/mutes";
 import chalk from "chalk";
-import {SERVER} from "../../config";
+import {EMBED_GENERAL, SERVER} from "../../config";
+import {MessageEmbed} from "discord.js";
 
 const Logger = require("../../Librairie/logger");
 
@@ -47,8 +50,54 @@ export default async function (client: BernardClient) {
         }
 
         setInterval(async () => {
-            await getSanction(client, guild, "unban")
-            await getSanction(client, guild, "unmute")
+            let guildConfig: any = await findGuild(guild.id);
+            let banConfigs: any = await findAllBan(guild.id);
+            let muteConfigs: any = await findAllMute(guild.id);
+
+            let embedMod = new MessageEmbed()
+                .setColor(EMBED_GENERAL)
+                .setAuthor({name: `${client.user?.tag}`, iconURL: client.user?.displayAvatarURL({dynamic: true})})
+                .setTimestamp()
+                .setFooter({text: `Case ${guildConfig.stats.sanctionsCase}`})
+
+            banConfigs.forEach(async (banConfig: any) => {
+                let timeBan = banConfig.time;
+                let dateBan = banConfig.date;
+                let memberBan = await guild.members.fetch(banConfig.memberBan);
+
+                if (!memberBan && dateBan === 0 && timeBan - (Date.now() - dateBan) >= 0)
+                    return Logger.client(`Update of the sanctions done (0 member unban)`)
+
+                embedMod.setDescription(`
+**Member:** \`${memberBan.user.tag}\` (${memberBan.id})
+**Action:** Unban
+**Reason:** Automatic unban
+**Reference:** [#${banConfig.case}](https://discord.com/channels/${guild.id}/${guildConfig.channels.logs.public}/${banConfig.reference})`)
+
+                await guild!.bans.remove(banConfig.memberBan, `Automatic unban`);
+                await client.getChannel(guild, guildConfig.channels.logs.public, {embeds: [embedMod]});
+
+                banConfig.delete().then(Logger.client(`Update of the sanction done (${memberBan.user.tag} unban)`));
+            });
+
+            muteConfigs.forEach(async (muteConfig: any) => {
+                let timeMute = muteConfig.time;
+                let dateMute = muteConfig.date;
+                let memberMute = await guild.members.fetch(muteConfig.memberBan);
+
+                if (!memberMute && dateMute === 0 && timeMute - (Date.now() - dateMute) >= 0)
+                    return Logger.client(`Update of the sanctions done (0 member unmute)`)
+
+                embedMod.setDescription(`
+**Member:** \`${memberMute.user.tag}\` (${memberMute.id})
+**Action:** Unmute
+**Reason:** Automatic unmute
+**Reference:** [#${muteConfig.case}](https://discord.com/channels/${guild.id}/${guildConfig.channels.logs.public}/${muteConfig.reference})`)
+
+                await client.getChannel(guild, guildConfig.channels.logs.public, {embeds: [embedMod]});
+                muteConfig.delete().then(Logger.client(`Update of the sanction done (${muteConfig.user.tag} unmute)`));
+            })
+
         }, 1.8e+6);
 
         if (guild.id === SERVER.id) {
