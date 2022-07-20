@@ -32,10 +32,15 @@ export default async function (client: BernardClient, message: Message) {
     if (memberConfig.afk.statut) {
         memberConfig.afk = {statut: false, reason: ''};
         await editMember(guildId, memberId, memberConfig);
-        if (message.guild?.ownerId !== message.author.id)
+        try {
             await message.member?.setNickname(`${message.member?.displayName.replace('[AFK]', "")}`,
                 language("AFK_WITHDRAWN_LOG").replace('%member%', message.member?.displayName));
-        await message.channel.send(language("AFK_WITHDRAWN").replace('%member%', message.author));
+            return message.channel.send(language("AFK_WITHDRAWN").replace('%member%', message.author));
+        }
+        catch (err: any) {
+            if (err.message.match("Missing Permissions")) return message.channel.send(language("AFK_WITHDRAWN").replace('%member%', message.author));
+            return console.log(err);
+        }
 
     }
 }
