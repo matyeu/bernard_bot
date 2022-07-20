@@ -1,11 +1,13 @@
 import {CommandInteraction, MessageAttachment} from "discord.js";
 import {BernardClient} from "../../Librairie";
-const AmeClient = require("amethyste-api");;
+
+const AmeClient = require("amethyste-api");
+;
 
 export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
     let memberOption = interaction.options.getString("user");
     const argUser = memberOption!.replace("<@!", "").replace(">", "");
-    const member = await interaction.guild?.members.cache.get(argUser.replace(/ /g,""));
+    const member = await interaction.guild?.members.cache.get(argUser.replace(/ /g, ""));
 
     if (!member) return interaction.replyErrorMessage(client, language("MEMBER_ERROR"), true);
 
@@ -13,11 +15,11 @@ export default async function (client: BernardClient, interaction: CommandIntera
     const AmeAPI = new AmeClient(process.env.AMETHYSTE);
 
     if (picture) {
-        const buffer = await AmeAPI.generate(`${picture}`, {url: member.displayAvatarURL({size: 512, dynamic: true}),});
+        await interaction.reply({content: "Loading..."});
+        const buffer = await AmeAPI.generate(`${picture}`, {url: member.displayAvatarURL({format: "png", size: 512}),});
         const attachement = new MessageAttachment(buffer, `${picture}.png`);
-        await interaction.reply({files: [attachement]});
-    }
-    else {
+        await interaction.editReply({content: null, files: [attachement]});
+    } else {
         const imgUrl = await member.displayAvatarURL({size: 512, dynamic: true});
         await interaction.reply({files: [imgUrl]});
     }
