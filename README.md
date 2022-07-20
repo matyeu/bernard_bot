@@ -59,8 +59,9 @@
 | balance       | Displays or add or remove the balance of a user.          | none                  | \<action> (username) (montant)        | 10secs  |
 | equipment     | Display your or a user's equipment.                       | none                  | \<username>                           | 10secs  |
 | farm          | The farm command allows you to fish, hunt, gather etc.    | none                  | \<choice>                             | 2m5secs |
+| sale          | Allows you to sell resources.                             | table, sale , calcinv | \<subCommand> (ressource) (quantity)  | 10secs  |
+| shop          | Allows to see the store.                                  | none                  | \<choice>                             | 10secs  |
 | start         | Allows you to start the RPG adventure.                    | none                  | none                                  | 10secs  |
-| sale          | Allows you to sell resources                              | table, sale , calcinv | \<subCommand> (ressource) (quantity)  | 10secs  |
 
 ### Casino
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
