@@ -11,7 +11,7 @@
     "consumables": false,
     "craft": false,
     "item": "headset",
-    "prix": 2500
+    "price": 2500
   },
   {
     "name_fr" : "Jambières",
@@ -25,7 +25,7 @@
     "consumables": false,
     "craft": false,
     "item": "legwarmers",
-    "prix": 2700
+    "price": 2700
   },
   {
     "name_fr" : "Bottes",
@@ -39,7 +39,7 @@
     "consumables": false,
     "craft": false,
     "item": "boots",
-    "prix": 2800
+    "price": 2800
   },
   {
     "name_fr" : "Gants",
@@ -53,7 +53,7 @@
     "consumables": false,
     "craft": false,
     "item": "gloves",
-    "prix": 2800
+    "price": 2800
   },
   {
     "name_fr" : "Couteau",
@@ -66,7 +66,7 @@
     "attributs" : { "hp": 0, "energy": 0, "attack": 25, "defence": 0 },
     "consumables": false,
     "item": "knife",
-    "prix": 2900
+    "price": 2900
   },
   {
     "name_fr" : "Glock",
@@ -79,6 +79,6 @@
     "attributs" : { "hp": 0, "energy": 0, "attack": 50, "defence": 0 },
     "consumables": false,
     "item": "glock",
-    "prix": 3500
+    "price": 3500
   }
 ]

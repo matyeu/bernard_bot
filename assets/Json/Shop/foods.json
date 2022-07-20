@@ -13,7 +13,7 @@
     "craft": false,
     "item": "crescent",
     "cooldown": 150000,
-    "prix": 10
+    "price": 10
 },
 {
    "name_fr" : "Baguette",
@@ -29,7 +29,7 @@
    "craft": false,
    "item": "baguette",
    "cooldown": 150000,
-   "prix": 20
+   "price": 20
 },
 {
    "name_fr" : "Cookie",
@@ -45,12 +45,12 @@
    "craft": false,
    "item": "cookie",
    "cooldown": 150000,
-   "prix": 5
+   "price": 5
 },
 {
    "name_fr" : "Brioche",
     "name_en" : "Brioche",
-   "id": 15,
+   "id": 16,
    "icon" : "<:monrp_brioche:959474517518991420>",
    "type": "consumables",
    "color" : "#e59c34",
@@ -61,12 +61,12 @@
    "craft": false,
    "item": "brioche",
    "cooldown": 150000,
-   "prix": 30
+   "price": 30
 },
 {
    "name_fr" : "Pomme",
     "name_en" : "Apple",
-   "id": 15,
+   "id": 17,
    "icon" : "<:monrp_pomme:959509951154376764>",
    "type": "consumables",
    "color" : "#c9bfbf",
@@ -76,12 +76,12 @@
    "craft": false,
    "item": "apple",
    "energy" : 2,
-   "prix": 10
+   "price": 10
 },
 {
    "name_fr" : "Orange",
    "name_en" : "Orange",
-   "id": 15,
+   "id": 18,
    "icon" : "<:monrp_orange:959510041671635005>",
    "type": "consumables",
    "color" : "#c9bfbf",
@@ -91,6 +91,6 @@
    "craft": false,
    "item": "pomme",
    "energy" : 5,
-   "prix": 20
+   "price": 20
  }
 ]
