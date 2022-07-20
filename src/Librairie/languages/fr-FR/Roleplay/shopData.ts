@@ -1,6 +1,6 @@
 const shopDataFR = {
     TITLE: "%emoji% Boutique - %shop%",
-    DESCRIPTION: "Utilisez `/acheter <id>` pour acheter l’article souhaité ou bien `/infoitem <id>` pour savoir tout sur l'item.\n\n%shop%",
+    DESCRIPTION: "Utilisez `/buy <id>` pour acheter l’article souhaité ou bien `/infoitem <id>` pour savoir tout sur l'item.\n\n%shop%",
     EQUIPMENTS: "Les équipements",
     MATERIALS: "Les matériaux",
     FOODS: "Les nourritures",
