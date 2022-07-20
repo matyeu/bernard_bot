@@ -35,6 +35,7 @@ export const slash = {
         name: "suggestion",
         description: "Send a suggestion to the support server",
         category: "Community",
+        permissions: ["SEND_MESSAGES"],
         defaultPermission: false
     }
 }

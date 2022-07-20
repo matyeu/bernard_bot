@@ -37,6 +37,7 @@ export const slash = {
         name: "bugreport",
         description: "Send a bug to the support server.",
         category: "Community",
+        permissions: ["SEND_MESSAGES"],
         defaultPermission: false
     }
 }

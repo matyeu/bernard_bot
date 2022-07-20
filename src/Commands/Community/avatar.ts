@@ -30,6 +30,7 @@ export const slash = {
         name: "avatar",
         description: "Displays a user's avatar.",
         category: "Community",
+        permissions: ["SEND_MESSAGES"],
         options: [
             {
                 name: "user",

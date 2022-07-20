@@ -12,14 +12,19 @@ export default async function (client: BernardClient, interaction: CommandIntera
 
     const member = await interaction.guild!.members.fetch(interaction.user)
 
-    let memberConfig : any = await find(guildID, memberID);
+    let memberConfig: any = await find(guildID, memberID);
     memberConfig.afk = {statut: true, reason: reason};
     await edit(guildID, memberID, memberConfig);
 
-    if (member.guild.ownerId !== interaction.user.id)
+    try {
         await member.setNickname(`[AFK] ${member.displayName}`, language("LOG_MESSAGE").replace('%user%', member.displayName));
-    await interaction.replySuccessMessage(client,
-        reason ? language("REASON_MESSAGE_WITH_REASON").replace('%reason%', reason) : language("REASON_MESSAGE"), false);
+        return interaction.replySuccessMessage(client,
+            reason ? language("REASON_MESSAGE_WITH_REASON").replace('%reason%', reason) : language("REASON_MESSAGE"), false);
+    } catch (err: any) {
+        if (err.message.match("Missing Permissions")) return interaction.replySuccessMessage(client,
+            reason ? language("REASON_MESSAGE_WITH_REASON").replace('%reason%', reason) : language("REASON_MESSAGE"), false);
+        return console.log(err);
+    }
 
 }
 
@@ -28,6 +33,7 @@ export const slash = {
         name: "afk",
         description: "Put yourself in afk mode.",
         category: "Community",
+        permissions: ["SEND_MESSAGES"],
         options: [{
             name: "reason",
             type: "STRING",
