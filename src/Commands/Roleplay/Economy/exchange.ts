@@ -104,6 +104,7 @@ export const slash = {
                 required: true,
             }
         ],
+        roleplay: true,
         defaultPermission: false
     }
 }

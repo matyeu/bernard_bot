@@ -229,6 +229,7 @@ export const slash = {
                 type: "SUB_COMMAND",
             }
         ],
+        roleplay: true,
         defaultPermission: false
     }
 }

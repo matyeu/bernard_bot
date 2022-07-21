@@ -43,6 +43,7 @@ export const slash = {
                 ],
             },
         ],
+        roleplay: true,
         defaultPermission: false
     }
 }
