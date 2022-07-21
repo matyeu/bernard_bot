@@ -18,7 +18,14 @@ let Roleplay = model("Roleplay", new Schema({
             now: Number,
             total: Number,
         },
-        hygiene: Number,
+        hygiene: {
+            now: Number,
+            total: Number,
+        },
+    },
+    power: {
+        attack: Number,
+        defence: Number
     },
     wedding: {
         enabled: Boolean,
@@ -86,13 +93,20 @@ export const def = {
     health: {
         hp: {
             now: 10,
-            total: 0,
+            total: 10,
         },
         energy: {
             now: 50,
-            total: 0,
+            total: 50,
         },
-        hygiene: 40,
+        hygiene: {
+            now: 40,
+            total: 40,
+        },
+    },
+    power: {
+        attack: 0,
+        defence: 0
     },
     wedding: {
         enabled: false,
