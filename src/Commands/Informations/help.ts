@@ -1,5 +1,5 @@
 import {CommandInteraction, MessageActionRow, MessageEmbed, MessageSelectMenu} from "discord.js";
-import {EMBED_GENERAL, FOOTER} from "../../config";
+import {EMBED_GENERAL, EMOJIS, FOOTER} from "../../config";
 import {BernardClient} from "../../Librairie";
 
 export default async function (client: BernardClient, interaction: CommandInteraction, language: any ) {
@@ -21,6 +21,12 @@ export default async function (client: BernardClient, interaction: CommandIntera
                     description: language("DESCRIPTION_GENERAL"),
                     emoji: "🎈",
                     value: "general",
+                },
+                {
+                    label: language("LABEL_ROLEPLAY"),
+                    description: language("DESCRIPTION_ROLEPLAY"),
+                    emoji: EMOJIS.roleplay,
+                    value: "roleplay"
                 },
                 {
                     label: language("LABEL_LINK"),

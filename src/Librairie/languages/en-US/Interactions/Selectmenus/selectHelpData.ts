@@ -1,6 +1,7 @@
 const selectHelpDataEN = {
     AUTHOR: "❓ Getting help",
     TITLE_GENERAL: "🎈 The list of orders 🎈",
+    TITLE_ROLEPLAY: "%emoji% The list of orders %emoji%",
     DESCRIPTION_LINK: "**• Link support :** %discord%\n**• Link github bot :** %bot%\n**• Link github site :** %site%",
     DEFAULT: "The subcommand %subcommand% is **not valid**."
 };

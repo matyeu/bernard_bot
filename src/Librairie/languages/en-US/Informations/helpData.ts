@@ -4,6 +4,8 @@ const helpDataEN = {
     PLACEHOLDER: "Select a topic",
     LABEL_GENERAL: "General commands",
     DESCRIPTION_GENERAL: "Have the list of general orders",
+    LABEL_ROLEPLAY: "Roleplay commands",
+    DESCRIPTION_ROLEPLAY: "Have the list of roleplay orders",
     LABEL_LINK: "Useful links",
     DESCRIPTION_LINK: "Have a list of useful links",
 };
