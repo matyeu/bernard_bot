@@ -1,8 +1,8 @@
-import {BernardClient} from "../../Librairie";
+import {BernardClient} from "../../../Librairie";
 import {CommandInteraction, MessageAttachment, MessageEmbed} from "discord.js";
-import {find as findMember, edit as editMember} from "../../Models/roleplay";
-import {find as findLevel, edit as editLevel} from "../../Models/levels";
-import {EMBED_ERROR, EMBED_INFO, EMBED_SUCCESS, EMOJIS, FOOTER} from "../../config";
+import {find as findMember, edit as editMember} from "../../../Models/roleplay";
+import {find as findLevel, edit as editLevel} from "../../../Models/levels";
+import {EMBED_ERROR, EMBED_INFO, EMBED_SUCCESS, EMOJIS, FOOTER} from "../../../config";
 
 export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 

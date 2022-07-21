@@ -1,7 +1,7 @@
-import {BernardClient} from "../../Librairie";
+import {BernardClient} from "../../../Librairie";
 import {CommandInteraction, MessageEmbed} from "discord.js";
-import {find} from "../../Models/roleplay";
-import {EMBED_GENERAL, EMOJIS, FOOTER} from "../../config";
+import {find} from "../../../Models/roleplay";
+import {EMBED_GENERAL, EMOJIS, FOOTER} from "../../../config";
 
 export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 

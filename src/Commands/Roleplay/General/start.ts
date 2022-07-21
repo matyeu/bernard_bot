@@ -1,9 +1,9 @@
-import {BernardClient} from "../../Librairie";
+import {BernardClient} from "../../../Librairie";
 import {CommandInteraction} from "discord.js";
-import {find as findGuild, edit as editGuild} from "../../Models/guild";
-import {create as createMember, find as findMember} from "../../Models/roleplay";
-import {find as findEconomy, edit as editEconomy} from "../../Models/economy";
-import {EMOJIS} from "../../config";
+import {find as findGuild, edit as editGuild} from "../../../Models/guild";
+import {create as createMember, find as findMember} from "../../../Models/roleplay";
+import {find as findEconomy, edit as editEconomy} from "../../../Models/economy";
+import {EMOJIS} from "../../../config";
 
 export default async function (client: BernardClient, interaction: CommandInteraction, language: any) {
 
