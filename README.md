@@ -54,15 +54,16 @@
 | morpion       | Allows you to play morpion.                | none         | none                  | 10secs |
 
 ### Roleplay
-| Name          | Description                                               | Sub-commands   | Usage                                        | Cd      |
-| ------------- | --------------------------------------------------------- | --------------------- | ------------------------------------- | ------- |
-| balance       | Displays or add or remove the balance of a user.          | none                  | \<action> (username) (montant)        | 10secs  |
-| infoitem      | Allows you to obtain information on an item.              | none                  | \<id>                                 | 10secs  |
-| equipment     | Display your or a user's equipment.                       | none                  | \<username>                           | 10secs  |
-| farm          | The farm command allows you to fish, hunt, gather etc.    | none                  | \<choice>                             | 2m5secs |
-| sale          | Allows you to sell resources.                             | table, sale , calcinv | \<subCommand> (ressource) (quantity)  | 10secs  |
-| shop          | Allows to see the store.                                  | none                  | \<choice>                             | 10secs  |
-| start         | Allows you to start the RPG adventure.                    | none                  | none                                  | 10secs  |
+| Name          | Description                                               | Sub-commands                          | Usage                                 | Cd      |
+| ------------- | --------------------------------------------------------- | ------------------------------------- | ------------------------------------- | ------- |
+| balance       | Displays or add or remove the balance of a user.          | none                                  | \<action> (username) (montant)        | 10secs  |
+| infoitem      | Allows you to obtain information on an item.              | none                                  | \<id>                                 | 10secs  |
+| equipment     | Display your or a user's equipment.                       | none                                  | \<username>                           | 10secs  |
+| farm          | The farm command allows you to fish, hunt, gather etc.    | none                                  | \<choice>                             | 2m5secs |
+| sale          | Allows you to sell resources.                             | table, sale , calcinv                 | \<subCommand> (ressource) (quantity)  | 10secs  |
+| shop          | Allows to see the store.                                  | none                                  | \<choice>                             | 10secs  |
+| start         | Allows you to start the RPG adventure.                    | none                                  | none                                  | 10secs  |
+| wedding       | Allows you to marry two people.                           | request, operation, account, divorce  | none                                  | 10secs  |
 
 ### Casino
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |

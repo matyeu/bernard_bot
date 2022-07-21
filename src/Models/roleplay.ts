@@ -20,6 +20,10 @@ let Roleplay = model("Roleplay", new Schema({
         },
         hygiene: Number,
     },
+    wedding: {
+        enabled: Boolean,
+        partner: String,
+    },
     inventory: {
         equipements: {
             headset: Boolean,
@@ -29,7 +33,7 @@ let Roleplay = model("Roleplay", new Schema({
             ring: Boolean,
             collar: Boolean,
             belt: Boolean,
-            arme: Boolean,
+            weapon: Boolean,
             shield: Boolean,
             arc: Boolean,
             fishingRod: Boolean,
@@ -47,7 +51,7 @@ let Roleplay = model("Roleplay", new Schema({
             cantaril: Number,
             iron: Number,
             crystal: Number,
-            rubis: Number,
+            ruby: Number,
             gold: Number,
             spinelle: Number,
             eclatsSpinelle: Number,
@@ -90,6 +94,10 @@ export const def = {
         },
         hygiene: 40,
     },
+    wedding: {
+        enabled: false,
+        partner: "",
+    },
     inventory: {
         equipements: {
             headset: false,
@@ -99,7 +107,7 @@ export const def = {
             ring: false,
             collar: false,
             belt: false,
-            arme: false,
+            weapon: false,
             shield: false,
             arc: false,
             fishingRod: false,
@@ -117,7 +125,7 @@ export const def = {
             cantaril: 0,
             iron: 0,
             crystal: 0,
-            rubis: 0,
+            ruby: 0,
             gold: 0,
             spinelle: 0,
             eclatsSpinelle: 0,
