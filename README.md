@@ -47,6 +47,7 @@
 | balance       | Show the balance of the user.            | none           | \<user>               | 10secs |
 | bugreport     | Send a bug to the support server.        | none           | none                  | 10secs |
 | suggestion    | Send a suggestion to the support server. | none           | none                  | 10secs |
+
 ### Fun
 
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
@@ -54,6 +55,7 @@
 | morpion       | Allows you to play morpion.                | none         | none                  | 10secs |
 
 ### Roleplay
+
 | Name          | Description                                               | Sub-commands                          | Usage                                 | Cd      |
 | ------------- | --------------------------------------------------------- | ------------------------------------- | ------------------------------------- | ------- |
 | balance       | Displays or add or remove the balance of a user.          | none                                  | \<action> (username) (montant)        | 10secs  |
@@ -67,9 +69,11 @@
 | wedding       | Allows you to marry two people.                           | request, operation, account, divorce  | none                                  | 10secs  |
 
 ### Casino
+
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
 | crash         | Allows you to play crash.                | none           | \<bet>                | 10secs |
+| coinflip      | Allows you to play coinflip.             | none           | \<bet>                | 10secs |
 | rps           | Allows you to play rps.                  | none           | \<bet>                | 10secs |
 
 ### Moderation

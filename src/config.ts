@@ -22,6 +22,11 @@ export const SERVER = {
     bug: "983070467491512361"
 }
 
+export const IMAGES = {
+    coinflip_face: "https://cdn.discordapp.com/attachments/975827779968970772/980822112224825354/KOYE_SPIN_FACE.gif",
+    coinflip_tail: "https://cdn.discordapp.com/attachments/975827779968970772/980822049624821760/KOYE_SPIN_PILE.gif"
+}
+
 export const EMOJIS = {
     arc: "954380365185814548",
     arrow: "959500106233704468",
@@ -90,4 +95,6 @@ export const EMOJIS = {
     power: "950814421679214632",
     attack: "950815431374016513",
     defense: "950815449422114827",
+    face: "999976733790961684",
+    tail: "999976744675188736",
 };
