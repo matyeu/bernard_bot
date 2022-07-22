@@ -9,7 +9,7 @@ export default async function (client: BernardClient, interaction: CommandIntera
     let bet = interaction.options.getNumber('bet')!;
     let member = await interaction.guild!.members.fetch(interaction.user.id)
 
-    if (casinoConfig.money < bet)
+    if (casinoConfig.money < bet || bet === 0)
         return interaction.replyErrorMessage(client, language("BET_ERROR_NOTHAVE"), true);
 
     if (bet > 500)
