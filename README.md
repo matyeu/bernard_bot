@@ -52,7 +52,8 @@
 
 | Name          | Description                              | Sub-commands   | Usage                 | Cd     |
 | ------------- | ---------------------------------------- | -------------- | --------------------- | ------ |
-| morpion       | Allows you to play morpion.                | none         | none                  | 10secs |
+| morpion       | Allows you to play morpion.              | none           | none                  | 10secs |
+| joke          | Allows you to display a joke.            | none           | none                  | 10secs |
 
 ### Roleplay
 
